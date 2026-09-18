@@ -1,5 +1,5 @@
 {
-  "purpose": "Distinct variable categories with reused IDs and shared format",
+  "purpose": "Adversarial duplicate IDs across variable categories (not a valid baseline)",
   "concepts": [
     "Status Variables",
     "Data Variables",
@@ -28,7 +28,7 @@
     "synthetic_wkn": "urn:sema-sedd:fictional:temperature"
   },
   "pending": [
-    "Identifier lexical types and uniqueness scopes",
+    "X04 establishes cross-category uniqueness: duplicate 701 values must be tested as an invalid/ambiguous input.",
     "Format representation and scope",
     "WKN representation and official identity evidence",
     "Range/unit/default representation"

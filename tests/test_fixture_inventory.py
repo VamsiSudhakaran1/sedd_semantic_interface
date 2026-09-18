@@ -105,3 +105,64 @@ def test_report_injection_probe_is_text_not_an_xml_script_element() -> None:
     root = ET.parse(FIXTURES / "malformed/report-markup.xml").getroot()
     assert root[0].text == '<script>alert("synthetic")</script>'
     assert len(root[0]) == 0
+
+
+def test_e172_minimal_has_qualified_root_and_unqualified_required_children() -> None:
+    root = ET.parse(FIXTURES / "minimal/e172-empty.xml").getroot()
+    assert root.tag == "{urn:semi-org:xsd.SEDD}DataDictionary"
+    assert [child.tag for child in root] == [
+        "SEDDHeader",
+        "CollectionEvents",
+        "DataVariables",
+        "StatusVariables",
+        "EquipmentConstants",
+        "Alarms",
+        "RecipeVariableParameters",
+        "VariableFormats",
+    ]
+    assert all("{" not in node.tag for child in root for node in child.iter())
+    recipe = root.find("RecipeVariableParameters")
+    assert recipe is not None and recipe.get("RecipeType")
+
+
+def test_namespace_negative_candidate_does_not_masquerade_as_positive() -> None:
+    root = ET.parse(FIXTURES / "malformed/e172-qualified-children.xml").getroot()
+    assert all(child.tag.startswith("{urn:semi-org:xsd.SEDD}") for child in root)
+    record = next(r for r in RECORDS if r["path"].endswith("e172-qualified-children.xml"))
+    assert record["expected_schema_result"].startswith("INVALID:")
+
+
+def test_alarm_change_pair_changes_only_one_reference() -> None:
+    before = ET.parse(FIXTURES / "relationships/e172-event-alarm-report.xml").getroot()
+    after = ET.parse(FIXTURES / "changes/e172-alarm-link-after.xml").getroot()
+    old_link = before.find("Alarms/Alarm/ClearEvent")
+    new_link = after.find("Alarms/Alarm/ClearEvent")
+    assert old_link is not None and old_link.text == "802"
+    assert new_link is not None and new_link.text == "801"
+    new_link.text = old_link.text
+    assert ET.tostring(before) == ET.tostring(after)
+
+
+def test_relationship_candidate_retains_intentionally_unresolved_variable() -> None:
+    root = ET.parse(FIXTURES / "relationships/e172-event-alarm-report.xml").getroot()
+    ceids = {e.text for e in root.findall("CollectionEvents/CollectionEvent/CEID")}
+    assert root.findtext("Alarms/Alarm/SetEvent") in ceids
+    assert root.findtext("Alarms/Alarm/ClearEvent") in ceids
+    assert root.findtext("DefaultEventReportLinks/EventReportLink/CEID") in ceids
+    assert root.findtext("DefaultReportDefinitions/DefaultReportDefinition/RPTID") == "901"
+    assert root.findtext("DefaultEventReportLinks/EventReportLink/RPTIDList/RPTID") == "901"
+    assert root.findtext("DefaultReportDefinitions/DefaultReportDefinition/VIDList/VID") == "799"
+    assert not root.findall("DataVariables/DataVariable")
+    assert not root.findall("StatusVariables/StatusVariable")
+    assert not root.findall("EquipmentConstants/EquipmentConstant")
+
+
+def test_schema_evidence_matches_received_reference_fingerprint() -> None:
+    inventory = json.loads((ROOT / "docs/e172_schema_inventory.json").read_text())
+    assert inventory["source_sha256"] == MANIFEST["sources"]["schema"]["sha256"]
+    assert inventory["classification"] == "OBSERVED"
+    assert inventory["declarations"]
+    observations = (ROOT / "docs/e172_observations.md").read_text(encoding="utf-8")
+    for row in MANIFEST["coverage"]:
+        for evidence in row["evidence"]:
+            assert f"OBSERVED {evidence} " in observations

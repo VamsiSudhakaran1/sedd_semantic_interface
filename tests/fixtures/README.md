@@ -1,15 +1,16 @@
 # Synthetic fixture inventory
 
-Reference access is blocked. See ../../docs/e172_observations.md from this directory
-via [the observations](../../docs/e172_observations.md).
+See [the observations](../../docs/e172_observations.md) for evidence and limitations.
 
-No fixture is currently an E172-valid document. JSON files are pending scenario
-plans. Neutral XML probes test XML mechanics only. The namespace
-`urn:sema-sedd:fixture-only:1` is intentionally unrelated to SEMI.
+The E172 schema has been inspected. The TrackSys sample and imported E173 schema
+are still absent. No fixture is claimed to have passed complete XSD validation.
+`e172-*.xml` files are candidates derived from inspected declarations; the qualified
+children candidate is deliberately invalid. The report candidate has a deliberately
+unresolved VID 799. Other XML files test generic mechanics and use generic names or
+the unrelated `urn:sema-sedd:fixture-only:1` namespace.
 
-`manifest.json` lists every input, syntax classification and pending canonical
-concept. The `malformed` folder includes well-formed adversarial cases as well as
-syntax-invalid cases. Never expand its DTD/entity fixtures or execute report text.
-
-Do not convert planned data into an adapter contract until XSD/sample evidence
-is recorded. Do not infer a supported revision from any fixture filename.
+JSON files are pending scenario plans, not canonical serialization. The reused IDs
+in variables-plan are an adversarial cross-category collision, not a valid baseline.
+`manifest.json` lists all inputs and evidence. The malformed folder includes both
+syntax errors and well-formed adversarial inputs. Never expand its entities or
+execute report text. Runtime parsing/security behavior remains unimplemented.
