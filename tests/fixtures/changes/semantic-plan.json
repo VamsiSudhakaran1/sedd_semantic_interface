@@ -1,0 +1,50 @@
+{
+  "purpose": "One independent change per future before/after pair",
+  "concepts": [
+    "Equipment metadata",
+    "Status Variables",
+    "Data Variables",
+    "Equipment Constants",
+    "Collection Events",
+    "Alarms",
+    "Remote Commands",
+    "Remote Command Parameters",
+    "Supported SECS Messages",
+    "Variable Formats",
+    "Default Reports",
+    "Event/Report Links",
+    "SEMI Standards metadata",
+    "Well-Known Names",
+    "descriptions",
+    "provenance",
+    "unresolved references",
+    "unknown extensions"
+  ],
+  "data": {
+    "cases": [
+      "add/remove entity",
+      "change native identifier with independent identity evidence",
+      "change WKN without guessing identity",
+      "change name, type, format, unit, range, default, description independently",
+      "add/remove relationship",
+      "change report members and event-report links",
+      "change alarm set/clear links",
+      "change command-local parameter",
+      "change message structure",
+      "change standards metadata",
+      "unknown extension change",
+      "same description with different native IDs must not fuzzy-match",
+      "duplicate strong identity evidence must stay ambiguous"
+    ]
+  },
+  "pending": [
+    "All E172 XML mappings",
+    "Canonical representation",
+    "Matching conflict policy",
+    "Change output schema"
+  ],
+  "status": "PENDING",
+  "classification": "ASSUMPTION",
+  "kind": "scenario-plan",
+  "e172_validity": "NOT_ESTABLISHED"
+}

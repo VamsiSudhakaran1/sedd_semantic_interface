@@ -1,0 +1,55 @@
+{
+  "purpose": "Evidence-backed edges, dangling references, and ambiguous targets",
+  "concepts": [
+    "Collection Events",
+    "Default Reports",
+    "Event/Report Links",
+    "Alarms",
+    "unresolved references"
+  ],
+  "data": {
+    "events": [
+      "801",
+      "802"
+    ],
+    "reports": [
+      "901"
+    ],
+    "variables": [
+      "701",
+      "702"
+    ],
+    "alarm": "1001",
+    "proposed_edges": [
+      [
+        "event:801",
+        "report:901"
+      ],
+      [
+        "report:901",
+        "variable:701"
+      ],
+      [
+        "alarm:1001",
+        "set-event:801"
+      ],
+      [
+        "alarm:1001",
+        "clear-event:802"
+      ]
+    ],
+    "dangling_target": "variable:799",
+    "ambiguous_target": "two status variables with identifier 701"
+  },
+  "pending": [
+    "Actual reference syntax",
+    "Report membership ordering",
+    "Direct event-variable versus indirect report traversal",
+    "State-transition metadata",
+    "Alarm set/clear distinctions"
+  ],
+  "status": "PENDING",
+  "classification": "ASSUMPTION",
+  "kind": "scenario-plan",
+  "e172_validity": "NOT_ESTABLISHED"
+}

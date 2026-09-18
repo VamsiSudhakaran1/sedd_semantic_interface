@@ -1,0 +1,345 @@
+{
+  "version": 1,
+  "reference_analysis_status": "BLOCKED_REFERENCE_ACCESS",
+  "sources": {
+    "schema": {
+      "url": "https://dom.semi.org/web/wstandards.nsf/37F6244E9929719388258C4400652DC9/$file/E172-0225-SEDD-Schema.xsd",
+      "status": "PENDING",
+      "sha256": null
+    },
+    "sample": {
+      "url": "https://dom.semi.org/web/wstandards.nsf/3F009B878C57ABB388258C44006550D6/$file/SEDD_TrackSys_Model404_0225.xml",
+      "status": "PENDING",
+      "sha256": null
+    }
+  },
+  "coverage": [
+    {
+      "concept": "Equipment metadata",
+      "status": "PENDING",
+      "evidence": [],
+      "fixtures": [
+        "minimal/equipment-plan.json",
+        "changes/semantic-plan.json"
+      ],
+      "reason": "Reference bytes unavailable; actual XSD declarations and sample instances must be inspected before XML mapping."
+    },
+    {
+      "concept": "Status Variables",
+      "status": "PENDING",
+      "evidence": [],
+      "fixtures": [
+        "relationships/variables-plan.json",
+        "changes/semantic-plan.json"
+      ],
+      "reason": "Reference bytes unavailable; actual XSD declarations and sample instances must be inspected before XML mapping."
+    },
+    {
+      "concept": "Data Variables",
+      "status": "PENDING",
+      "evidence": [],
+      "fixtures": [
+        "relationships/variables-plan.json",
+        "changes/semantic-plan.json"
+      ],
+      "reason": "Reference bytes unavailable; actual XSD declarations and sample instances must be inspected before XML mapping."
+    },
+    {
+      "concept": "Equipment Constants",
+      "status": "PENDING",
+      "evidence": [],
+      "fixtures": [
+        "relationships/variables-plan.json",
+        "changes/semantic-plan.json"
+      ],
+      "reason": "Reference bytes unavailable; actual XSD declarations and sample instances must be inspected before XML mapping."
+    },
+    {
+      "concept": "Collection Events",
+      "status": "PENDING",
+      "evidence": [],
+      "fixtures": [
+        "relationships/links-plan.json",
+        "changes/semantic-plan.json"
+      ],
+      "reason": "Reference bytes unavailable; actual XSD declarations and sample instances must be inspected before XML mapping."
+    },
+    {
+      "concept": "Alarms",
+      "status": "PENDING",
+      "evidence": [],
+      "fixtures": [
+        "relationships/links-plan.json",
+        "changes/semantic-plan.json"
+      ],
+      "reason": "Reference bytes unavailable; actual XSD declarations and sample instances must be inspected before XML mapping."
+    },
+    {
+      "concept": "Remote Commands",
+      "status": "PENDING",
+      "evidence": [],
+      "fixtures": [
+        "relationships/commands-messages-plan.json",
+        "changes/semantic-plan.json"
+      ],
+      "reason": "Reference bytes unavailable; actual XSD declarations and sample instances must be inspected before XML mapping."
+    },
+    {
+      "concept": "Remote Command Parameters",
+      "status": "PENDING",
+      "evidence": [],
+      "fixtures": [
+        "relationships/commands-messages-plan.json",
+        "changes/semantic-plan.json"
+      ],
+      "reason": "Reference bytes unavailable; actual XSD declarations and sample instances must be inspected before XML mapping."
+    },
+    {
+      "concept": "Supported SECS Messages",
+      "status": "PENDING",
+      "evidence": [],
+      "fixtures": [
+        "relationships/commands-messages-plan.json",
+        "changes/semantic-plan.json"
+      ],
+      "reason": "Reference bytes unavailable; actual XSD declarations and sample instances must be inspected before XML mapping."
+    },
+    {
+      "concept": "Variable Formats",
+      "status": "PENDING",
+      "evidence": [],
+      "fixtures": [
+        "relationships/variables-plan.json",
+        "changes/semantic-plan.json"
+      ],
+      "reason": "Reference bytes unavailable; actual XSD declarations and sample instances must be inspected before XML mapping."
+    },
+    {
+      "concept": "Default Reports",
+      "status": "PENDING",
+      "evidence": [],
+      "fixtures": [
+        "relationships/links-plan.json",
+        "changes/semantic-plan.json"
+      ],
+      "reason": "Reference bytes unavailable; actual XSD declarations and sample instances must be inspected before XML mapping."
+    },
+    {
+      "concept": "Event/Report Links",
+      "status": "PENDING",
+      "evidence": [],
+      "fixtures": [
+        "relationships/links-plan.json",
+        "changes/semantic-plan.json"
+      ],
+      "reason": "Reference bytes unavailable; actual XSD declarations and sample instances must be inspected before XML mapping."
+    },
+    {
+      "concept": "SEMI Standards metadata",
+      "status": "PENDING",
+      "evidence": [],
+      "fixtures": [
+        "minimal/equipment-plan.json",
+        "changes/semantic-plan.json"
+      ],
+      "reason": "Reference bytes unavailable; actual XSD declarations and sample instances must be inspected before XML mapping."
+    },
+    {
+      "concept": "Well-Known Names",
+      "status": "PENDING",
+      "evidence": [],
+      "fixtures": [
+        "relationships/variables-plan.json",
+        "changes/semantic-plan.json"
+      ],
+      "reason": "Reference bytes unavailable; actual XSD declarations and sample instances must be inspected before XML mapping."
+    },
+    {
+      "concept": "descriptions",
+      "status": "PENDING",
+      "evidence": [],
+      "fixtures": [
+        "minimal/equipment-plan.json",
+        "changes/semantic-plan.json"
+      ],
+      "reason": "Reference bytes unavailable; actual XSD declarations and sample instances must be inspected before XML mapping."
+    },
+    {
+      "concept": "provenance",
+      "status": "PENDING",
+      "evidence": [],
+      "fixtures": [
+        "minimal/equipment-plan.json",
+        "relationships/extensions-plan.json",
+        "changes/semantic-plan.json"
+      ],
+      "reason": "Reference bytes unavailable; actual XSD declarations and sample instances must be inspected before XML mapping."
+    },
+    {
+      "concept": "unresolved references",
+      "status": "PENDING",
+      "evidence": [],
+      "fixtures": [
+        "relationships/links-plan.json",
+        "changes/semantic-plan.json"
+      ],
+      "reason": "Reference bytes unavailable; actual XSD declarations and sample instances must be inspected before XML mapping."
+    },
+    {
+      "concept": "unknown extensions",
+      "status": "PENDING",
+      "evidence": [],
+      "fixtures": [
+        "relationships/extensions-plan.json",
+        "changes/semantic-plan.json"
+      ],
+      "reason": "Reference bytes unavailable; actual XSD declarations and sample instances must be inspected before XML mapping."
+    }
+  ],
+  "fixtures": [
+    {
+      "path": "minimal/neutral.xml",
+      "kind": "xml-mechanics",
+      "e172_validity": "NOT_ESTABLISHED",
+      "xml_syntax": "WELL_FORMED",
+      "contains_doctype": false,
+      "future_processing": "PENDING"
+    },
+    {
+      "path": "changes/noise-before.xml",
+      "kind": "xml-mechanics",
+      "e172_validity": "NOT_ESTABLISHED",
+      "xml_syntax": "WELL_FORMED",
+      "contains_doctype": false,
+      "future_processing": "PENDING"
+    },
+    {
+      "path": "changes/noise-after.xml",
+      "kind": "xml-mechanics",
+      "e172_validity": "NOT_ESTABLISHED",
+      "xml_syntax": "WELL_FORMED",
+      "contains_doctype": false,
+      "future_processing": "PENDING"
+    },
+    {
+      "path": "changes/text-before.xml",
+      "kind": "xml-mechanics",
+      "e172_validity": "NOT_ESTABLISHED",
+      "xml_syntax": "WELL_FORMED",
+      "contains_doctype": false,
+      "future_processing": "PENDING"
+    },
+    {
+      "path": "changes/text-after.xml",
+      "kind": "xml-mechanics",
+      "e172_validity": "NOT_ESTABLISHED",
+      "xml_syntax": "WELL_FORMED",
+      "contains_doctype": false,
+      "future_processing": "PENDING"
+    },
+    {
+      "path": "malformed/truncated.xml",
+      "kind": "xml-mechanics",
+      "e172_validity": "NOT_ESTABLISHED",
+      "xml_syntax": "INVALID",
+      "contains_doctype": false,
+      "future_processing": "PENDING"
+    },
+    {
+      "path": "malformed/duplicate-attribute.xml",
+      "kind": "xml-mechanics",
+      "e172_validity": "NOT_ESTABLISHED",
+      "xml_syntax": "INVALID",
+      "contains_doctype": false,
+      "future_processing": "PENDING"
+    },
+    {
+      "path": "malformed/undeclared-prefix.xml",
+      "kind": "xml-mechanics",
+      "e172_validity": "NOT_ESTABLISHED",
+      "xml_syntax": "INVALID",
+      "contains_doctype": false,
+      "future_processing": "PENDING"
+    },
+    {
+      "path": "malformed/external-entity.xml",
+      "kind": "xml-mechanics",
+      "e172_validity": "NOT_ESTABLISHED",
+      "xml_syntax": "WELL_FORMED",
+      "contains_doctype": true,
+      "future_processing": "REJECT_DTD"
+    },
+    {
+      "path": "malformed/external-dtd.xml",
+      "kind": "xml-mechanics",
+      "e172_validity": "NOT_ESTABLISHED",
+      "xml_syntax": "WELL_FORMED",
+      "contains_doctype": true,
+      "future_processing": "REJECT_DTD"
+    },
+    {
+      "path": "malformed/entity-expansion.xml",
+      "kind": "xml-mechanics",
+      "e172_validity": "NOT_ESTABLISHED",
+      "xml_syntax": "WELL_FORMED",
+      "contains_doctype": true,
+      "future_processing": "REJECT_DTD"
+    },
+    {
+      "path": "malformed/namespace-impostor.xml",
+      "kind": "xml-mechanics",
+      "e172_validity": "NOT_ESTABLISHED",
+      "xml_syntax": "WELL_FORMED",
+      "contains_doctype": false,
+      "future_processing": "PENDING"
+    },
+    {
+      "path": "malformed/report-markup.xml",
+      "kind": "xml-mechanics",
+      "e172_validity": "NOT_ESTABLISHED",
+      "xml_syntax": "WELL_FORMED",
+      "contains_doctype": false,
+      "future_processing": "PENDING"
+    },
+    {
+      "path": "minimal/equipment-plan.json",
+      "kind": "scenario-plan",
+      "e172_validity": "NOT_ESTABLISHED",
+      "future_processing": "PENDING"
+    },
+    {
+      "path": "relationships/variables-plan.json",
+      "kind": "scenario-plan",
+      "e172_validity": "NOT_ESTABLISHED",
+      "future_processing": "PENDING"
+    },
+    {
+      "path": "relationships/links-plan.json",
+      "kind": "scenario-plan",
+      "e172_validity": "NOT_ESTABLISHED",
+      "future_processing": "PENDING"
+    },
+    {
+      "path": "relationships/commands-messages-plan.json",
+      "kind": "scenario-plan",
+      "e172_validity": "NOT_ESTABLISHED",
+      "future_processing": "PENDING"
+    },
+    {
+      "path": "relationships/extensions-plan.json",
+      "kind": "scenario-plan",
+      "e172_validity": "NOT_ESTABLISHED",
+      "future_processing": "PENDING"
+    },
+    {
+      "path": "changes/semantic-plan.json",
+      "kind": "scenario-plan",
+      "e172_validity": "NOT_ESTABLISHED",
+      "future_processing": "PENDING"
+    }
+  ],
+  "pending_resource_tests": {
+    "depth": "Generate just below/at/above the approved loader depth limit after that limit is defined.",
+    "bytes": "Generate limit boundary inputs in tests after the approved byte limit is defined; do not commit huge files."
+  }
+}

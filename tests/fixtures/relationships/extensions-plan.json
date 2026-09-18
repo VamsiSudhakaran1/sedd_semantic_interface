@@ -1,0 +1,19 @@
+{
+  "purpose": "Unknown namespaced content with retained source context",
+  "concepts": [
+    "unknown extensions",
+    "provenance"
+  ],
+  "data": {
+    "namespace": "urn:sema-sedd:synthetic-extension:1",
+    "label": "fictional calibration hint"
+  },
+  "pending": [
+    "Whether XSD permits extension points",
+    "Preservation policy for unsupported content versus invalid document"
+  ],
+  "status": "PENDING",
+  "classification": "ASSUMPTION",
+  "kind": "scenario-plan",
+  "e172_validity": "NOT_ESTABLISHED"
+}

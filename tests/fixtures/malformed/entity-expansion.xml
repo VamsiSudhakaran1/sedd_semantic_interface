@@ -1,0 +1,1 @@
+<!DOCTYPE probe [<!ENTITY a "synthetic"><!ENTITY b "&a;&a;"><!ENTITY c "&b;&b;">]><probe>&c;</probe>
