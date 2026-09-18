@@ -1,0 +1,1774 @@
+{
+  "classification": "OBSERVED",
+  "source_sha256": "23678aef0204ffbb654403077895be8db9f48b00c7a30934589c259c74f09810",
+  "source_filename": "E172-0225-SEDD-Schema.xsd",
+  "declarations": [
+    {
+      "line": 32,
+      "schema_xpath": "/xs:schema/xs:import",
+      "element_context": "",
+      "declaration": "import",
+      "attributes": {
+        "namespace": "urn:semi-org:xsd.SMN",
+        "schemaLocation": "E173-0415-SECSIIMessageNotation-Schema.xsd"
+      }
+    },
+    {
+      "line": 33,
+      "schema_xpath": "/xs:schema/xs:element",
+      "element_context": "",
+      "declaration": "element",
+      "attributes": {
+        "name": "DataDictionary"
+      }
+    },
+    {
+      "line": 39,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[1]",
+      "element_context": "DataDictionary",
+      "declaration": "element",
+      "attributes": {
+        "name": "SEDDHeader"
+      }
+    },
+    {
+      "line": 45,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[1]/xs:complexType/xs:sequence/xs:element[1]",
+      "element_context": "DataDictionary/SEDDHeader",
+      "declaration": "element",
+      "attributes": {
+        "name": "MDLN"
+      }
+    },
+    {
+      "line": 55,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[1]/xs:complexType/xs:sequence/xs:element[2]",
+      "element_context": "DataDictionary/SEDDHeader",
+      "declaration": "element",
+      "attributes": {
+        "name": "SOFTREV"
+      }
+    },
+    {
+      "line": 65,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[1]/xs:complexType/xs:sequence/xs:element[3]",
+      "element_context": "DataDictionary/SEDDHeader",
+      "declaration": "element",
+      "attributes": {
+        "name": "EquipmentID",
+        "minOccurs": "0"
+      }
+    },
+    {
+      "line": 75,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[1]/xs:complexType/xs:sequence/xs:element[4]",
+      "element_context": "DataDictionary/SEDDHeader",
+      "declaration": "element",
+      "attributes": {
+        "name": "Supplier"
+      }
+    },
+    {
+      "line": 85,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[1]/xs:complexType/xs:sequence/xs:element[5]",
+      "element_context": "DataDictionary/SEDDHeader",
+      "declaration": "element",
+      "attributes": {
+        "name": "CreateDate",
+        "type": "xs:date"
+      }
+    },
+    {
+      "line": 90,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[1]/xs:complexType/xs:sequence/xs:element[6]",
+      "element_context": "DataDictionary/SEDDHeader",
+      "declaration": "element",
+      "attributes": {
+        "name": "Description"
+      }
+    },
+    {
+      "line": 103,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[2]",
+      "element_context": "DataDictionary",
+      "declaration": "element",
+      "attributes": {
+        "name": "CollectionEvents"
+      }
+    },
+    {
+      "line": 109,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[2]/xs:complexType/xs:sequence/xs:element",
+      "element_context": "DataDictionary/CollectionEvents",
+      "declaration": "element",
+      "attributes": {
+        "name": "CollectionEvent",
+        "minOccurs": "0",
+        "maxOccurs": "unbounded"
+      }
+    },
+    {
+      "line": 115,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[2]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[1]",
+      "element_context": "DataDictionary/CollectionEvents/CollectionEvent",
+      "declaration": "element",
+      "attributes": {
+        "name": "CEID",
+        "type": "xs:unsignedLong"
+      }
+    },
+    {
+      "line": 120,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[2]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[2]",
+      "element_context": "DataDictionary/CollectionEvents/CollectionEvent",
+      "declaration": "element",
+      "attributes": {
+        "name": "CENAME",
+        "type": "xs:string"
+      }
+    },
+    {
+      "line": 125,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[2]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[3]",
+      "element_context": "DataDictionary/CollectionEvents/CollectionEvent",
+      "declaration": "element",
+      "attributes": {
+        "name": "VALIDDVS",
+        "minOccurs": "0"
+      }
+    },
+    {
+      "line": 131,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[2]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[3]/xs:complexType/xs:sequence/xs:element",
+      "element_context": "DataDictionary/CollectionEvents/CollectionEvent/VALIDDVS",
+      "declaration": "element",
+      "attributes": {
+        "name": "VID",
+        "minOccurs": "0",
+        "maxOccurs": "unbounded"
+      }
+    },
+    {
+      "line": 138,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[2]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[3]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:simpleContent/xs:extension/xs:attribute",
+      "element_context": "DataDictionary/CollectionEvents/CollectionEvent/VALIDDVS/VID",
+      "declaration": "attribute",
+      "attributes": {
+        "name": "name",
+        "type": "xs:string",
+        "use": "optional"
+      }
+    },
+    {
+      "line": 146,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[2]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[4]",
+      "element_context": "DataDictionary/CollectionEvents/CollectionEvent",
+      "declaration": "element",
+      "attributes": {
+        "name": "RelevantVariables",
+        "minOccurs": "0"
+      }
+    },
+    {
+      "line": 152,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[2]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[4]/xs:complexType/xs:sequence/xs:element",
+      "element_context": "DataDictionary/CollectionEvents/CollectionEvent/RelevantVariables",
+      "declaration": "element",
+      "attributes": {
+        "name": "VID",
+        "minOccurs": "0",
+        "maxOccurs": "unbounded"
+      }
+    },
+    {
+      "line": 159,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[2]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[4]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:simpleContent/xs:extension/xs:attribute",
+      "element_context": "DataDictionary/CollectionEvents/CollectionEvent/RelevantVariables/VID",
+      "declaration": "attribute",
+      "attributes": {
+        "name": "name",
+        "type": "xs:string",
+        "use": "optional"
+      }
+    },
+    {
+      "line": 167,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[2]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[5]",
+      "element_context": "DataDictionary/CollectionEvents/CollectionEvent",
+      "declaration": "element",
+      "attributes": {
+        "name": "StateTransition",
+        "minOccurs": "0"
+      }
+    },
+    {
+      "line": 173,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[2]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[5]/xs:complexType/xs:sequence/xs:element[1]",
+      "element_context": "DataDictionary/CollectionEvents/CollectionEvent/StateTransition",
+      "declaration": "element",
+      "attributes": {
+        "name": "StateModel"
+      }
+    },
+    {
+      "line": 183,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[2]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[5]/xs:complexType/xs:sequence/xs:element[2]",
+      "element_context": "DataDictionary/CollectionEvents/CollectionEvent/StateTransition",
+      "declaration": "element",
+      "attributes": {
+        "name": "TransitionID"
+      }
+    },
+    {
+      "line": 193,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[2]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[5]/xs:complexType/xs:sequence/xs:element[3]",
+      "element_context": "DataDictionary/CollectionEvents/CollectionEvent/StateTransition",
+      "declaration": "element",
+      "attributes": {
+        "name": "PreviousState"
+      }
+    },
+    {
+      "line": 203,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[2]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[5]/xs:complexType/xs:sequence/xs:element[4]",
+      "element_context": "DataDictionary/CollectionEvents/CollectionEvent/StateTransition",
+      "declaration": "element",
+      "attributes": {
+        "name": "NewState"
+      }
+    },
+    {
+      "line": 216,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[2]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[6]",
+      "element_context": "DataDictionary/CollectionEvents/CollectionEvent",
+      "declaration": "element",
+      "attributes": {
+        "name": "Description"
+      }
+    },
+    {
+      "line": 226,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[2]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[7]",
+      "element_context": "DataDictionary/CollectionEvents/CollectionEvent",
+      "declaration": "element",
+      "attributes": {
+        "name": "Source",
+        "minOccurs": "0"
+      }
+    },
+    {
+      "line": 236,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[2]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[8]",
+      "element_context": "DataDictionary/CollectionEvents/CollectionEvent",
+      "declaration": "element",
+      "attributes": {
+        "name": "SEMIStandard",
+        "type": "SEMIStandardType",
+        "minOccurs": "0"
+      }
+    },
+    {
+      "line": 241,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[2]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[9]",
+      "element_context": "DataDictionary/CollectionEvents/CollectionEvent",
+      "declaration": "element",
+      "attributes": {
+        "name": "WellKnownName",
+        "type": "xs:string",
+        "minOccurs": "0"
+      }
+    },
+    {
+      "line": 251,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[2]/xs:unique",
+      "element_context": "DataDictionary/CollectionEvents",
+      "declaration": "unique",
+      "attributes": {
+        "name": "UniqueCEID"
+      }
+    },
+    {
+      "line": 259,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[3]",
+      "element_context": "DataDictionary",
+      "declaration": "element",
+      "attributes": {
+        "name": "DataVariables"
+      }
+    },
+    {
+      "line": 265,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[3]/xs:complexType/xs:sequence/xs:element",
+      "element_context": "DataDictionary/DataVariables",
+      "declaration": "element",
+      "attributes": {
+        "name": "DataVariable",
+        "minOccurs": "0",
+        "maxOccurs": "unbounded"
+      }
+    },
+    {
+      "line": 271,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[3]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[1]",
+      "element_context": "DataDictionary/DataVariables/DataVariable",
+      "declaration": "element",
+      "attributes": {
+        "name": "VID",
+        "type": "xs:unsignedLong"
+      }
+    },
+    {
+      "line": 276,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[3]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[2]",
+      "element_context": "DataDictionary/DataVariables/DataVariable",
+      "declaration": "element",
+      "attributes": {
+        "name": "DVVALNAME",
+        "type": "xs:string"
+      }
+    },
+    {
+      "line": 281,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[3]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[3]",
+      "element_context": "DataDictionary/DataVariables/DataVariable",
+      "declaration": "element",
+      "attributes": {
+        "name": "UNITS",
+        "type": "xs:string",
+        "minOccurs": "0",
+        "maxOccurs": "unbounded"
+      }
+    },
+    {
+      "line": 286,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[3]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[4]",
+      "element_context": "DataDictionary/DataVariables/DataVariable",
+      "declaration": "element",
+      "attributes": {
+        "name": "Format"
+      }
+    },
+    {
+      "line": 296,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[3]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[5]",
+      "element_context": "DataDictionary/DataVariables/DataVariable",
+      "declaration": "element",
+      "attributes": {
+        "name": "MinValue",
+        "type": "xs:string",
+        "minOccurs": "0"
+      }
+    },
+    {
+      "line": 301,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[3]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[6]",
+      "element_context": "DataDictionary/DataVariables/DataVariable",
+      "declaration": "element",
+      "attributes": {
+        "name": "MaxValue",
+        "type": "xs:string",
+        "minOccurs": "0"
+      }
+    },
+    {
+      "line": 306,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[3]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[7]",
+      "element_context": "DataDictionary/DataVariables/DataVariable",
+      "declaration": "element",
+      "attributes": {
+        "name": "Description"
+      }
+    },
+    {
+      "line": 316,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[3]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[8]",
+      "element_context": "DataDictionary/DataVariables/DataVariable",
+      "declaration": "element",
+      "attributes": {
+        "name": "Source",
+        "minOccurs": "0"
+      }
+    },
+    {
+      "line": 326,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[3]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[9]",
+      "element_context": "DataDictionary/DataVariables/DataVariable",
+      "declaration": "element",
+      "attributes": {
+        "name": "SEMIStandard",
+        "type": "SEMIStandardType",
+        "minOccurs": "0"
+      }
+    },
+    {
+      "line": 331,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[3]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[10]",
+      "element_context": "DataDictionary/DataVariables/DataVariable",
+      "declaration": "element",
+      "attributes": {
+        "name": "WellKnownName",
+        "type": "xs:string",
+        "minOccurs": "0"
+      }
+    },
+    {
+      "line": 342,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[4]",
+      "element_context": "DataDictionary",
+      "declaration": "element",
+      "attributes": {
+        "name": "StatusVariables"
+      }
+    },
+    {
+      "line": 348,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[4]/xs:complexType/xs:sequence/xs:element",
+      "element_context": "DataDictionary/StatusVariables",
+      "declaration": "element",
+      "attributes": {
+        "name": "StatusVariable",
+        "minOccurs": "0",
+        "maxOccurs": "unbounded"
+      }
+    },
+    {
+      "line": 354,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[4]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[1]",
+      "element_context": "DataDictionary/StatusVariables/StatusVariable",
+      "declaration": "element",
+      "attributes": {
+        "name": "SVID",
+        "type": "xs:unsignedLong"
+      }
+    },
+    {
+      "line": 359,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[4]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[2]",
+      "element_context": "DataDictionary/StatusVariables/StatusVariable",
+      "declaration": "element",
+      "attributes": {
+        "name": "SVNAME",
+        "type": "xs:string"
+      }
+    },
+    {
+      "line": 364,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[4]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[3]",
+      "element_context": "DataDictionary/StatusVariables/StatusVariable",
+      "declaration": "element",
+      "attributes": {
+        "name": "UNITS",
+        "type": "xs:string",
+        "minOccurs": "0",
+        "maxOccurs": "unbounded"
+      }
+    },
+    {
+      "line": 369,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[4]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[4]",
+      "element_context": "DataDictionary/StatusVariables/StatusVariable",
+      "declaration": "element",
+      "attributes": {
+        "name": "Format"
+      }
+    },
+    {
+      "line": 379,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[4]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[5]",
+      "element_context": "DataDictionary/StatusVariables/StatusVariable",
+      "declaration": "element",
+      "attributes": {
+        "name": "MinValue",
+        "type": "xs:string",
+        "minOccurs": "0"
+      }
+    },
+    {
+      "line": 384,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[4]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[6]",
+      "element_context": "DataDictionary/StatusVariables/StatusVariable",
+      "declaration": "element",
+      "attributes": {
+        "name": "MaxValue",
+        "type": "xs:string",
+        "minOccurs": "0"
+      }
+    },
+    {
+      "line": 389,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[4]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[7]",
+      "element_context": "DataDictionary/StatusVariables/StatusVariable",
+      "declaration": "element",
+      "attributes": {
+        "name": "Description"
+      }
+    },
+    {
+      "line": 399,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[4]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[8]",
+      "element_context": "DataDictionary/StatusVariables/StatusVariable",
+      "declaration": "element",
+      "attributes": {
+        "name": "Source",
+        "minOccurs": "0"
+      }
+    },
+    {
+      "line": 409,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[4]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[9]",
+      "element_context": "DataDictionary/StatusVariables/StatusVariable",
+      "declaration": "element",
+      "attributes": {
+        "name": "SEMIStandard",
+        "type": "SEMIStandardType",
+        "minOccurs": "0"
+      }
+    },
+    {
+      "line": 414,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[4]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[10]",
+      "element_context": "DataDictionary/StatusVariables/StatusVariable",
+      "declaration": "element",
+      "attributes": {
+        "name": "WellKnownName",
+        "type": "xs:string",
+        "minOccurs": "0"
+      }
+    },
+    {
+      "line": 425,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[5]",
+      "element_context": "DataDictionary",
+      "declaration": "element",
+      "attributes": {
+        "name": "EquipmentConstants"
+      }
+    },
+    {
+      "line": 431,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[5]/xs:complexType/xs:sequence/xs:element",
+      "element_context": "DataDictionary/EquipmentConstants",
+      "declaration": "element",
+      "attributes": {
+        "name": "EquipmentConstant",
+        "minOccurs": "0",
+        "maxOccurs": "unbounded"
+      }
+    },
+    {
+      "line": 437,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[5]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[1]",
+      "element_context": "DataDictionary/EquipmentConstants/EquipmentConstant",
+      "declaration": "element",
+      "attributes": {
+        "name": "ECID",
+        "type": "xs:unsignedLong"
+      }
+    },
+    {
+      "line": 442,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[5]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[2]",
+      "element_context": "DataDictionary/EquipmentConstants/EquipmentConstant",
+      "declaration": "element",
+      "attributes": {
+        "name": "ECNAME",
+        "type": "xs:string"
+      }
+    },
+    {
+      "line": 447,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[5]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[3]",
+      "element_context": "DataDictionary/EquipmentConstants/EquipmentConstant",
+      "declaration": "element",
+      "attributes": {
+        "name": "ECMIN",
+        "type": "xs:string",
+        "minOccurs": "0"
+      }
+    },
+    {
+      "line": 452,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[5]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[4]",
+      "element_context": "DataDictionary/EquipmentConstants/EquipmentConstant",
+      "declaration": "element",
+      "attributes": {
+        "name": "ECMAX",
+        "type": "xs:string",
+        "minOccurs": "0"
+      }
+    },
+    {
+      "line": 457,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[5]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[5]",
+      "element_context": "DataDictionary/EquipmentConstants/EquipmentConstant",
+      "declaration": "element",
+      "attributes": {
+        "name": "ECDEF",
+        "type": "xs:string",
+        "minOccurs": "0"
+      }
+    },
+    {
+      "line": 462,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[5]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[6]",
+      "element_context": "DataDictionary/EquipmentConstants/EquipmentConstant",
+      "declaration": "element",
+      "attributes": {
+        "name": "UNITS",
+        "type": "xs:string",
+        "minOccurs": "0",
+        "maxOccurs": "unbounded"
+      }
+    },
+    {
+      "line": 467,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[5]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[7]",
+      "element_context": "DataDictionary/EquipmentConstants/EquipmentConstant",
+      "declaration": "element",
+      "attributes": {
+        "name": "Format"
+      }
+    },
+    {
+      "line": 477,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[5]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[8]",
+      "element_context": "DataDictionary/EquipmentConstants/EquipmentConstant",
+      "declaration": "element",
+      "attributes": {
+        "name": "Description"
+      }
+    },
+    {
+      "line": 487,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[5]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[9]",
+      "element_context": "DataDictionary/EquipmentConstants/EquipmentConstant",
+      "declaration": "element",
+      "attributes": {
+        "name": "Source",
+        "minOccurs": "0"
+      }
+    },
+    {
+      "line": 497,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[5]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[10]",
+      "element_context": "DataDictionary/EquipmentConstants/EquipmentConstant",
+      "declaration": "element",
+      "attributes": {
+        "name": "SEMIStandard",
+        "type": "SEMIStandardType",
+        "minOccurs": "0"
+      }
+    },
+    {
+      "line": 502,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[5]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[11]",
+      "element_context": "DataDictionary/EquipmentConstants/EquipmentConstant",
+      "declaration": "element",
+      "attributes": {
+        "name": "WellKnownName",
+        "type": "xs:string",
+        "minOccurs": "0"
+      }
+    },
+    {
+      "line": 513,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[6]",
+      "element_context": "DataDictionary",
+      "declaration": "element",
+      "attributes": {
+        "name": "Alarms"
+      }
+    },
+    {
+      "line": 519,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[6]/xs:complexType/xs:sequence/xs:element",
+      "element_context": "DataDictionary/Alarms",
+      "declaration": "element",
+      "attributes": {
+        "name": "Alarm",
+        "minOccurs": "0",
+        "maxOccurs": "unbounded"
+      }
+    },
+    {
+      "line": 525,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[6]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[1]",
+      "element_context": "DataDictionary/Alarms/Alarm",
+      "declaration": "element",
+      "attributes": {
+        "name": "ALCD",
+        "type": "xs:byte"
+      }
+    },
+    {
+      "line": 530,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[6]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[2]",
+      "element_context": "DataDictionary/Alarms/Alarm",
+      "declaration": "element",
+      "attributes": {
+        "name": "ALID",
+        "type": "xs:unsignedLong"
+      }
+    },
+    {
+      "line": 535,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[6]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[3]",
+      "element_context": "DataDictionary/Alarms/Alarm",
+      "declaration": "element",
+      "attributes": {
+        "name": "ALTX"
+      }
+    },
+    {
+      "line": 545,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[6]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[4]",
+      "element_context": "DataDictionary/Alarms/Alarm",
+      "declaration": "element",
+      "attributes": {
+        "name": "AlarmName",
+        "type": "xs:string"
+      }
+    },
+    {
+      "line": 550,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[6]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[5]",
+      "element_context": "DataDictionary/Alarms/Alarm",
+      "declaration": "element",
+      "attributes": {
+        "name": "SetEvent",
+        "type": "xs:unsignedLong",
+        "minOccurs": "0"
+      }
+    },
+    {
+      "line": 555,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[6]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[6]",
+      "element_context": "DataDictionary/Alarms/Alarm",
+      "declaration": "element",
+      "attributes": {
+        "name": "ClearEvent",
+        "type": "xs:unsignedLong",
+        "minOccurs": "0"
+      }
+    },
+    {
+      "line": 560,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[6]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[7]",
+      "element_context": "DataDictionary/Alarms/Alarm",
+      "declaration": "element",
+      "attributes": {
+        "name": "Description"
+      }
+    },
+    {
+      "line": 570,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[6]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[8]",
+      "element_context": "DataDictionary/Alarms/Alarm",
+      "declaration": "element",
+      "attributes": {
+        "name": "Source",
+        "minOccurs": "0"
+      }
+    },
+    {
+      "line": 580,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[6]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[9]",
+      "element_context": "DataDictionary/Alarms/Alarm",
+      "declaration": "element",
+      "attributes": {
+        "name": "SEMIStandard",
+        "type": "SEMIStandardType",
+        "minOccurs": "0"
+      }
+    },
+    {
+      "line": 585,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[6]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[10]",
+      "element_context": "DataDictionary/Alarms/Alarm",
+      "declaration": "element",
+      "attributes": {
+        "name": "WellKnownName",
+        "type": "xs:string",
+        "minOccurs": "0"
+      }
+    },
+    {
+      "line": 595,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[6]/xs:unique",
+      "element_context": "DataDictionary/Alarms",
+      "declaration": "unique",
+      "attributes": {
+        "name": "UniqueALID"
+      }
+    },
+    {
+      "line": 603,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[7]",
+      "element_context": "DataDictionary",
+      "declaration": "element",
+      "attributes": {
+        "name": "RecipeVariableParameters",
+        "maxOccurs": "unbounded"
+      }
+    },
+    {
+      "line": 609,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[7]/xs:complexType/xs:sequence/xs:element",
+      "element_context": "DataDictionary/RecipeVariableParameters",
+      "declaration": "element",
+      "attributes": {
+        "name": "RVP",
+        "minOccurs": "0",
+        "maxOccurs": "unbounded"
+      }
+    },
+    {
+      "line": 615,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[7]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[1]",
+      "element_context": "DataDictionary/RecipeVariableParameters/RVP",
+      "declaration": "element",
+      "attributes": {
+        "name": "RVPName"
+      }
+    },
+    {
+      "line": 625,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[7]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[2]",
+      "element_context": "DataDictionary/RecipeVariableParameters/RVP",
+      "declaration": "element",
+      "attributes": {
+        "name": "MinValue",
+        "type": "xs:string",
+        "minOccurs": "0"
+      }
+    },
+    {
+      "line": 630,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[7]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[3]",
+      "element_context": "DataDictionary/RecipeVariableParameters/RVP",
+      "declaration": "element",
+      "attributes": {
+        "name": "MaxValue",
+        "type": "xs:string",
+        "minOccurs": "0"
+      }
+    },
+    {
+      "line": 635,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[7]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[4]",
+      "element_context": "DataDictionary/RecipeVariableParameters/RVP",
+      "declaration": "element",
+      "attributes": {
+        "name": "Description"
+      }
+    },
+    {
+      "line": 645,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[7]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[5]",
+      "element_context": "DataDictionary/RecipeVariableParameters/RVP",
+      "declaration": "element",
+      "attributes": {
+        "name": "Source",
+        "minOccurs": "0"
+      }
+    },
+    {
+      "line": 655,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[7]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[6]",
+      "element_context": "DataDictionary/RecipeVariableParameters/RVP",
+      "declaration": "element",
+      "attributes": {
+        "name": "Format",
+        "maxOccurs": "unbounded"
+      }
+    },
+    {
+      "line": 665,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[7]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[7]",
+      "element_context": "DataDictionary/RecipeVariableParameters/RVP",
+      "declaration": "element",
+      "attributes": {
+        "name": "Units",
+        "type": "xs:string",
+        "minOccurs": "0",
+        "maxOccurs": "unbounded"
+      }
+    },
+    {
+      "line": 671,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[7]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:attribute",
+      "element_context": "DataDictionary/RecipeVariableParameters/RVP",
+      "declaration": "attribute",
+      "attributes": {
+        "name": "RVPNamePattern",
+        "type": "xs:boolean",
+        "use": "required"
+      }
+    },
+    {
+      "line": 679,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[7]/xs:complexType/xs:attribute",
+      "element_context": "DataDictionary/RecipeVariableParameters",
+      "declaration": "attribute",
+      "attributes": {
+        "name": "RecipeType",
+        "use": "required"
+      }
+    },
+    {
+      "line": 690,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[7]/xs:unique",
+      "element_context": "DataDictionary/RecipeVariableParameters",
+      "declaration": "unique",
+      "attributes": {
+        "name": "UniqueRVPName"
+      }
+    },
+    {
+      "line": 698,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[8]",
+      "element_context": "DataDictionary",
+      "declaration": "element",
+      "attributes": {
+        "name": "VariableFormats"
+      }
+    },
+    {
+      "line": 704,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[8]/xs:complexType/xs:sequence/xs:element",
+      "element_context": "DataDictionary/VariableFormats",
+      "declaration": "element",
+      "attributes": {
+        "name": "VariableFormat",
+        "minOccurs": "0",
+        "maxOccurs": "unbounded"
+      }
+    },
+    {
+      "line": 710,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[8]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[1]",
+      "element_context": "DataDictionary/VariableFormats/VariableFormat",
+      "declaration": "element",
+      "attributes": {
+        "name": "FormatName"
+      }
+    },
+    {
+      "line": 717,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[8]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[2]",
+      "element_context": "DataDictionary/VariableFormats/VariableFormat",
+      "declaration": "element",
+      "attributes": {
+        "name": "SECSData",
+        "type": "smn:DataItem"
+      }
+    },
+    {
+      "line": 727,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[8]/xs:unique",
+      "element_context": "DataDictionary/VariableFormats",
+      "declaration": "unique",
+      "attributes": {
+        "name": "UniqueVariableFormat"
+      }
+    },
+    {
+      "line": 735,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[9]",
+      "element_context": "DataDictionary",
+      "declaration": "element",
+      "attributes": {
+        "name": "SECSMessages",
+        "nillable": "true",
+        "minOccurs": "0"
+      }
+    },
+    {
+      "line": 747,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[9]/xs:complexType/xs:sequence/xs:element",
+      "element_context": "DataDictionary/SECSMessages",
+      "declaration": "element",
+      "attributes": {
+        "ref": "smn:SECSMessage",
+        "minOccurs": "0",
+        "maxOccurs": "unbounded"
+      }
+    },
+    {
+      "line": 759,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[10]",
+      "element_context": "DataDictionary",
+      "declaration": "element",
+      "attributes": {
+        "name": "RemoteCommands",
+        "nillable": "true",
+        "minOccurs": "0"
+      }
+    },
+    {
+      "line": 769,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[10]/xs:complexType/xs:sequence/xs:element",
+      "element_context": "DataDictionary/RemoteCommands",
+      "declaration": "element",
+      "attributes": {
+        "name": "RemoteCommand",
+        "minOccurs": "0",
+        "maxOccurs": "unbounded"
+      }
+    },
+    {
+      "line": 778,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[10]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[1]",
+      "element_context": "DataDictionary/RemoteCommands/RemoteCommand",
+      "declaration": "element",
+      "attributes": {
+        "name": "Name",
+        "type": "xs:string"
+      }
+    },
+    {
+      "line": 783,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[10]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[2]",
+      "element_context": "DataDictionary/RemoteCommands/RemoteCommand",
+      "declaration": "element",
+      "attributes": {
+        "name": "AssociatedParameters",
+        "minOccurs": "0",
+        "maxOccurs": "1"
+      }
+    },
+    {
+      "line": 789,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[10]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[2]/xs:complexType/xs:sequence/xs:element",
+      "element_context": "DataDictionary/RemoteCommands/RemoteCommand/AssociatedParameters",
+      "declaration": "element",
+      "attributes": {
+        "name": "Parameter",
+        "minOccurs": "1",
+        "maxOccurs": "1"
+      }
+    },
+    {
+      "line": 795,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[10]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[2]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[1]",
+      "element_context": "DataDictionary/RemoteCommands/RemoteCommand/AssociatedParameters/Parameter",
+      "declaration": "element",
+      "attributes": {
+        "name": "Name",
+        "type": "xs:string",
+        "minOccurs": "1",
+        "maxOccurs": "1"
+      }
+    },
+    {
+      "line": 800,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[10]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[2]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[2]",
+      "element_context": "DataDictionary/RemoteCommands/RemoteCommand/AssociatedParameters/Parameter",
+      "declaration": "element",
+      "attributes": {
+        "name": "ValueFormat",
+        "type": "smn:DataItem",
+        "minOccurs": "1",
+        "maxOccurs": "1"
+      }
+    },
+    {
+      "line": 805,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[10]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[2]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[3]",
+      "element_context": "DataDictionary/RemoteCommands/RemoteCommand/AssociatedParameters/Parameter",
+      "declaration": "element",
+      "attributes": {
+        "name": "Description",
+        "type": "xs:string"
+      }
+    },
+    {
+      "line": 811,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[10]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[2]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:attribute",
+      "element_context": "DataDictionary/RemoteCommands/RemoteCommand/AssociatedParameters/Parameter",
+      "declaration": "attribute",
+      "attributes": {
+        "name": "IsRequired"
+      }
+    },
+    {
+      "line": 840,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[10]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[3]",
+      "element_context": "DataDictionary/RemoteCommands/RemoteCommand",
+      "declaration": "element",
+      "attributes": {
+        "name": "ObjectSpecifier",
+        "minOccurs": "0",
+        "maxOccurs": "unbounded",
+        "type": "xs:string"
+      }
+    },
+    {
+      "line": 849,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[10]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[4]",
+      "element_context": "DataDictionary/RemoteCommands/RemoteCommand",
+      "declaration": "element",
+      "attributes": {
+        "name": "Documentation",
+        "type": "xs:string"
+      }
+    },
+    {
+      "line": 858,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[10]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:attribute[1]",
+      "element_context": "DataDictionary/RemoteCommands/RemoteCommand",
+      "declaration": "attribute",
+      "attributes": {
+        "name": "useS2F21",
+        "type": "xs:boolean",
+        "default": "false",
+        "use": "optional"
+      }
+    },
+    {
+      "line": 863,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[10]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:attribute[2]",
+      "element_context": "DataDictionary/RemoteCommands/RemoteCommand",
+      "declaration": "attribute",
+      "attributes": {
+        "name": "useS2F41",
+        "type": "xs:boolean",
+        "default": "false",
+        "use": "optional"
+      }
+    },
+    {
+      "line": 868,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[10]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:attribute[3]",
+      "element_context": "DataDictionary/RemoteCommands/RemoteCommand",
+      "declaration": "attribute",
+      "attributes": {
+        "name": "useS2F49",
+        "type": "xs:boolean",
+        "default": "false",
+        "use": "optional"
+      }
+    },
+    {
+      "line": 878,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[11]",
+      "element_context": "DataDictionary",
+      "declaration": "element",
+      "attributes": {
+        "name": "SEMIStandards",
+        "nillable": "true",
+        "minOccurs": "0"
+      }
+    },
+    {
+      "line": 886,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[11]/xs:complexType/xs:sequence/xs:element",
+      "element_context": "DataDictionary/SEMIStandards",
+      "declaration": "element",
+      "attributes": {
+        "name": "SupportedSEMIStandard",
+        "minOccurs": "0",
+        "maxOccurs": "unbounded"
+      }
+    },
+    {
+      "line": 894,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[11]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[1]",
+      "element_context": "DataDictionary/SEMIStandards/SupportedSEMIStandard",
+      "declaration": "element",
+      "attributes": {
+        "name": "SEMIStandardName",
+        "type": "xs:string"
+      }
+    },
+    {
+      "line": 901,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[11]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[2]",
+      "element_context": "DataDictionary/SEMIStandards/SupportedSEMIStandard",
+      "declaration": "element",
+      "attributes": {
+        "name": "SEMIStandard",
+        "type": "SEMIStandardType"
+      }
+    },
+    {
+      "line": 908,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[11]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[3]",
+      "element_context": "DataDictionary/SEMIStandards/SupportedSEMIStandard",
+      "declaration": "element",
+      "attributes": {
+        "name": "RequirementGroup",
+        "minOccurs": "0",
+        "maxOccurs": "unbounded"
+      }
+    },
+    {
+      "line": 917,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[11]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[3]/xs:complexType/xs:sequence/xs:element[1]",
+      "element_context": "DataDictionary/SEMIStandards/SupportedSEMIStandard/RequirementGroup",
+      "declaration": "element",
+      "attributes": {
+        "name": "Name",
+        "type": "xs:string",
+        "minOccurs": "0"
+      }
+    },
+    {
+      "line": 922,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[11]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[3]/xs:complexType/xs:sequence/xs:element[2]",
+      "element_context": "DataDictionary/SEMIStandards/SupportedSEMIStandard/RequirementGroup",
+      "declaration": "element",
+      "attributes": {
+        "name": "Requirement",
+        "minOccurs": "0",
+        "maxOccurs": "unbounded"
+      }
+    },
+    {
+      "line": 932,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[11]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[3]/xs:complexType/xs:sequence/xs:element[2]/xs:complexType/xs:sequence/xs:element[1]",
+      "element_context": "DataDictionary/SEMIStandards/SupportedSEMIStandard/RequirementGroup/Requirement",
+      "declaration": "element",
+      "attributes": {
+        "name": "Name",
+        "type": "xs:string",
+        "minOccurs": "0"
+      }
+    },
+    {
+      "line": 937,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[11]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[3]/xs:complexType/xs:sequence/xs:element[2]/xs:complexType/xs:sequence/xs:element[2]",
+      "element_context": "DataDictionary/SEMIStandards/SupportedSEMIStandard/RequirementGroup/Requirement",
+      "declaration": "element",
+      "attributes": {
+        "name": "Section",
+        "type": "xs:string",
+        "minOccurs": "0",
+        "maxOccurs": "unbounded"
+      }
+    },
+    {
+      "line": 942,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[11]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[3]/xs:complexType/xs:sequence/xs:element[2]/xs:complexType/xs:sequence/xs:element[3]",
+      "element_context": "DataDictionary/SEMIStandards/SupportedSEMIStandard/RequirementGroup/Requirement",
+      "declaration": "element",
+      "attributes": {
+        "name": "RequirementID",
+        "type": "xs:string",
+        "minOccurs": "0"
+      }
+    },
+    {
+      "line": 947,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[11]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[3]/xs:complexType/xs:sequence/xs:element[2]/xs:complexType/xs:sequence/xs:element[4]",
+      "element_context": "DataDictionary/SEMIStandards/SupportedSEMIStandard/RequirementGroup/Requirement",
+      "declaration": "element",
+      "attributes": {
+        "name": "ParentRequirementID",
+        "type": "xs:string",
+        "minOccurs": "0"
+      }
+    },
+    {
+      "line": 952,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[11]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[3]/xs:complexType/xs:sequence/xs:element[2]/xs:complexType/xs:sequence/xs:element[5]",
+      "element_context": "DataDictionary/SEMIStandards/SupportedSEMIStandard/RequirementGroup/Requirement",
+      "declaration": "element",
+      "attributes": {
+        "name": "Implemented",
+        "type": "xs:boolean",
+        "minOccurs": "0"
+      }
+    },
+    {
+      "line": 957,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[11]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[3]/xs:complexType/xs:sequence/xs:element[2]/xs:complexType/xs:sequence/xs:element[6]",
+      "element_context": "DataDictionary/SEMIStandards/SupportedSEMIStandard/RequirementGroup/Requirement",
+      "declaration": "element",
+      "attributes": {
+        "name": "Compliant",
+        "minOccurs": "0"
+      }
+    },
+    {
+      "line": 1001,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[11]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[3]/xs:complexType/xs:sequence/xs:element[2]/xs:complexType/xs:sequence/xs:element[7]",
+      "element_context": "DataDictionary/SEMIStandards/SupportedSEMIStandard/RequirementGroup/Requirement",
+      "declaration": "element",
+      "attributes": {
+        "name": "Note",
+        "type": "xs:string",
+        "minOccurs": "0",
+        "maxOccurs": "unbounded"
+      }
+    },
+    {
+      "line": 1012,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[11]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[4]",
+      "element_context": "DataDictionary/SEMIStandards/SupportedSEMIStandard",
+      "declaration": "element",
+      "attributes": {
+        "name": "Note",
+        "type": "xs:string",
+        "minOccurs": "0",
+        "maxOccurs": "unbounded"
+      }
+    },
+    {
+      "line": 1023,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[12]",
+      "element_context": "DataDictionary",
+      "declaration": "element",
+      "attributes": {
+        "name": "DefaultReportDefinitions",
+        "nillable": "true",
+        "minOccurs": "0"
+      }
+    },
+    {
+      "line": 1031,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[12]/xs:complexType/xs:sequence/xs:element[1]",
+      "element_context": "DataDictionary/DefaultReportDefinitions",
+      "declaration": "element",
+      "attributes": {
+        "name": "CanBeDeleted",
+        "type": "xs:boolean",
+        "minOccurs": "0",
+        "maxOccurs": "1"
+      }
+    },
+    {
+      "line": 1036,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[12]/xs:complexType/xs:sequence/xs:element[2]",
+      "element_context": "DataDictionary/DefaultReportDefinitions",
+      "declaration": "element",
+      "attributes": {
+        "name": "DefaultReportDefinition",
+        "minOccurs": "0",
+        "maxOccurs": "unbounded"
+      }
+    },
+    {
+      "line": 1045,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[12]/xs:complexType/xs:sequence/xs:element[2]/xs:complexType/xs:sequence/xs:element[1]",
+      "element_context": "DataDictionary/DefaultReportDefinitions/DefaultReportDefinition",
+      "declaration": "element",
+      "attributes": {
+        "name": "RPTID",
+        "type": "xs:unsignedLong"
+      }
+    },
+    {
+      "line": 1050,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[12]/xs:complexType/xs:sequence/xs:element[2]/xs:complexType/xs:sequence/xs:element[2]",
+      "element_context": "DataDictionary/DefaultReportDefinitions/DefaultReportDefinition",
+      "declaration": "element",
+      "attributes": {
+        "name": "DefaultReportName",
+        "type": "xs:string"
+      }
+    },
+    {
+      "line": 1055,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[12]/xs:complexType/xs:sequence/xs:element[2]/xs:complexType/xs:sequence/xs:element[3]",
+      "element_context": "DataDictionary/DefaultReportDefinitions/DefaultReportDefinition",
+      "declaration": "element",
+      "attributes": {
+        "name": "VIDList"
+      }
+    },
+    {
+      "line": 1061,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[12]/xs:complexType/xs:sequence/xs:element[2]/xs:complexType/xs:sequence/xs:element[3]/xs:complexType/xs:sequence/xs:element",
+      "element_context": "DataDictionary/DefaultReportDefinitions/DefaultReportDefinition/VIDList",
+      "declaration": "element",
+      "attributes": {
+        "name": "VID",
+        "type": "xs:unsignedLong",
+        "maxOccurs": "unbounded"
+      }
+    },
+    {
+      "line": 1069,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[12]/xs:complexType/xs:sequence/xs:element[2]/xs:complexType/xs:sequence/xs:element[4]",
+      "element_context": "DataDictionary/DefaultReportDefinitions/DefaultReportDefinition",
+      "declaration": "element",
+      "attributes": {
+        "name": "Description",
+        "type": "xs:string",
+        "minOccurs": "0"
+      }
+    },
+    {
+      "line": 1080,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[13]",
+      "element_context": "DataDictionary",
+      "declaration": "element",
+      "attributes": {
+        "name": "DefaultEventReportLinks",
+        "nillable": "true",
+        "minOccurs": "0"
+      }
+    },
+    {
+      "line": 1088,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[13]/xs:complexType/xs:sequence/xs:element[1]",
+      "element_context": "DataDictionary/DefaultEventReportLinks",
+      "declaration": "element",
+      "attributes": {
+        "name": "CanBeDeleted",
+        "type": "xs:boolean"
+      }
+    },
+    {
+      "line": 1097,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[13]/xs:complexType/xs:sequence/xs:element[2]",
+      "element_context": "DataDictionary/DefaultEventReportLinks",
+      "declaration": "element",
+      "attributes": {
+        "name": "EventReportLink",
+        "minOccurs": "0",
+        "maxOccurs": "unbounded"
+      }
+    },
+    {
+      "line": 1103,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[13]/xs:complexType/xs:sequence/xs:element[2]/xs:complexType/xs:sequence/xs:element[1]",
+      "element_context": "DataDictionary/DefaultEventReportLinks/EventReportLink",
+      "declaration": "element",
+      "attributes": {
+        "name": "CEID",
+        "type": "xs:unsignedLong"
+      }
+    },
+    {
+      "line": 1108,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[13]/xs:complexType/xs:sequence/xs:element[2]/xs:complexType/xs:sequence/xs:element[2]",
+      "element_context": "DataDictionary/DefaultEventReportLinks/EventReportLink",
+      "declaration": "element",
+      "attributes": {
+        "name": "RPTIDList"
+      }
+    },
+    {
+      "line": 1114,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[13]/xs:complexType/xs:sequence/xs:element[2]/xs:complexType/xs:sequence/xs:element[2]/xs:complexType/xs:sequence/xs:element",
+      "element_context": "DataDictionary/DefaultEventReportLinks/EventReportLink/RPTIDList",
+      "declaration": "element",
+      "attributes": {
+        "name": "RPTID",
+        "type": "xs:unsignedLong",
+        "maxOccurs": "unbounded"
+      }
+    },
+    {
+      "line": 1122,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[13]/xs:complexType/xs:sequence/xs:element[2]/xs:complexType/xs:sequence/xs:element[3]",
+      "element_context": "DataDictionary/DefaultEventReportLinks/EventReportLink",
+      "declaration": "element",
+      "attributes": {
+        "name": "Description",
+        "type": "xs:string",
+        "minOccurs": "0"
+      }
+    },
+    {
+      "line": 1133,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[14]",
+      "element_context": "DataDictionary",
+      "declaration": "element",
+      "attributes": {
+        "name": "EquipmentCharacterization",
+        "nillable": "true",
+        "minOccurs": "0"
+      }
+    },
+    {
+      "line": 1139,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[14]/xs:complexType/xs:sequence/xs:element[1]",
+      "element_context": "DataDictionary/EquipmentCharacterization",
+      "declaration": "element",
+      "attributes": {
+        "name": "SubstrateLocations",
+        "minOccurs": "0",
+        "maxOccurs": "1"
+      }
+    },
+    {
+      "line": 1145,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[14]/xs:complexType/xs:sequence/xs:element[1]/xs:complexType/xs:sequence/xs:element",
+      "element_context": "DataDictionary/EquipmentCharacterization/SubstrateLocations",
+      "declaration": "element",
+      "attributes": {
+        "name": "SubstrateLocation",
+        "minOccurs": "0",
+        "maxOccurs": "unbounded"
+      }
+    },
+    {
+      "line": 1151,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[14]/xs:complexType/xs:sequence/xs:element[1]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[1]",
+      "element_context": "DataDictionary/EquipmentCharacterization/SubstrateLocations/SubstrateLocation",
+      "declaration": "element",
+      "attributes": {
+        "name": "Instance",
+        "type": "xs:unsignedLong"
+      }
+    },
+    {
+      "line": 1156,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[14]/xs:complexType/xs:sequence/xs:element[1]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[2]",
+      "element_context": "DataDictionary/EquipmentCharacterization/SubstrateLocations/SubstrateLocation",
+      "declaration": "element",
+      "attributes": {
+        "name": "Name",
+        "type": "xs:string"
+      }
+    },
+    {
+      "line": 1167,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[14]/xs:complexType/xs:sequence/xs:element[2]",
+      "element_context": "DataDictionary/EquipmentCharacterization",
+      "declaration": "element",
+      "attributes": {
+        "name": "BatchLocations",
+        "minOccurs": "0",
+        "maxOccurs": "1"
+      }
+    },
+    {
+      "line": 1173,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[14]/xs:complexType/xs:sequence/xs:element[2]/xs:complexType/xs:sequence/xs:element",
+      "element_context": "DataDictionary/EquipmentCharacterization/BatchLocations",
+      "declaration": "element",
+      "attributes": {
+        "name": "BatchLocation",
+        "minOccurs": "0",
+        "maxOccurs": "unbounded"
+      }
+    },
+    {
+      "line": 1179,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[14]/xs:complexType/xs:sequence/xs:element[2]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[1]",
+      "element_context": "DataDictionary/EquipmentCharacterization/BatchLocations/BatchLocation",
+      "declaration": "element",
+      "attributes": {
+        "name": "Instance",
+        "type": "xs:unsignedLong"
+      }
+    },
+    {
+      "line": 1184,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[14]/xs:complexType/xs:sequence/xs:element[2]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[2]",
+      "element_context": "DataDictionary/EquipmentCharacterization/BatchLocations/BatchLocation",
+      "declaration": "element",
+      "attributes": {
+        "name": "Name",
+        "type": "xs:string"
+      }
+    },
+    {
+      "line": 1195,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[14]/xs:complexType/xs:sequence/xs:element[3]",
+      "element_context": "DataDictionary/EquipmentCharacterization",
+      "declaration": "element",
+      "attributes": {
+        "name": "EPTModules",
+        "minOccurs": "0",
+        "maxOccurs": "1"
+      }
+    },
+    {
+      "line": 1201,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[14]/xs:complexType/xs:sequence/xs:element[3]/xs:complexType/xs:sequence/xs:element",
+      "element_context": "DataDictionary/EquipmentCharacterization/EPTModules",
+      "declaration": "element",
+      "attributes": {
+        "name": "EPTModule",
+        "minOccurs": "0",
+        "maxOccurs": "unbounded"
+      }
+    },
+    {
+      "line": 1207,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[14]/xs:complexType/xs:sequence/xs:element[3]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[1]",
+      "element_context": "DataDictionary/EquipmentCharacterization/EPTModules/EPTModule",
+      "declaration": "element",
+      "attributes": {
+        "name": "Instance",
+        "type": "xs:unsignedLong"
+      }
+    },
+    {
+      "line": 1212,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[14]/xs:complexType/xs:sequence/xs:element[3]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[2]",
+      "element_context": "DataDictionary/EquipmentCharacterization/EPTModules/EPTModule",
+      "declaration": "element",
+      "attributes": {
+        "name": "Name",
+        "type": "xs:string"
+      }
+    },
+    {
+      "line": 1217,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[14]/xs:complexType/xs:sequence/xs:element[3]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[3]",
+      "element_context": "DataDictionary/EquipmentCharacterization/EPTModules/EPTModule",
+      "declaration": "element",
+      "attributes": {
+        "name": "ModuleType",
+        "type": "xs:string"
+      }
+    },
+    {
+      "line": 1228,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[14]/xs:complexType/xs:sequence/xs:element[4]",
+      "element_context": "DataDictionary/EquipmentCharacterization",
+      "declaration": "element",
+      "attributes": {
+        "name": "EquipmentModules",
+        "minOccurs": "0",
+        "maxOccurs": "1"
+      }
+    },
+    {
+      "line": 1234,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[14]/xs:complexType/xs:sequence/xs:element[4]/xs:complexType/xs:sequence/xs:element",
+      "element_context": "DataDictionary/EquipmentCharacterization/EquipmentModules",
+      "declaration": "element",
+      "attributes": {
+        "name": "EquipmentModule",
+        "minOccurs": "0",
+        "maxOccurs": "unbounded"
+      }
+    },
+    {
+      "line": 1240,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[14]/xs:complexType/xs:sequence/xs:element[4]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[1]",
+      "element_context": "DataDictionary/EquipmentCharacterization/EquipmentModules/EquipmentModule",
+      "declaration": "element",
+      "attributes": {
+        "name": "Instance",
+        "type": "xs:unsignedLong"
+      }
+    },
+    {
+      "line": 1245,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[14]/xs:complexType/xs:sequence/xs:element[4]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[2]",
+      "element_context": "DataDictionary/EquipmentCharacterization/EquipmentModules/EquipmentModule",
+      "declaration": "element",
+      "attributes": {
+        "name": "Name",
+        "type": "xs:string"
+      }
+    },
+    {
+      "line": 1256,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[14]/xs:complexType/xs:sequence/xs:element[5]",
+      "element_context": "DataDictionary/EquipmentCharacterization",
+      "declaration": "element",
+      "attributes": {
+        "name": "Loadports",
+        "minOccurs": "0",
+        "maxOccurs": "1"
+      }
+    },
+    {
+      "line": 1262,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[14]/xs:complexType/xs:sequence/xs:element[5]/xs:complexType/xs:sequence/xs:element",
+      "element_context": "DataDictionary/EquipmentCharacterization/Loadports",
+      "declaration": "element",
+      "attributes": {
+        "name": "Loadport",
+        "minOccurs": "0",
+        "maxOccurs": "unbounded"
+      }
+    },
+    {
+      "line": 1268,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[14]/xs:complexType/xs:sequence/xs:element[5]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[1]",
+      "element_context": "DataDictionary/EquipmentCharacterization/Loadports/Loadport",
+      "declaration": "element",
+      "attributes": {
+        "name": "Instance",
+        "type": "xs:unsignedLong"
+      }
+    },
+    {
+      "line": 1273,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[14]/xs:complexType/xs:sequence/xs:element[5]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[2]",
+      "element_context": "DataDictionary/EquipmentCharacterization/Loadports/Loadport",
+      "declaration": "element",
+      "attributes": {
+        "name": "LoadUnloadLocation",
+        "type": "xs:string"
+      }
+    },
+    {
+      "line": 1278,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[14]/xs:complexType/xs:sequence/xs:element[5]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[3]",
+      "element_context": "DataDictionary/EquipmentCharacterization/Loadports/Loadport",
+      "declaration": "element",
+      "attributes": {
+        "name": "DockOpenLocation",
+        "type": "xs:string"
+      }
+    },
+    {
+      "line": 1294,
+      "schema_xpath": "/xs:schema/xs:element/xs:unique[1]",
+      "element_context": "DataDictionary",
+      "declaration": "unique",
+      "attributes": {
+        "name": "UniqueRecipeType"
+      }
+    },
+    {
+      "line": 1301,
+      "schema_xpath": "/xs:schema/xs:element/xs:unique[2]",
+      "element_context": "DataDictionary",
+      "declaration": "unique",
+      "attributes": {
+        "name": "UniqueVariableID"
+      }
+    },
+    {
+      "line": 1308,
+      "schema_xpath": "/xs:schema/xs:element/xs:keyref[1]",
+      "element_context": "DataDictionary",
+      "declaration": "keyref",
+      "attributes": {
+        "name": "SVFormatKeyRef",
+        "refer": "VariableFormatKey"
+      }
+    },
+    {
+      "line": 1315,
+      "schema_xpath": "/xs:schema/xs:element/xs:keyref[2]",
+      "element_context": "DataDictionary",
+      "declaration": "keyref",
+      "attributes": {
+        "name": "DVFormatKeyRef",
+        "refer": "VariableFormatKey"
+      }
+    },
+    {
+      "line": 1322,
+      "schema_xpath": "/xs:schema/xs:element/xs:keyref[3]",
+      "element_context": "DataDictionary",
+      "declaration": "keyref",
+      "attributes": {
+        "name": "ECVFormatKeyRef",
+        "refer": "VariableFormatKey"
+      }
+    },
+    {
+      "line": 1329,
+      "schema_xpath": "/xs:schema/xs:element/xs:key",
+      "element_context": "DataDictionary",
+      "declaration": "key",
+      "attributes": {
+        "name": "VariableFormatKey"
+      }
+    }
+  ]
+}

@@ -1,158 +1,242 @@
-# E172-0225 observations and fixture strategy
+# E172-0225 engineering observations and fixture strategy
 
-**OBSERVED — Status: reference analysis blocked; Prompt 2 is not complete.**
-The source index is accessible, but the developer XSD and TrackSys Model 404 XML
-bytes have not been retrieved. This document deliberately contains no claimed
-schema observations. All canonical mappings are explicitly pending.
+**OBSERVED — Status: schema analyzed; sample and imported message schema pending.**
+This is a schema-only checkpoint of Prompt 2. No runtime parser or adapter was
+implemented. Findings below derive from XML declarations, not copied standards prose.
 
-## Evidence register
+## Reference evidence
 
-**OBSERVED O01 — Public sources.** On 2026-09-18, the
-[SEMI XML files index](https://dom.semi.org/web/wstandards.nsf/schema) listed both
-an E172-0225 complementary schema and a TrackSys Model 404 sample under E172-0225.
-Listing labels establish availability, not document contents or compatibility.
+**OBSERVED X00 — Source received.** The user supplied `E172-0225-SEDD-Schema.xsd`
+on 2026-09-18 (92,338 bytes), SHA-256
+`23678aef0204ffbb654403077895be8db9f48b00c7a30934589c259c74f09810`.
+Original bytes are preserved locally in ignored `work/references/`. The
+[public schema URL](https://dom.semi.org/web/wstandards.nsf/37F6244E9929719388258C4400652DC9/$file/E172-0225-SEDD-Schema.xsd)
+is its previously discovered source; this hash identifies the received file,
+not an independently authenticated SEMI release. `e172_schema_inventory.json`
+records declaration paths, attributes and original source lines without annotations.
+Line references below refer to the original received file.
 
-**OBSERVED O02 — Retrieval result.** Direct HTTPS requests to `dom.semi.org` and
-`downloads.semi.org` returned HTTP 403 browser-challenge HTML. The browser rendered
-the index, but its download actions did not yield inspectable local files in this
-session. The web reader also could not expose either file's content. No source
-hash, schema validation result, or sample counts can be reported.
+**OBSERVED X00b — Missing sources.** The TrackSys sample was not supplied or found
+among matching XML files in Downloads. The schema imports
+`E173-0415-SECSIIMessageNotation-Schema.xsd` at line 32; this dependency is also
+absent. Offline schema compilation failed because `smn:DataItem` cannot be resolved
+(line 717). No stub schema or network resolver was substituted. Full validation
+has NOT succeeded, even for fixtures which omit imported content.
 
-**OBSERVED O03 — Exact references.**
+## Namespace and top-level structure
 
-- [Developer schema](https://dom.semi.org/web/wstandards.nsf/37F6244E9929719388258C4400652DC9/$file/E172-0225-SEDD-Schema.xsd)
-- [TrackSys Model 404 sample](https://dom.semi.org/web/wstandards.nsf/3F009B878C57ABB388258C44006550D6/$file/SEDD_TrackSys_Model404_0225.xml)
+**OBSERVED X01 — Namespace (line 2).** The target namespace is
+`urn:semi-org:xsd.SEDD`; the schema declares `xs` for XML Schema and `smn` for
+`urn:semi-org:xsd.SMN`. It does not set `elementFormDefault` or
+`attributeFormDefault`, and contains no local `form` overrides. Thus the global
+`DataDictionary` root is qualified, while local SEDD children/attributes are
+unqualified under XSD defaults. Prefix spelling is not identity. A default SEDD
+namespace applied to all descendants does not match these local declarations.
+Imported `smn:SECSMessage` is a global element reference and retains its namespace.
 
-**OBSERVED O04 — Local scope.** The current repository has no revision adapter,
-XML loader, canonical model, or third-party reference files. The master contract
-names the desired canonical concepts; it is not evidence of E172 element names.
-The searched workspace and attachment directories yielded no matching references.
+**OBSERVED X02 — Ordered root sequence (lines 33–1293).** These children are
+listed in schema sequence order; multiplicities are derived from declarations:
 
-## Engineering observation ledger
-
-Every row below is **ASSUMPTION**, meaning an unresolved engineering question,
-not a conclusion about E172. Status **PENDING** blocks use as parser behavior.
-Evidence must include exact XSD declaration paths and sample paths where present.
-Absence from one sample cannot establish that a schema feature is unsupported.
-
-| ID | Label | Topic | Status | Evidence still required |
-| --- | --- | --- | --- | --- |
-| A01 | ASSUMPTION | Namespace structure | PENDING | Target namespace, qualification defaults, QName use, imports/includes; do not infer namespace from prefixes or filenames. |
-| A02 | ASSUMPTION | Top-level structure | PENDING | Root declaration, containers, compositor rules and multiplicities; no invented SEDD root. |
-| A03 | ASSUMPTION | Revision metadata | PENDING | Actual revision fields and sample values, schema versus equipment/software revision, conflicting/missing signals. Filename is not an adapter-selection rule. |
-| A04 | ASSUMPTION | Entity types | PENDING | Declarations for each canonical category; schema alternatives and sample presence recorded separately. |
-| A05 | ASSUMPTION | Identifiers | PENDING | Lexical types, key/unique constraints and scope, leading-zero rules; do not coerce identifiers to integers speculatively. |
-| A06 | ASSUMPTION | References | PENDING | Reference fields, keyrefs/IDREFs if any, target scope, missing and ambiguous targets. |
-| A07 | ASSUMPTION | Relationship patterns | PENDING | Direct event-variable, event-report, report-variable, alarm-event, command-parameter and standard/WKN/format relationships. Do not conflate direct edges with graph reachability. |
-| A08 | ASSUMPTION | Optionality | PENDING | minOccurs/maxOccurs, attribute use, defaults, nillable and choices, inherited constraints; missing, empty, nil and defaulted values remain distinct until policy is established. |
-| A09 | ASSUMPTION | WKN representation | PENDING | Element/attribute shape, scope, namespace, vocabulary authority and collision behavior. A fictional fixture WKN is never an official WKN. |
-| A10 | ASSUMPTION | Supported messages | PENDING | Stream/function fields, ranges, direction, metadata and structure grammar; stream/function alone may not capture all distinctions. |
-| A11 | ASSUMPTION | Default reports | PENDING | Report identity, member reference syntax, ordering and event-link representation. |
-| A12 | ASSUMPTION | Alarms | PENDING | Alarm identity, set/clear event references, optionality and unresolved target representation. |
-| A13 | ASSUMPTION | Remote commands | PENDING | Command identity, parameter ownership, optionality, constraints, format and name scope. |
-| A14 | ASSUMPTION | Variable formats | PENDING | Inline/named formats, nesting, data types, allowed values, units, ranges and defaults; distinguish lexical XSD types from interface types. |
-| A15 | ASSUMPTION | Descriptions and provenance | PENDING | Description shape/mixed content/language; source paths and lines; equipment revision versus schema revision. |
-| A16 | ASSUMPTION | Standards metadata | PENDING | Standard identity/revision fields and entity-standard association syntax. |
-| A17 | ASSUMPTION | Unknown extensions | PENDING | Wildcards or extension points, foreign namespace handling, preservation boundaries. Unknown is not automatically schema-valid. |
-| A18 | ASSUMPTION | Ordering and whitespace | PENDING | Identify unordered collections versus meaningful sequences and text; never sort message structures or strip every space. |
-
-## Original synthetic fixtures
-
-**OBSERVED O05 — Fixture scope.** `tests/fixtures/manifest.json` inventories the
-original fixtures. None is claimed to be E172-valid. JSON scenario plans describe
-fictional test data and are labeled `ASSUMPTION` / `PENDING`; they are neither
-canonical-model serialization nor SEDD wire format. XML mechanics probes use a
-project-owned fixture namespace or deliberately generic XML. A future E172 adapter
-must never accept this namespace as an alias for a SEMI namespace.
-
-**OBSERVED O06 — Directory responsibilities.**
-
-| Directory | Available material | Still pending |
+| Child | Occurrences | Source line |
 | --- | --- | --- |
-| minimal | Small neutral XML probe and equipment scenario plan | Smallest XSD-valid E172 document with required metadata |
-| relationships | Original variable, event/report/alarm, command/message and extension scenario plans | Actual E172 XML encodings and expected resolved/unresolved relationships |
-| malformed | Truncated XML, duplicate attribute, undeclared prefix, external entity/DTD, bounded entity expansion, namespace impostor and escaped report markup | Loader assertions and E172 semantic-invalid examples |
-| changes | Prefix/attribute-order/indentation pair, significant-text pair and semantic-change scenario plan | E172 before/after pairs and canonical comparison assertions |
+| SEDDHeader | 1 | 39 |
+| CollectionEvents | 1 | 103 |
+| DataVariables | 1 | 259 |
+| StatusVariables | 1 | 342 |
+| EquipmentConstants | 1 | 425 |
+| Alarms | 1 | 513 |
+| RecipeVariableParameters | 1..many; RecipeType attribute required | 603, 679 |
+| VariableFormats | 1 | 698 |
+| SECSMessages | 0..1, nillable | 735 |
+| RemoteCommands | 0..1, nillable | 759 |
+| SEMIStandards | 0..1, nillable | 878 |
+| DefaultReportDefinitions | 0..1, nillable | 1023 |
+| DefaultEventReportLinks | 0..1, nillable | 1080 |
+| EquipmentCharacterization | 0..1, nillable | 1133 |
 
-**OBSERVED O07 — Scope of checks.** Current tests check inventory integrity,
-contract concept coverage, local XML mechanics and preservation of significant
-text in the probes. They do not test an E172 parser or claim XXE protection in
-application code. DTD probes are inspected as bytes and never expanded by these
-tests. Their external addresses are inert fictional test targets, never fetched.
-The escaped script payload is text and is never rendered or executed.
+**OBSERVED X02b — Header and empty containers.** Header children are MDLN,
+SOFTREV, optional EquipmentID, Supplier, CreateDate and Description, in that order
+(lines 45–90). CreateDate is an XSD date. MDLN/SOFTREV are strings up to 20
+characters; Supplier is up to 80 and Description up to 4096. Required inventory
+containers permit zero entity children. An empty RecipeVariableParameters still
+needs RecipeType. Representing this section as metadata does not authorize recipe
+management functionality; it remains outside the product's operational scope.
 
-**ASSUMPTION A19 — Future fixture promotion, PENDING.** Once both sources are
-available, create original minimal and relationship XML against verified
-namespace/declarations. Validate against a pinned local schema with network and
-entity resolution disabled. Inspect schema imports before loading; obtain any
-required dependencies explicitly. Record schema-validation outcome separately
-from expected adapter semantics. Confirm the reference sample's own validity;
-report discrepancies without repairing or treating the sample as normative.
+**OBSERVED X03 — Revision metadata.** No dedicated root revision attribute or
+schema `version` attribute is declared. SOFTREV occurs in the equipment header.
+The filename supplies an external revision label, not an in-document revision
+selector. The supplied XSD alone does not establish reliable adapter detection.
 
-**ASSUMPTION A20 — Future security/resource checks, PENDING.** A later secure-loader
-increment must prove zero network/file resolution for DTD/entity fixtures and
-exercise depth/size boundaries with generated bounded inputs. Numeric resource
-limits have not been selected here. Namespace and HTML cases are well-formed
-adversarial inputs, not necessarily XML syntax errors.
+**ASSUMPTION A01 — Revision detection, PENDING.** Inspect the TrackSys root and
+metadata before choosing revision signals; do not treat SOFTREV, a prefix, a
+filename or a schemaLocation URL as conclusive revision evidence.
+
+## Entities, identity and references
+
+**OBSERVED X04 — Variable identities (lines 259–512, 1301–1307).** DataVariable
+uses VID/DVVALNAME; StatusVariable uses SVID/SVNAME; EquipmentConstant uses
+ECID/ECNAME. The identifiers are `xs:unsignedLong`. `UniqueVariableID` spans all
+three categories, selecting VID, SVID or ECID. The earlier plan's reused 701 IDs
+are therefore an adversarial collision case, not a valid baseline. The declared
+constraint concerns XSD numeric values; source lexical spelling can still be
+retained for provenance. This alone does not decide cross-version match policy.
+
+**OBSERVED X04b — Scalar properties.** DV/SV have required Format and Description,
+optional MinValue/MaxValue, and zero or more UNITS. EC has optional ECMIN, ECMAX,
+ECDEF, zero or more UNITS, and required Format/Description. Range/default values
+are strings in this XSD. Do not infer their interface data types from XSD string.
+
+**OBSERVED X05 — Enforced links and scope (lines 1294–1333).** The XSD declares
+variable Format keyrefs to VariableFormat/FormatName. It also declares uniqueness
+for CEID, ALID, FormatName, RecipeType and RVPName in their respective scopes.
+It has no declared keyref for event VID, alarm SetEvent/ClearEvent, or report/link
+identifiers. Those fields' existence does not prove target resolution. Dangling
+and ambiguous targets need explicit canonical handling in a later increment.
+
+**OBSERVED X06 — Events (lines 103–257).** CollectionEvent contains CEID, CENAME,
+optional VALIDDVS, optional RelevantVariables, optional StateTransition, required
+Description, then optional Source, SEMIStandard and WellKnownName. Both variable
+containers contain zero or more numeric VID values with an optional name
+attribute. StateTransition has StateModel, TransitionID, PreviousState and NewState
+strings. These are two distinct variable lists; merging their meanings loses data.
+
+**ASSUMPTION A02 — Event reference semantics, PENDING.** The field structures are
+observed, but target-kind restrictions, direct relationship labels and the sample's
+actual usage must be reviewed. Do not synthesize a state-machine entity or an edge
+from descriptive text. Report traversal is distinct from an explicit event VID.
+
+**OBSERVED X07 — Alarms (lines 513–601).** Alarm declares ALCD as xs:byte, ALID as
+xs:unsignedLong, ALTX up to 120 characters, AlarmName, optional numeric SetEvent
+and ClearEvent, Description, and optional Source/SEMIStandard/WellKnownName.
+Set/clear fields must remain distinct; the synthetic candidate uses two CEIDs.
+
+## Commands, formats, messages, reports and metadata
+
+**OBSERVED X08 — Remote commands (lines 759–876).** RemoteCommand contains Name,
+optional AssociatedParameters, repeated optional ObjectSpecifier, and required
+Documentation. Optional useS2F21/useS2F41/useS2F49 booleans each declare a false
+default. AssociatedParameters contains exactly one Parameter in the received XSD,
+not an unbounded list. Parameter has Name, ValueFormat of `smn:DataItem`, and
+Description. Optional IsRequired has Yes/No/Conditional values, not xs:boolean.
+
+**ASSUMPTION A03 — Parameter multiplicity, PENDING.** The exactly-one declaration
+must be compared with the sample and any authoritative erratum. Do not silently
+repair it to many parameters. Conditional requiredness is not equivalent to false.
+
+**OBSERVED X09 — Variable formats (lines 698–733, 1308–1333).** VariableFormat has
+FormatName (up to 80 characters) and SECSData typed as imported `smn:DataItem`.
+Variable Format fields refer to FormatName through explicit keyrefs. Imported
+list/primitive structure is not defined by the supplied file and remains pending.
+
+**OBSERVED X10 — Messages (lines 735–757).** SECSMessages contains zero or more
+references to imported `smn:SECSMessage`. This file does not define that element's
+stream/function fields, direction or structure grammar. None has been invented
+for fixtures. The missing E173 file is required to inspect those declarations.
+
+**OBSERVED X11 — Reports and event/report links (lines 1023–1131).** A
+DefaultReportDefinition requires RPTID, DefaultReportName and VIDList containing
+one or more VID values; Description is optional. Its container's CanBeDeleted is
+optional. DefaultEventReportLinks instead requires CanBeDeleted when non-nil;
+EventReportLink has CEID, RPTIDList with one or more RPTID, and optional Description.
+No report or link keyrefs occur in this XSD. Repeated member order is retained.
+
+**ASSUMPTION A04 — Sequence semantics, PENDING.** XML schema sequence order is not
+the same question as canonical semantic ordering. Do not sort report members or
+message structures, or erase significant text, without evidence. Attribute order,
+prefix spelling and indentation-only changes have separate mechanics probes.
+
+**OBSERVED X12 — WKN and standards (lines 103–601, 878–1021, 1334 onward).**
+WellKnownName is an optional string on events, DV, SV, EC and alarms. Their
+SEMIStandard is an optional SEMIStandardType string. The named type is a plain
+string restriction; it does not embed an official WKN registry. SupportedSEMIStandard
+contains SEMIStandardName and SEMIStandard, optional requirement groups and notes.
+Requirement metadata includes declared fields such as Section, RequirementID,
+ParentRequirementID and Implemented. Store interface metadata without converting
+it into product compliance certification or gating behavior.
+
+**ASSUMPTION A05 — Identity authority, PENDING.** A matching string is not proof
+that a WKN is official or globally unique. Establish vocabulary and scope evidence
+before assigning WELL_KNOWN_NAME matches. Synthetic labels claim no SEMI status.
+
+**OBSERVED X13 — Descriptions and provenance.** Description, Documentation and
+Source occur as separate text fields. Source is not a substitute for input-file,
+XML-path or source-line provenance. The schema inspection records original line
+numbers and declaration paths. Runtime provenance preservation is still pending.
+
+**OBSERVED X14 — Unknown content.** No xs:any or xs:anyAttribute wildcard appears
+in this supplied XSD. EquipmentCharacterization explicitly names SubstrateLocations,
+BatchLocations, EPTModules, EquipmentModules and Loadports. Arbitrary foreign
+extensions are not automatically schema-valid. Their preservation as unsupported
+content is a canonical design question, separate from schema validity.
+
+**ASSUMPTION A06 — Unknown preservation, PENDING.** Decide how the future adapter
+retains unsupported declared sections and schema-invalid extensions without
+silently discarding them or presenting them as understood entities.
+
+## Fixture strategy and current checks
+
+**OBSERVED X15 — Original fixtures.** Four additional candidate XML files now use
+the observed root QName, unqualified children and declaration order:
+
+| Fixture | Purpose | Validation status |
+| --- | --- | --- |
+| minimal/e172-empty.xml | Required header and empty required containers | PENDING imported schema |
+| relationships/e172-event-alarm-report.xml | Two events, distinct alarm links, parameterless command, standards metadata, report and event/report link; variable 799 intentionally unresolved | PENDING imported schema |
+| changes/e172-alarm-link-after.xml | Same candidate with only ClearEvent changed from 802 to 801 | PENDING imported schema |
+| malformed/e172-qualified-children.xml | Deliberately qualified local children; expected schema rejection | PENDING imported schema |
+
+**OBSERVED X15b — Existing groundwork.** Original JSON plans remain explicitly
+ASSUMPTION/PENDING. They are neither canonical serialization nor E172 XML. The
+neutral XML probes retain their fixture-only namespace. DTD/entity payloads are
+bounded and never expanded in inventory tests. HTML/script-like text is never
+executed. Depth/size limits and actual loader security tests await the loader.
+
+**OBSERVED X16 — Verification boundary.** Tests verify manifest completeness,
+contract concept accounting, candidate QNames and declared structural examples,
+and the single-change pair. They do not prove full XSD validity, E172 conformity,
+reference resolution, parser security or canonical comparison behavior. Original
+reference files remain outside version control; no standards prose is reproduced.
 
 ## Canonical concept to fixture coverage matrix
 
-**OBSERVED O08 — Coverage accounting.** Every master-contract concept is listed
-below and in the machine-readable manifest. `PENDING` means no E172 evidence was
-obtained; scenario coverage does not remove that evidence gap.
+**OBSERVED X17 — Accounting.** Evidence status refers only to inspected schema
+structure. Every concept has a source observation or an explicit PENDING entry.
+Sample review and complete-schema validation remain pending for every row.
 
-| Canonical concept | Classification | Evidence status | Original scenario coverage |
-| --- | --- | --- | --- |
-| Equipment metadata | ASSUMPTION | PENDING | `minimal/equipment-plan.json`; `changes/semantic-plan.json` |
-| Status Variables | ASSUMPTION | PENDING | `relationships/variables-plan.json`; `changes/semantic-plan.json` |
-| Data Variables | ASSUMPTION | PENDING | `relationships/variables-plan.json`; `changes/semantic-plan.json` |
-| Equipment Constants | ASSUMPTION | PENDING | `relationships/variables-plan.json`; `changes/semantic-plan.json` |
-| Collection Events | ASSUMPTION | PENDING | `relationships/links-plan.json`; `changes/semantic-plan.json` |
-| Alarms | ASSUMPTION | PENDING | `relationships/links-plan.json`; `changes/semantic-plan.json` |
-| Remote Commands | ASSUMPTION | PENDING | `relationships/commands-messages-plan.json`; `changes/semantic-plan.json` |
-| Remote Command Parameters | ASSUMPTION | PENDING | `relationships/commands-messages-plan.json`; `changes/semantic-plan.json` |
-| Supported SECS Messages | ASSUMPTION | PENDING | `relationships/commands-messages-plan.json`; `changes/semantic-plan.json` |
-| Variable Formats | ASSUMPTION | PENDING | `relationships/variables-plan.json`; `changes/semantic-plan.json` |
-| Default Reports | ASSUMPTION | PENDING | `relationships/links-plan.json`; `changes/semantic-plan.json` |
-| Event/Report Links | ASSUMPTION | PENDING | `relationships/links-plan.json`; `changes/semantic-plan.json` |
-| SEMI Standards metadata | ASSUMPTION | PENDING | `minimal/equipment-plan.json`; `changes/semantic-plan.json` |
-| Well-Known Names | ASSUMPTION | PENDING | `relationships/variables-plan.json`; `changes/semantic-plan.json` |
-| descriptions | ASSUMPTION | PENDING | `minimal/equipment-plan.json`; `changes/semantic-plan.json` |
-| provenance | ASSUMPTION | PENDING | `minimal/equipment-plan.json`, `relationships/extensions-plan.json`; `changes/semantic-plan.json` |
-| unresolved references | ASSUMPTION | PENDING | `relationships/links-plan.json`; `changes/semantic-plan.json` |
-| unknown extensions | ASSUMPTION | PENDING | `relationships/extensions-plan.json`; `changes/semantic-plan.json` |
+| Canonical concept | Label | Status | Evidence | Fixtures / plans |
+| --- | --- | --- | --- | --- |
+| Equipment metadata | OBSERVED | OBSERVED | X02 | `minimal/equipment-plan.json`, `minimal/e172-empty.xml` |
+| Status Variables | ASSUMPTION | PENDING | X04 | `relationships/variables-plan.json` |
+| Data Variables | ASSUMPTION | PENDING | X04 | `relationships/variables-plan.json` |
+| Equipment Constants | ASSUMPTION | PENDING | X04 | `relationships/variables-plan.json` |
+| Collection Events | OBSERVED | OBSERVED | X06 | `relationships/links-plan.json`, `relationships/e172-event-alarm-report.xml` |
+| Alarms | OBSERVED | OBSERVED | X07 | `relationships/links-plan.json`, `relationships/e172-event-alarm-report.xml` |
+| Remote Commands | OBSERVED | OBSERVED | X08 | `relationships/commands-messages-plan.json`, `relationships/e172-event-alarm-report.xml` |
+| Remote Command Parameters | ASSUMPTION | PENDING | X08 | `relationships/commands-messages-plan.json` |
+| Supported SECS Messages | ASSUMPTION | PENDING | X10 | `relationships/commands-messages-plan.json` |
+| Variable Formats | ASSUMPTION | PENDING | X09 | `relationships/variables-plan.json` |
+| Default Reports | OBSERVED | OBSERVED | X11 | `relationships/links-plan.json`, `relationships/e172-event-alarm-report.xml` |
+| Event/Report Links | OBSERVED | OBSERVED | X11 | `relationships/links-plan.json`, `relationships/e172-event-alarm-report.xml` |
+| SEMI Standards metadata | OBSERVED | OBSERVED | X12 | `minimal/equipment-plan.json`, `relationships/e172-event-alarm-report.xml` |
+| Well-Known Names | ASSUMPTION | PENDING | X12 | `relationships/variables-plan.json` |
+| descriptions | OBSERVED | OBSERVED | X13 | `minimal/equipment-plan.json`, `minimal/e172-empty.xml` |
+| provenance | ASSUMPTION | PENDING | X13 | `minimal/equipment-plan.json`, `relationships/extensions-plan.json` |
+| unresolved references | OBSERVED | OBSERVED | X05 | `relationships/links-plan.json`, `relationships/e172-event-alarm-report.xml` |
+| unknown extensions | ASSUMPTION | PENDING | X14 | `relationships/extensions-plan.json` |
 
-## Relationship evidence checklist
+## Relationship evidence and remaining work
 
-**ASSUMPTION A21 — All mappings below are PENDING.** These are requested product
-relationships, not discovered schema relationships.
+**OBSERVED X18 — Available structural evidence.** Event variable lists and
+state-transition fields: X06. Report-to-variable and event-to-report identifiers:
+X11. Alarm set/clear identifiers: X07. Command parameter containment: X08.
+Entity WKN/standard fields: X12. Variable-to-format keyrefs: X09.
+Supported message wrapper/import: X10. All eleven requested patterns are accounted
+for; identifier resolution policy and imported structures remain pending.
 
-| Requested relationship | Scenario | Evidence status |
-| --- | --- | --- |
-| Collection Event → variables | links-plan | PENDING |
-| Collection Event → state-transition metadata | links-plan | PENDING |
-| Default Report → variables | links-plan | PENDING |
-| Collection Event → default report | links-plan | PENDING |
-| Alarm → set event | links-plan | PENDING |
-| Alarm → clear event | links-plan | PENDING |
-| Remote Command → parameters | commands-messages-plan | PENDING |
-| Entity → WKN | variables-plan | PENDING |
-| Entity → standard | equipment-plan | PENDING |
-| Variable → format | variables-plan | PENDING |
-| Supported Message → structure/metadata | commands-messages-plan | PENDING |
-
-## Resuming the analysis
-
-**ASSUMPTION A22 — Completion procedure, PENDING.** Supply the two reference files
-in `work/references/` or attach them. Record original filename, exact source URL,
-retrieval date, byte length and SHA-256 before analysis. Preserve original bytes.
-Replace each pending question with independently written `OBSERVED` findings
-linked to exact source paths/lines; preserve genuine unresolved questions as
-`ASSUMPTION`. Build the E172 fixture variants only from supported declarations.
-Update the coverage manifest with evidence IDs and validate every claimed mapping.
-Do not advance adapter implementation on unresolved assumptions.
-
-**OBSERVED O09 — Publication boundary.** No standards prose or reference document
-content is copied into this repository. Only the public source links, retrieval
-observations, original engineering questions and original synthetic test material
-are recorded. Prompt 2 requires further work when the reference bytes arrive.
+**ASSUMPTION A07 — Completion, PENDING.** Supply the TrackSys Model 404 XML and
+`E173-0415-SECSIIMessageNotation-Schema.xsd` (with any further imports it declares).
+Hash and inspect them, compile the unmodified local schema set without network
+access, report sample/schema inconsistencies, then add format/parameter/message
+fixtures and independent one-change variants. Promote fixture validation status
+only after running that complete schema; preserve unsupported concepts as pending.
+No schema stubs or guessed tag mappings may stand in for missing source evidence.

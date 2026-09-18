@@ -51,6 +51,7 @@ SEMI endorsement or certification.
 ## Reference analysis status
 
 Prompt 2 has an [evidence ledger and fixture coverage matrix](docs/e172_observations.md).
-Reference file retrieval is blocked; every E172 mapping is explicitly pending.
+The supplied E172 schema has been analyzed; the TrackSys sample and imported E173
+message schema remain pending. Full XSD validation has not yet run.
 Original XML mechanics probes and JSON scenario plans are available in
 `tests/fixtures/`; these do not imply E172 parsing support.

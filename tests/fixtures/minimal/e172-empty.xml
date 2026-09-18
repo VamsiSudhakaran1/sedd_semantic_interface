@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='utf-8'?>
+<sedd:DataDictionary xmlns:sedd="urn:semi-org:xsd.SEDD">
+  <SEDDHeader>
+    <MDLN>Lantern17</MDLN>
+    <SOFTREV>0.1</SOFTREV>
+    <Supplier>Example Fabrication Lab</Supplier>
+    <CreateDate>2026-09-18</CreateDate>
+    <Description>Original synthetic equipment.</Description>
+  </SEDDHeader>
+  <CollectionEvents/>
+  <DataVariables/>
+  <StatusVariables/>
+  <EquipmentConstants/>
+  <Alarms/>
+  <RecipeVariableParameters RecipeType="SyntheticEmpty"/>
+  <VariableFormats/>
+</sedd:DataDictionary>

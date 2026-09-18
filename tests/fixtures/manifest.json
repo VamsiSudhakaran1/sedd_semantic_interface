@@ -1,199 +1,253 @@
 {
   "version": 1,
-  "reference_analysis_status": "BLOCKED_REFERENCE_ACCESS",
+  "reference_analysis_status": "PARTIAL_SCHEMA_ONLY",
   "sources": {
     "schema": {
       "url": "https://dom.semi.org/web/wstandards.nsf/37F6244E9929719388258C4400652DC9/$file/E172-0225-SEDD-Schema.xsd",
-      "status": "PENDING",
-      "sha256": null
+      "status": "OBSERVED",
+      "sha256": "23678aef0204ffbb654403077895be8db9f48b00c7a30934589c259c74f09810",
+      "bytes": 92338,
+      "filename": "E172-0225-SEDD-Schema.xsd",
+      "received": "2026-09-18"
     },
     "sample": {
       "url": "https://dom.semi.org/web/wstandards.nsf/3F009B878C57ABB388258C44006550D6/$file/SEDD_TrackSys_Model404_0225.xml",
       "status": "PENDING",
+      "sha256": null
+    },
+    "message_schema": {
+      "status": "PENDING",
+      "filename": "E173-0415-SECSIIMessageNotation-Schema.xsd",
+      "evidence": "schema line 32: xs:import",
       "sha256": null
     }
   },
   "coverage": [
     {
       "concept": "Equipment metadata",
-      "status": "PENDING",
-      "evidence": [],
+      "status": "OBSERVED",
+      "evidence": [
+        "X02"
+      ],
       "fixtures": [
         "minimal/equipment-plan.json",
-        "changes/semantic-plan.json"
+        "changes/semantic-plan.json",
+        "minimal/e172-empty.xml"
       ],
-      "reason": "Reference bytes unavailable; actual XSD declarations and sample instances must be inspected before XML mapping."
+      "reason": "Schema declaration evidence available; sample corroboration and complete XSD validation pending."
     },
     {
       "concept": "Status Variables",
       "status": "PENDING",
-      "evidence": [],
+      "evidence": [
+        "X04"
+      ],
       "fixtures": [
         "relationships/variables-plan.json",
         "changes/semantic-plan.json"
       ],
-      "reason": "Reference bytes unavailable; actual XSD declarations and sample instances must be inspected before XML mapping."
+      "reason": "Partial schema evidence only; imported structure, sample evidence, or canonical preservation policy remains pending."
     },
     {
       "concept": "Data Variables",
       "status": "PENDING",
-      "evidence": [],
+      "evidence": [
+        "X04"
+      ],
       "fixtures": [
         "relationships/variables-plan.json",
         "changes/semantic-plan.json"
       ],
-      "reason": "Reference bytes unavailable; actual XSD declarations and sample instances must be inspected before XML mapping."
+      "reason": "Partial schema evidence only; imported structure, sample evidence, or canonical preservation policy remains pending."
     },
     {
       "concept": "Equipment Constants",
       "status": "PENDING",
-      "evidence": [],
+      "evidence": [
+        "X04"
+      ],
       "fixtures": [
         "relationships/variables-plan.json",
         "changes/semantic-plan.json"
       ],
-      "reason": "Reference bytes unavailable; actual XSD declarations and sample instances must be inspected before XML mapping."
+      "reason": "Partial schema evidence only; imported structure, sample evidence, or canonical preservation policy remains pending."
     },
     {
       "concept": "Collection Events",
-      "status": "PENDING",
-      "evidence": [],
+      "status": "OBSERVED",
+      "evidence": [
+        "X06"
+      ],
       "fixtures": [
         "relationships/links-plan.json",
-        "changes/semantic-plan.json"
+        "changes/semantic-plan.json",
+        "relationships/e172-event-alarm-report.xml"
       ],
-      "reason": "Reference bytes unavailable; actual XSD declarations and sample instances must be inspected before XML mapping."
+      "reason": "Schema declaration evidence available; sample corroboration and complete XSD validation pending."
     },
     {
       "concept": "Alarms",
-      "status": "PENDING",
-      "evidence": [],
+      "status": "OBSERVED",
+      "evidence": [
+        "X07"
+      ],
       "fixtures": [
         "relationships/links-plan.json",
-        "changes/semantic-plan.json"
+        "changes/semantic-plan.json",
+        "relationships/e172-event-alarm-report.xml"
       ],
-      "reason": "Reference bytes unavailable; actual XSD declarations and sample instances must be inspected before XML mapping."
+      "reason": "Schema declaration evidence available; sample corroboration and complete XSD validation pending."
     },
     {
       "concept": "Remote Commands",
-      "status": "PENDING",
-      "evidence": [],
+      "status": "OBSERVED",
+      "evidence": [
+        "X08"
+      ],
       "fixtures": [
         "relationships/commands-messages-plan.json",
-        "changes/semantic-plan.json"
+        "changes/semantic-plan.json",
+        "relationships/e172-event-alarm-report.xml"
       ],
-      "reason": "Reference bytes unavailable; actual XSD declarations and sample instances must be inspected before XML mapping."
+      "reason": "Schema declaration evidence available; sample corroboration and complete XSD validation pending."
     },
     {
       "concept": "Remote Command Parameters",
       "status": "PENDING",
-      "evidence": [],
+      "evidence": [
+        "X08"
+      ],
       "fixtures": [
         "relationships/commands-messages-plan.json",
         "changes/semantic-plan.json"
       ],
-      "reason": "Reference bytes unavailable; actual XSD declarations and sample instances must be inspected before XML mapping."
+      "reason": "Partial schema evidence only; imported structure, sample evidence, or canonical preservation policy remains pending."
     },
     {
       "concept": "Supported SECS Messages",
       "status": "PENDING",
-      "evidence": [],
+      "evidence": [
+        "X10"
+      ],
       "fixtures": [
         "relationships/commands-messages-plan.json",
         "changes/semantic-plan.json"
       ],
-      "reason": "Reference bytes unavailable; actual XSD declarations and sample instances must be inspected before XML mapping."
+      "reason": "Partial schema evidence only; imported structure, sample evidence, or canonical preservation policy remains pending."
     },
     {
       "concept": "Variable Formats",
       "status": "PENDING",
-      "evidence": [],
+      "evidence": [
+        "X09"
+      ],
       "fixtures": [
         "relationships/variables-plan.json",
         "changes/semantic-plan.json"
       ],
-      "reason": "Reference bytes unavailable; actual XSD declarations and sample instances must be inspected before XML mapping."
+      "reason": "Partial schema evidence only; imported structure, sample evidence, or canonical preservation policy remains pending."
     },
     {
       "concept": "Default Reports",
-      "status": "PENDING",
-      "evidence": [],
+      "status": "OBSERVED",
+      "evidence": [
+        "X11"
+      ],
       "fixtures": [
         "relationships/links-plan.json",
-        "changes/semantic-plan.json"
+        "changes/semantic-plan.json",
+        "relationships/e172-event-alarm-report.xml"
       ],
-      "reason": "Reference bytes unavailable; actual XSD declarations and sample instances must be inspected before XML mapping."
+      "reason": "Schema declaration evidence available; sample corroboration and complete XSD validation pending."
     },
     {
       "concept": "Event/Report Links",
-      "status": "PENDING",
-      "evidence": [],
+      "status": "OBSERVED",
+      "evidence": [
+        "X11"
+      ],
       "fixtures": [
         "relationships/links-plan.json",
-        "changes/semantic-plan.json"
+        "changes/semantic-plan.json",
+        "relationships/e172-event-alarm-report.xml"
       ],
-      "reason": "Reference bytes unavailable; actual XSD declarations and sample instances must be inspected before XML mapping."
+      "reason": "Schema declaration evidence available; sample corroboration and complete XSD validation pending."
     },
     {
       "concept": "SEMI Standards metadata",
-      "status": "PENDING",
-      "evidence": [],
+      "status": "OBSERVED",
+      "evidence": [
+        "X12"
+      ],
       "fixtures": [
         "minimal/equipment-plan.json",
-        "changes/semantic-plan.json"
+        "changes/semantic-plan.json",
+        "relationships/e172-event-alarm-report.xml"
       ],
-      "reason": "Reference bytes unavailable; actual XSD declarations and sample instances must be inspected before XML mapping."
+      "reason": "Schema declaration evidence available; sample corroboration and complete XSD validation pending."
     },
     {
       "concept": "Well-Known Names",
       "status": "PENDING",
-      "evidence": [],
+      "evidence": [
+        "X12"
+      ],
       "fixtures": [
         "relationships/variables-plan.json",
         "changes/semantic-plan.json"
       ],
-      "reason": "Reference bytes unavailable; actual XSD declarations and sample instances must be inspected before XML mapping."
+      "reason": "Partial schema evidence only; imported structure, sample evidence, or canonical preservation policy remains pending."
     },
     {
       "concept": "descriptions",
-      "status": "PENDING",
-      "evidence": [],
+      "status": "OBSERVED",
+      "evidence": [
+        "X13"
+      ],
       "fixtures": [
         "minimal/equipment-plan.json",
-        "changes/semantic-plan.json"
+        "changes/semantic-plan.json",
+        "minimal/e172-empty.xml"
       ],
-      "reason": "Reference bytes unavailable; actual XSD declarations and sample instances must be inspected before XML mapping."
+      "reason": "Schema declaration evidence available; sample corroboration and complete XSD validation pending."
     },
     {
       "concept": "provenance",
       "status": "PENDING",
-      "evidence": [],
+      "evidence": [
+        "X13"
+      ],
       "fixtures": [
         "minimal/equipment-plan.json",
         "relationships/extensions-plan.json",
         "changes/semantic-plan.json"
       ],
-      "reason": "Reference bytes unavailable; actual XSD declarations and sample instances must be inspected before XML mapping."
+      "reason": "Partial schema evidence only; imported structure, sample evidence, or canonical preservation policy remains pending."
     },
     {
       "concept": "unresolved references",
-      "status": "PENDING",
-      "evidence": [],
+      "status": "OBSERVED",
+      "evidence": [
+        "X05"
+      ],
       "fixtures": [
         "relationships/links-plan.json",
-        "changes/semantic-plan.json"
+        "changes/semantic-plan.json",
+        "relationships/e172-event-alarm-report.xml"
       ],
-      "reason": "Reference bytes unavailable; actual XSD declarations and sample instances must be inspected before XML mapping."
+      "reason": "Schema declaration evidence available; sample corroboration and complete XSD validation pending."
     },
     {
       "concept": "unknown extensions",
       "status": "PENDING",
-      "evidence": [],
+      "evidence": [
+        "X14"
+      ],
       "fixtures": [
         "relationships/extensions-plan.json",
         "changes/semantic-plan.json"
       ],
-      "reason": "Reference bytes unavailable; actual XSD declarations and sample instances must be inspected before XML mapping."
+      "reason": "Partial schema evidence only; imported structure, sample evidence, or canonical preservation policy remains pending."
     }
   ],
   "fixtures": [
@@ -336,6 +390,61 @@
       "kind": "scenario-plan",
       "e172_validity": "NOT_ESTABLISHED",
       "future_processing": "PENDING"
+    },
+    {
+      "path": "minimal/e172-empty.xml",
+      "kind": "e172-candidate",
+      "e172_validity": "NOT_ESTABLISHED",
+      "xml_syntax": "WELL_FORMED",
+      "contains_doctype": false,
+      "future_processing": "PENDING",
+      "evidence": [
+        "X01",
+        "X02"
+      ],
+      "validation_blocker": "Missing imported E173 message-notation schema; not validated against full XSD."
+    },
+    {
+      "path": "relationships/e172-event-alarm-report.xml",
+      "kind": "e172-candidate",
+      "e172_validity": "NOT_ESTABLISHED",
+      "xml_syntax": "WELL_FORMED",
+      "contains_doctype": false,
+      "future_processing": "PENDING",
+      "evidence": [
+        "X01",
+        "X02"
+      ],
+      "validation_blocker": "Missing imported E173 message-notation schema; not validated against full XSD."
+    },
+    {
+      "path": "changes/e172-alarm-link-after.xml",
+      "kind": "e172-candidate",
+      "e172_validity": "NOT_ESTABLISHED",
+      "xml_syntax": "WELL_FORMED",
+      "contains_doctype": false,
+      "future_processing": "PENDING",
+      "evidence": [
+        "X01",
+        "X02"
+      ],
+      "validation_blocker": "Missing imported E173 message-notation schema; not validated against full XSD.",
+      "paired_with": "relationships/e172-event-alarm-report.xml",
+      "intended_change": "ALARM_EVENT_LINK_CHANGED; prospective comparator expectation, not implemented"
+    },
+    {
+      "path": "malformed/e172-qualified-children.xml",
+      "kind": "e172-candidate",
+      "e172_validity": "NOT_ESTABLISHED",
+      "xml_syntax": "WELL_FORMED",
+      "contains_doctype": false,
+      "future_processing": "PENDING",
+      "evidence": [
+        "X01",
+        "X02"
+      ],
+      "validation_blocker": "Missing imported E173 message-notation schema; not validated against full XSD.",
+      "expected_schema_result": "INVALID: local child declarations are unqualified; full validation still pending"
     }
   ],
   "pending_resource_tests": {
