@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='utf-8'?>
+<sedd:DataDictionary xmlns:sedd="urn:semi-org:xsd.SEDD">
+  <SEDDHeader>
+    <MDLN>Lantern17</MDLN>
+    <SOFTREV>0.1</SOFTREV>
+    <Supplier>Example Fabrication Lab</Supplier>
+    <CreateDate>2026-09-18</CreateDate>
+    <Description>Original synthetic equipment.</Description>
+  </SEDDHeader>
+  <CollectionEvents>
+    <CollectionEvent>
+      <CEID>801</CEID>
+      <CENAME>SyntheticStart</CENAME>
+      <VALIDDVS><VID name="SyntheticCount">701</VID></VALIDDVS><RelevantVariables><VID name="SyntheticState">702</VID></RelevantVariables><StateTransition><StateModel>SyntheticCycle</StateModel><TransitionID>T1</TransitionID><PreviousState>Idle</PreviousState><NewState>Active</NewState></StateTransition><Description>Original event for relationship testing.</Description>
+    </CollectionEvent>
+    <CollectionEvent>
+      <CEID>802</CEID>
+      <CENAME>SyntheticStop</CENAME>
+      <Description>Original event for relationship testing.</Description>
+    </CollectionEvent>
+  </CollectionEvents>
+  <DataVariables><DataVariable><VID>701</VID><DVVALNAME>SyntheticCount</DVVALNAME><UNITS>count</UNITS><Format>SyntheticUnsigned</Format><MinValue>0</MinValue><MaxValue>100</MaxValue><Description>Original synthetic variable.</Description><Source>Synthetic fixture author</Source><SEMIStandard>Synthetic-Only</SEMIStandard><WellKnownName>urn:sema-sedd:fictional:701</WellKnownName></DataVariable></DataVariables>
+  <StatusVariables><StatusVariable><SVID>702</SVID><SVNAME>SyntheticState</SVNAME><UNITS>count</UNITS><Format>SyntheticUnsigned</Format><MinValue>0</MinValue><MaxValue>100</MaxValue><Description>Original synthetic variable.</Description><Source>Synthetic fixture author</Source><SEMIStandard>Synthetic-Only</SEMIStandard><WellKnownName>urn:sema-sedd:fictional:702</WellKnownName></StatusVariable></StatusVariables>
+  <EquipmentConstants><EquipmentConstant><ECID>703</ECID><ECNAME>SyntheticLimit</ECNAME><ECMIN>0</ECMIN><ECMAX>100</ECMAX><ECDEF>20</ECDEF><UNITS>count</UNITS><Format>SyntheticUnsigned</Format><Description>Original synthetic variable.</Description><Source>Synthetic fixture author</Source><SEMIStandard>Synthetic-Only</SEMIStandard><WellKnownName>urn:sema-sedd:fictional:703</WellKnownName></EquipmentConstant></EquipmentConstants>
+  <Alarms>
+    <Alarm>
+      <ALCD>1</ALCD>
+      <ALID>1001</ALID>
+      <ALTX>Synthetic warning</ALTX>
+      <AlarmName>SyntheticAlarm</AlarmName>
+      <SetEvent>801</SetEvent>
+      <ClearEvent>802</ClearEvent>
+      <Description>Original paired-event alarm.</Description>
+    </Alarm>
+  </Alarms>
+  <RecipeVariableParameters RecipeType="SyntheticEmpty"/>
+  <VariableFormats><VariableFormat><FormatName>SyntheticUnsigned</FormatName><SECSData><smn:UI4 xmlns:smn="urn:semi-org:xsd.SMN" length="1"/></SECSData></VariableFormat><VariableFormat><FormatName>SyntheticEnumeration</FormatName><SECSData><ns0:ENU xmlns:ns0="urn:semi-org:xsd.SMN"><ns0:EnumFormat>UI1</ns0:EnumFormat><ns0:EnumerationChoices><ns0:EnumValue><ns0:Value>7</ns0:Value><ns0:Description>Original synthetic choice.</ns0:Description></ns0:EnumValue></ns0:EnumerationChoices></ns0:ENU></SECSData></VariableFormat><VariableFormat><FormatName>SyntheticBits</FormatName><SECSData><ns1:BIT xmlns:ns1="urn:semi-org:xsd.SMN"><ns1:BitFieldFormat>UI1</ns1:BitFieldFormat><ns1:BitFieldDefinitions><ns1:BitPosition><ns1:BitNumber>2</ns1:BitNumber><ns1:OnValue>SyntheticEnabled</ns1:OnValue><ns1:OffValue>SyntheticDisabled</ns1:OffValue></ns1:BitPosition></ns1:BitFieldDefinitions></ns1:BIT></SECSData></VariableFormat><VariableFormat><FormatName>SyntheticAlternatives</FormatName><SECSData><ns2:SET xmlns:ns2="urn:semi-org:xsd.SMN"><ns2:Format><ns2:UI4/></ns2:Format><ns2:Format><ns2:ASC/></ns2:Format></ns2:SET></SECSData></VariableFormat></VariableFormats>
+  <SECSMessages><smn:SECSMessage xmlns:smn="urn:semi-org:xsd.SMN" s="99" f="1" direction="H to E" name="SyntheticMessage"><smn:Description>Original synthetic message.</smn:Description><smn:SECSData><smn:LST><smn:UI4 name="counter"/><smn:ASC name="label"/></smn:LST></smn:SECSData></smn:SECSMessage></SECSMessages><RemoteCommands>
+    <RemoteCommand>
+      <Name>SYNTH_PREPARE</Name>
+      <AssociatedParameters><Parameter IsRequired="Conditional"><Name>MODE</Name><ValueFormat><smn:UI4 xmlns:smn="urn:semi-org:xsd.SMN" length="1"/></ValueFormat><Description>Original synthetic parameter.</Description></Parameter></AssociatedParameters><Documentation>Original command with no associated parameters.</Documentation>
+    </RemoteCommand>
+  </RemoteCommands>
+  <SEMIStandards>
+    <SupportedSEMIStandard>
+      <SEMIStandardName>Synthetic test label</SEMIStandardName>
+      <SEMIStandard>Synthetic-Only</SEMIStandard>
+    </SupportedSEMIStandard>
+  </SEMIStandards>
+  <DefaultReportDefinitions>
+    <DefaultReportDefinition>
+      <RPTID>901</RPTID>
+      <DefaultReportName>SyntheticReport</DefaultReportName>
+      <VIDList>
+        <VID>701</VID>
+      <VID>702</VID></VIDList>
+      <Description>Original two-variable report.</Description>
+    </DefaultReportDefinition>
+  </DefaultReportDefinitions>
+  <DefaultEventReportLinks>
+    <CanBeDeleted>false</CanBeDeleted>
+    <EventReportLink>
+      <CEID>801</CEID>
+      <RPTIDList>
+        <RPTID>901</RPTID>
+      </RPTIDList>
+    </EventReportLink>
+  </DefaultEventReportLinks>
+</sedd:DataDictionary>

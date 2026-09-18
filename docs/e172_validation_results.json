@@ -178,13 +178,40 @@
       "errors": [
         "Element '{urn:sema-sedd:fictional-extension}Hint': This element is not expected. Expected is ( EquipmentCharacterization )."
       ]
+    },
+    {
+      "path": "relationships/e172-dangling-event-variable.xml",
+      "sha256": "7c8d1b2b7e5e4d784f3c442b625492ef69070ba254dc25d4c5d0e027dd6ea944",
+      "xsd_valid": true,
+      "expected_xsd_valid": true,
+      "errors": []
+    },
+    {
+      "path": "relationships/e172-dangling-report-link.xml",
+      "sha256": "173a0c336efcfebf23388d245ebb0bb4dbc337396975a9262322f57d423e51c0",
+      "xsd_valid": true,
+      "expected_xsd_valid": true,
+      "errors": []
+    },
+    {
+      "path": "relationships/e172-ambiguous-message.xml",
+      "sha256": "02a5285dbd8956e2fef77491d0068e65a5adebbc0a886220ccfb827614c96190",
+      "xsd_valid": true,
+      "expected_xsd_valid": true,
+      "errors": []
+    },
+    {
+      "path": "relationships/e172-compound-formats.xml",
+      "sha256": "3f31d5041ec198e93097abd71c58de6af48b354bb30819939dc494caa509704e",
+      "xsd_valid": true,
+      "expected_xsd_valid": true,
+      "errors": []
     }
   ],
   "sample": {
-    "sha256": "777d4b5ec3ccf94342fc73aaea1f40ade11d6172c4dad8693fb25bff96fd6ceb",
-    "well_formed": false,
-    "xsd_valid": null,
-    "first_error_line": 7988,
-    "first_error_column": 271
+    "sha256": "10de748939ba7ac2fd9b233d6df5361aa2bef9a98dd1d3961853eda4da2b765b",
+    "well_formed": true,
+    "xsd_valid": true,
+    "errors": []
   }
 }

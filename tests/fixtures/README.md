@@ -14,5 +14,8 @@ and prospective comparator expectations. Other JSON files remain scenario plans.
 Generic XML probes use a deliberately unrelated namespace and do not claim E172
 validity. Never expand DTD/entity payloads or execute markup in descriptions.
 
-The received sample has XML syntax errors. Prefix and isolated-fragment observations
-are labeled separately; no recovered sample becomes an adapter contract.
+The original TrackSys download is well-formed and XSD-valid. Whole-document
+observations supersede the earlier malformed copy. Dangling-reference and
+ambiguous-message fixtures retain evidence from the full reference analysis.
+Compound-format fixtures cover original ENU, BIT and SET structures; successful
+XSD validation does not establish their complete canonical semantics.

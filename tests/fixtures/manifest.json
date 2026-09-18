@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "reference_analysis_status": "ANALYZED_WITH_MALFORMED_SAMPLE",
+  "reference_analysis_status": "COMPLETE_WITH_EXPLICIT_PENDING_SEMANTICS",
   "sources": {
     "schema": {
       "url": "https://dom.semi.org/web/wstandards.nsf/37F6244E9929719388258C4400652DC9/$file/E172-0225-SEDD-Schema.xsd",
@@ -12,11 +12,10 @@
     },
     "sample": {
       "url": "https://dom.semi.org/web/wstandards.nsf/3F009B878C57ABB388258C44006550D6/$file/SEDD_TrackSys_Model404_0225.xml",
-      "status": "OBSERVED_MALFORMED",
-      "sha256": "777d4b5ec3ccf94342fc73aaea1f40ade11d6172c4dad8693fb25bff96fd6ceb",
-      "filename": "tracksys_sample.xml",
-      "bytes": 342528,
-      "first_error_line": 7988
+      "status": "OBSERVED_XSD_VALID",
+      "sha256": "10de748939ba7ac2fd9b233d6df5361aa2bef9a98dd1d3961853eda4da2b765b",
+      "filename": "SEDD_TrackSys_Model404_0225.xml",
+      "bytes": 387563
     },
     "message_schema": {
       "status": "OBSERVED",
@@ -40,7 +39,7 @@
         "minimal/e172-empty.xml",
         "relationships/e172-complete.xml"
       ],
-      "reason": "Schema evidence and original fixtures available. Received TrackSys file is malformed; whole-document sample validation remains pending."
+      "reason": "Schema evidence and original XML coverage available; whole TrackSys sample analyzed and XSD-validated. Semantic rules beyond that evidence remain explicit assumptions."
     },
     {
       "concept": "Status Variables",
@@ -53,7 +52,7 @@
         "changes/semantic-plan.json",
         "relationships/e172-complete.xml"
       ],
-      "reason": "Schema evidence and original fixtures available. Received TrackSys file is malformed; whole-document sample validation remains pending."
+      "reason": "Schema evidence and original XML coverage available; whole TrackSys sample analyzed and XSD-validated. Semantic rules beyond that evidence remain explicit assumptions."
     },
     {
       "concept": "Data Variables",
@@ -66,7 +65,7 @@
         "changes/semantic-plan.json",
         "relationships/e172-complete.xml"
       ],
-      "reason": "Schema evidence and original fixtures available. Received TrackSys file is malformed; whole-document sample validation remains pending."
+      "reason": "Schema evidence and original XML coverage available; whole TrackSys sample analyzed and XSD-validated. Semantic rules beyond that evidence remain explicit assumptions."
     },
     {
       "concept": "Equipment Constants",
@@ -79,7 +78,7 @@
         "changes/semantic-plan.json",
         "relationships/e172-complete.xml"
       ],
-      "reason": "Schema evidence and original fixtures available. Received TrackSys file is malformed; whole-document sample validation remains pending."
+      "reason": "Schema evidence and original XML coverage available; whole TrackSys sample analyzed and XSD-validated. Semantic rules beyond that evidence remain explicit assumptions."
     },
     {
       "concept": "Collection Events",
@@ -93,7 +92,7 @@
         "relationships/e172-event-alarm-report.xml",
         "relationships/e172-complete.xml"
       ],
-      "reason": "Schema evidence and original fixtures available. Received TrackSys file is malformed; whole-document sample validation remains pending."
+      "reason": "Schema evidence and original XML coverage available; whole TrackSys sample analyzed and XSD-validated. Semantic rules beyond that evidence remain explicit assumptions."
     },
     {
       "concept": "Alarms",
@@ -107,7 +106,7 @@
         "relationships/e172-event-alarm-report.xml",
         "relationships/e172-complete.xml"
       ],
-      "reason": "Schema evidence and original fixtures available. Received TrackSys file is malformed; whole-document sample validation remains pending."
+      "reason": "Schema evidence and original XML coverage available; whole TrackSys sample analyzed and XSD-validated. Semantic rules beyond that evidence remain explicit assumptions."
     },
     {
       "concept": "Remote Commands",
@@ -121,7 +120,7 @@
         "relationships/e172-event-alarm-report.xml",
         "relationships/e172-complete.xml"
       ],
-      "reason": "Schema evidence and original fixtures available. Received TrackSys file is malformed; whole-document sample validation remains pending."
+      "reason": "Schema evidence and original XML coverage available; whole TrackSys sample analyzed and XSD-validated. Semantic rules beyond that evidence remain explicit assumptions."
     },
     {
       "concept": "Remote Command Parameters",
@@ -135,21 +134,23 @@
         "changes/semantic-plan.json",
         "relationships/e172-complete.xml"
       ],
-      "reason": "Schema evidence and original fixtures available. Received TrackSys file is malformed; whole-document sample validation remains pending."
+      "reason": "Schema evidence and original XML coverage available; whole TrackSys sample analyzed and XSD-validated. Semantic rules beyond that evidence remain explicit assumptions."
     },
     {
       "concept": "Supported SECS Messages",
       "status": "OBSERVED",
       "evidence": [
         "X10",
-        "M01"
+        "M01",
+        "S05"
       ],
       "fixtures": [
         "relationships/commands-messages-plan.json",
         "changes/semantic-plan.json",
-        "relationships/e172-complete.xml"
+        "relationships/e172-complete.xml",
+        "relationships/e172-ambiguous-message.xml"
       ],
-      "reason": "Schema evidence and original fixtures available. Received TrackSys file is malformed; whole-document sample validation remains pending."
+      "reason": "Schema evidence and original XML coverage available; whole TrackSys sample analyzed and XSD-validated. Semantic rules beyond that evidence remain explicit assumptions."
     },
     {
       "concept": "Variable Formats",
@@ -161,9 +162,10 @@
       "fixtures": [
         "relationships/variables-plan.json",
         "changes/semantic-plan.json",
-        "relationships/e172-complete.xml"
+        "relationships/e172-complete.xml",
+        "relationships/e172-compound-formats.xml"
       ],
-      "reason": "Schema evidence and original fixtures available. Received TrackSys file is malformed; whole-document sample validation remains pending."
+      "reason": "Schema evidence and original XML coverage available; whole TrackSys sample analyzed and XSD-validated. Semantic rules beyond that evidence remain explicit assumptions."
     },
     {
       "concept": "Default Reports",
@@ -177,7 +179,7 @@
         "relationships/e172-event-alarm-report.xml",
         "relationships/e172-complete.xml"
       ],
-      "reason": "Schema evidence and original fixtures available. Received TrackSys file is malformed; whole-document sample validation remains pending."
+      "reason": "Schema evidence and original XML coverage available; whole TrackSys sample analyzed and XSD-validated. Semantic rules beyond that evidence remain explicit assumptions."
     },
     {
       "concept": "Event/Report Links",
@@ -191,7 +193,7 @@
         "relationships/e172-event-alarm-report.xml",
         "relationships/e172-complete.xml"
       ],
-      "reason": "Schema evidence and original fixtures available. Received TrackSys file is malformed; whole-document sample validation remains pending."
+      "reason": "Schema evidence and original XML coverage available; whole TrackSys sample analyzed and XSD-validated. Semantic rules beyond that evidence remain explicit assumptions."
     },
     {
       "concept": "SEMI Standards metadata",
@@ -205,7 +207,7 @@
         "relationships/e172-event-alarm-report.xml",
         "relationships/e172-complete.xml"
       ],
-      "reason": "Schema evidence and original fixtures available. Received TrackSys file is malformed; whole-document sample validation remains pending."
+      "reason": "Schema evidence and original XML coverage available; whole TrackSys sample analyzed and XSD-validated. Semantic rules beyond that evidence remain explicit assumptions."
     },
     {
       "concept": "Well-Known Names",
@@ -218,7 +220,7 @@
         "changes/semantic-plan.json",
         "relationships/e172-complete.xml"
       ],
-      "reason": "Schema evidence and original fixtures available. Received TrackSys file is malformed; whole-document sample validation remains pending."
+      "reason": "Schema evidence and original XML coverage available; whole TrackSys sample analyzed and XSD-validated. Semantic rules beyond that evidence remain explicit assumptions."
     },
     {
       "concept": "descriptions",
@@ -232,7 +234,7 @@
         "minimal/e172-empty.xml",
         "relationships/e172-complete.xml"
       ],
-      "reason": "Schema evidence and original fixtures available. Received TrackSys file is malformed; whole-document sample validation remains pending."
+      "reason": "Schema evidence and original XML coverage available; whole TrackSys sample analyzed and XSD-validated. Semantic rules beyond that evidence remain explicit assumptions."
     },
     {
       "concept": "provenance",
@@ -251,15 +253,18 @@
       "concept": "unresolved references",
       "status": "OBSERVED",
       "evidence": [
-        "X05"
+        "X05",
+        "S04"
       ],
       "fixtures": [
         "relationships/links-plan.json",
         "changes/semantic-plan.json",
         "relationships/e172-event-alarm-report.xml",
-        "relationships/e172-complete.xml"
+        "relationships/e172-complete.xml",
+        "relationships/e172-dangling-event-variable.xml",
+        "relationships/e172-dangling-report-link.xml"
       ],
-      "reason": "Schema evidence and original fixtures available. Received TrackSys file is malformed; whole-document sample validation remains pending."
+      "reason": "Schema evidence and original XML coverage available; whole TrackSys sample analyzed and XSD-validated. Semantic rules beyond that evidence remain explicit assumptions."
     },
     {
       "concept": "unknown extensions",
@@ -727,6 +732,58 @@
       "kind": "change-catalog",
       "e172_validity": "NOT_APPLICABLE",
       "future_processing": "PENDING"
+    },
+    {
+      "path": "relationships/e172-dangling-event-variable.xml",
+      "kind": "e172-synthetic",
+      "e172_validity": "XSD_VALID",
+      "xml_syntax": "WELL_FORMED",
+      "contains_doctype": false,
+      "future_processing": "PENDING",
+      "expected_xsd_valid": true,
+      "evidence": [
+        "S04",
+        "S05"
+      ]
+    },
+    {
+      "path": "relationships/e172-dangling-report-link.xml",
+      "kind": "e172-synthetic",
+      "e172_validity": "XSD_VALID",
+      "xml_syntax": "WELL_FORMED",
+      "contains_doctype": false,
+      "future_processing": "PENDING",
+      "expected_xsd_valid": true,
+      "evidence": [
+        "S04",
+        "S05"
+      ]
+    },
+    {
+      "path": "relationships/e172-ambiguous-message.xml",
+      "kind": "e172-synthetic",
+      "e172_validity": "XSD_VALID",
+      "xml_syntax": "WELL_FORMED",
+      "contains_doctype": false,
+      "future_processing": "PENDING",
+      "expected_xsd_valid": true,
+      "evidence": [
+        "S04",
+        "S05"
+      ]
+    },
+    {
+      "path": "relationships/e172-compound-formats.xml",
+      "kind": "e172-synthetic",
+      "e172_validity": "XSD_VALID",
+      "xml_syntax": "WELL_FORMED",
+      "contains_doctype": false,
+      "future_processing": "PENDING",
+      "expected_xsd_valid": true,
+      "evidence": [
+        "M02",
+        "S02"
+      ]
     }
   ],
   "pending_resource_tests": {
