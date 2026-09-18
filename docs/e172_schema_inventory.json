@@ -1770,5 +1770,322 @@
         "name": "VariableFormatKey"
       }
     }
+  ],
+  "compositors": [
+    {
+      "line": 38,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence",
+      "kind": "sequence",
+      "minOccurs": "1",
+      "maxOccurs": "1"
+    },
+    {
+      "line": 44,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[1]/xs:complexType/xs:sequence",
+      "kind": "sequence",
+      "minOccurs": "1",
+      "maxOccurs": "1"
+    },
+    {
+      "line": 108,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[2]/xs:complexType/xs:sequence",
+      "kind": "sequence",
+      "minOccurs": "1",
+      "maxOccurs": "1"
+    },
+    {
+      "line": 114,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[2]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence",
+      "kind": "sequence",
+      "minOccurs": "1",
+      "maxOccurs": "1"
+    },
+    {
+      "line": 130,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[2]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[3]/xs:complexType/xs:sequence",
+      "kind": "sequence",
+      "minOccurs": "1",
+      "maxOccurs": "1"
+    },
+    {
+      "line": 151,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[2]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[4]/xs:complexType/xs:sequence",
+      "kind": "sequence",
+      "minOccurs": "1",
+      "maxOccurs": "1"
+    },
+    {
+      "line": 172,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[2]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[5]/xs:complexType/xs:sequence",
+      "kind": "sequence",
+      "minOccurs": "1",
+      "maxOccurs": "1"
+    },
+    {
+      "line": 264,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[3]/xs:complexType/xs:sequence",
+      "kind": "sequence",
+      "minOccurs": "1",
+      "maxOccurs": "1"
+    },
+    {
+      "line": 270,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[3]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence",
+      "kind": "sequence",
+      "minOccurs": "1",
+      "maxOccurs": "1"
+    },
+    {
+      "line": 347,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[4]/xs:complexType/xs:sequence",
+      "kind": "sequence",
+      "minOccurs": "1",
+      "maxOccurs": "1"
+    },
+    {
+      "line": 353,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[4]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence",
+      "kind": "sequence",
+      "minOccurs": "1",
+      "maxOccurs": "1"
+    },
+    {
+      "line": 430,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[5]/xs:complexType/xs:sequence",
+      "kind": "sequence",
+      "minOccurs": "1",
+      "maxOccurs": "1"
+    },
+    {
+      "line": 436,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[5]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence",
+      "kind": "sequence",
+      "minOccurs": "1",
+      "maxOccurs": "1"
+    },
+    {
+      "line": 518,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[6]/xs:complexType/xs:sequence",
+      "kind": "sequence",
+      "minOccurs": "1",
+      "maxOccurs": "1"
+    },
+    {
+      "line": 524,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[6]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence",
+      "kind": "sequence",
+      "minOccurs": "1",
+      "maxOccurs": "1"
+    },
+    {
+      "line": 608,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[7]/xs:complexType/xs:sequence",
+      "kind": "sequence",
+      "minOccurs": "1",
+      "maxOccurs": "1"
+    },
+    {
+      "line": 614,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[7]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence",
+      "kind": "sequence",
+      "minOccurs": "1",
+      "maxOccurs": "1"
+    },
+    {
+      "line": 703,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[8]/xs:complexType/xs:sequence",
+      "kind": "sequence",
+      "minOccurs": "1",
+      "maxOccurs": "1"
+    },
+    {
+      "line": 709,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[8]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence",
+      "kind": "sequence",
+      "minOccurs": "1",
+      "maxOccurs": "1"
+    },
+    {
+      "line": 746,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[9]/xs:complexType/xs:sequence",
+      "kind": "sequence",
+      "minOccurs": "1",
+      "maxOccurs": "1"
+    },
+    {
+      "line": 768,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[10]/xs:complexType/xs:sequence",
+      "kind": "sequence",
+      "minOccurs": "1",
+      "maxOccurs": "1"
+    },
+    {
+      "line": 777,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[10]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence",
+      "kind": "sequence",
+      "minOccurs": "1",
+      "maxOccurs": "1"
+    },
+    {
+      "line": 788,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[10]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[2]/xs:complexType/xs:sequence",
+      "kind": "sequence",
+      "minOccurs": "1",
+      "maxOccurs": "unbounded"
+    },
+    {
+      "line": 794,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[10]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[2]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence",
+      "kind": "sequence",
+      "minOccurs": "1",
+      "maxOccurs": "1"
+    },
+    {
+      "line": 885,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[11]/xs:complexType/xs:sequence",
+      "kind": "sequence",
+      "minOccurs": "1",
+      "maxOccurs": "1"
+    },
+    {
+      "line": 893,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[11]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence",
+      "kind": "sequence",
+      "minOccurs": "1",
+      "maxOccurs": "1"
+    },
+    {
+      "line": 916,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[11]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[3]/xs:complexType/xs:sequence",
+      "kind": "sequence",
+      "minOccurs": "1",
+      "maxOccurs": "1"
+    },
+    {
+      "line": 931,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[11]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[3]/xs:complexType/xs:sequence/xs:element[2]/xs:complexType/xs:sequence",
+      "kind": "sequence",
+      "minOccurs": "1",
+      "maxOccurs": "1"
+    },
+    {
+      "line": 1030,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[12]/xs:complexType/xs:sequence",
+      "kind": "sequence",
+      "minOccurs": "1",
+      "maxOccurs": "1"
+    },
+    {
+      "line": 1044,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[12]/xs:complexType/xs:sequence/xs:element[2]/xs:complexType/xs:sequence",
+      "kind": "sequence",
+      "minOccurs": "1",
+      "maxOccurs": "1"
+    },
+    {
+      "line": 1060,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[12]/xs:complexType/xs:sequence/xs:element[2]/xs:complexType/xs:sequence/xs:element[3]/xs:complexType/xs:sequence",
+      "kind": "sequence",
+      "minOccurs": "1",
+      "maxOccurs": "1"
+    },
+    {
+      "line": 1087,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[13]/xs:complexType/xs:sequence",
+      "kind": "sequence",
+      "minOccurs": "1",
+      "maxOccurs": "1"
+    },
+    {
+      "line": 1102,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[13]/xs:complexType/xs:sequence/xs:element[2]/xs:complexType/xs:sequence",
+      "kind": "sequence",
+      "minOccurs": "1",
+      "maxOccurs": "1"
+    },
+    {
+      "line": 1113,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[13]/xs:complexType/xs:sequence/xs:element[2]/xs:complexType/xs:sequence/xs:element[2]/xs:complexType/xs:sequence",
+      "kind": "sequence",
+      "minOccurs": "1",
+      "maxOccurs": "1"
+    },
+    {
+      "line": 1138,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[14]/xs:complexType/xs:sequence",
+      "kind": "sequence",
+      "minOccurs": "1",
+      "maxOccurs": "1"
+    },
+    {
+      "line": 1144,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[14]/xs:complexType/xs:sequence/xs:element[1]/xs:complexType/xs:sequence",
+      "kind": "sequence",
+      "minOccurs": "1",
+      "maxOccurs": "1"
+    },
+    {
+      "line": 1150,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[14]/xs:complexType/xs:sequence/xs:element[1]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence",
+      "kind": "sequence",
+      "minOccurs": "1",
+      "maxOccurs": "1"
+    },
+    {
+      "line": 1172,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[14]/xs:complexType/xs:sequence/xs:element[2]/xs:complexType/xs:sequence",
+      "kind": "sequence",
+      "minOccurs": "1",
+      "maxOccurs": "1"
+    },
+    {
+      "line": 1178,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[14]/xs:complexType/xs:sequence/xs:element[2]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence",
+      "kind": "sequence",
+      "minOccurs": "1",
+      "maxOccurs": "1"
+    },
+    {
+      "line": 1200,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[14]/xs:complexType/xs:sequence/xs:element[3]/xs:complexType/xs:sequence",
+      "kind": "sequence",
+      "minOccurs": "1",
+      "maxOccurs": "1"
+    },
+    {
+      "line": 1206,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[14]/xs:complexType/xs:sequence/xs:element[3]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence",
+      "kind": "sequence",
+      "minOccurs": "1",
+      "maxOccurs": "1"
+    },
+    {
+      "line": 1233,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[14]/xs:complexType/xs:sequence/xs:element[4]/xs:complexType/xs:sequence",
+      "kind": "sequence",
+      "minOccurs": "1",
+      "maxOccurs": "1"
+    },
+    {
+      "line": 1239,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[14]/xs:complexType/xs:sequence/xs:element[4]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence",
+      "kind": "sequence",
+      "minOccurs": "1",
+      "maxOccurs": "1"
+    },
+    {
+      "line": 1261,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[14]/xs:complexType/xs:sequence/xs:element[5]/xs:complexType/xs:sequence",
+      "kind": "sequence",
+      "minOccurs": "1",
+      "maxOccurs": "1"
+    },
+    {
+      "line": 1267,
+      "schema_xpath": "/xs:schema/xs:element/xs:complexType/xs:sequence/xs:element[14]/xs:complexType/xs:sequence/xs:element[5]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence",
+      "kind": "sequence",
+      "minOccurs": "1",
+      "maxOccurs": "1"
+    }
   ]
 }

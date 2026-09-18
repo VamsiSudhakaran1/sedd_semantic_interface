@@ -23,6 +23,8 @@ sedd = "sema_sedd.cli:main"
 [project.optional-dependencies]
 dev = ["pytest>=8,<10", "ruff>=0.9,<1", "mypy>=1.14,<2", "build>=1.2,<2"]
 
+references = ["lxml>=5,<7"]
+
 [tool.setuptools.packages.find]
 where = ["src"]
 

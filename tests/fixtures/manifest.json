@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "reference_analysis_status": "PARTIAL_SCHEMA_ONLY",
+  "reference_analysis_status": "ANALYZED_WITH_MALFORMED_SAMPLE",
   "sources": {
     "schema": {
       "url": "https://dom.semi.org/web/wstandards.nsf/37F6244E9929719388258C4400652DC9/$file/E172-0225-SEDD-Schema.xsd",
@@ -12,14 +12,19 @@
     },
     "sample": {
       "url": "https://dom.semi.org/web/wstandards.nsf/3F009B878C57ABB388258C44006550D6/$file/SEDD_TrackSys_Model404_0225.xml",
-      "status": "PENDING",
-      "sha256": null
+      "status": "OBSERVED_MALFORMED",
+      "sha256": "777d4b5ec3ccf94342fc73aaea1f40ade11d6172c4dad8693fb25bff96fd6ceb",
+      "filename": "tracksys_sample.xml",
+      "bytes": 342528,
+      "first_error_line": 7988
     },
     "message_schema": {
-      "status": "PENDING",
+      "status": "OBSERVED",
       "filename": "E173-0415-SECSIIMessageNotation-Schema.xsd",
       "evidence": "schema line 32: xs:import",
-      "sha256": null
+      "sha256": "cc339254dd145c19b9d73a892890d8f05dedff4a1389ac934762aad55da6ff30",
+      "bytes": 29725,
+      "archive_sha256": "674be022c347639e8a21703feb283fa98fbde395f115b7145c09410e1d596baa"
     }
   },
   "coverage": [
@@ -32,45 +37,49 @@
       "fixtures": [
         "minimal/equipment-plan.json",
         "changes/semantic-plan.json",
-        "minimal/e172-empty.xml"
+        "minimal/e172-empty.xml",
+        "relationships/e172-complete.xml"
       ],
-      "reason": "Schema declaration evidence available; sample corroboration and complete XSD validation pending."
+      "reason": "Schema evidence and original fixtures available. Received TrackSys file is malformed; whole-document sample validation remains pending."
     },
     {
       "concept": "Status Variables",
-      "status": "PENDING",
+      "status": "OBSERVED",
       "evidence": [
         "X04"
       ],
       "fixtures": [
         "relationships/variables-plan.json",
-        "changes/semantic-plan.json"
+        "changes/semantic-plan.json",
+        "relationships/e172-complete.xml"
       ],
-      "reason": "Partial schema evidence only; imported structure, sample evidence, or canonical preservation policy remains pending."
+      "reason": "Schema evidence and original fixtures available. Received TrackSys file is malformed; whole-document sample validation remains pending."
     },
     {
       "concept": "Data Variables",
-      "status": "PENDING",
+      "status": "OBSERVED",
       "evidence": [
         "X04"
       ],
       "fixtures": [
         "relationships/variables-plan.json",
-        "changes/semantic-plan.json"
+        "changes/semantic-plan.json",
+        "relationships/e172-complete.xml"
       ],
-      "reason": "Partial schema evidence only; imported structure, sample evidence, or canonical preservation policy remains pending."
+      "reason": "Schema evidence and original fixtures available. Received TrackSys file is malformed; whole-document sample validation remains pending."
     },
     {
       "concept": "Equipment Constants",
-      "status": "PENDING",
+      "status": "OBSERVED",
       "evidence": [
         "X04"
       ],
       "fixtures": [
         "relationships/variables-plan.json",
-        "changes/semantic-plan.json"
+        "changes/semantic-plan.json",
+        "relationships/e172-complete.xml"
       ],
-      "reason": "Partial schema evidence only; imported structure, sample evidence, or canonical preservation policy remains pending."
+      "reason": "Schema evidence and original fixtures available. Received TrackSys file is malformed; whole-document sample validation remains pending."
     },
     {
       "concept": "Collection Events",
@@ -81,9 +90,10 @@
       "fixtures": [
         "relationships/links-plan.json",
         "changes/semantic-plan.json",
-        "relationships/e172-event-alarm-report.xml"
+        "relationships/e172-event-alarm-report.xml",
+        "relationships/e172-complete.xml"
       ],
-      "reason": "Schema declaration evidence available; sample corroboration and complete XSD validation pending."
+      "reason": "Schema evidence and original fixtures available. Received TrackSys file is malformed; whole-document sample validation remains pending."
     },
     {
       "concept": "Alarms",
@@ -94,9 +104,10 @@
       "fixtures": [
         "relationships/links-plan.json",
         "changes/semantic-plan.json",
-        "relationships/e172-event-alarm-report.xml"
+        "relationships/e172-event-alarm-report.xml",
+        "relationships/e172-complete.xml"
       ],
-      "reason": "Schema declaration evidence available; sample corroboration and complete XSD validation pending."
+      "reason": "Schema evidence and original fixtures available. Received TrackSys file is malformed; whole-document sample validation remains pending."
     },
     {
       "concept": "Remote Commands",
@@ -107,45 +118,52 @@
       "fixtures": [
         "relationships/commands-messages-plan.json",
         "changes/semantic-plan.json",
-        "relationships/e172-event-alarm-report.xml"
+        "relationships/e172-event-alarm-report.xml",
+        "relationships/e172-complete.xml"
       ],
-      "reason": "Schema declaration evidence available; sample corroboration and complete XSD validation pending."
+      "reason": "Schema evidence and original fixtures available. Received TrackSys file is malformed; whole-document sample validation remains pending."
     },
     {
       "concept": "Remote Command Parameters",
-      "status": "PENDING",
+      "status": "OBSERVED",
       "evidence": [
-        "X08"
+        "X08",
+        "M02"
       ],
       "fixtures": [
         "relationships/commands-messages-plan.json",
-        "changes/semantic-plan.json"
+        "changes/semantic-plan.json",
+        "relationships/e172-complete.xml"
       ],
-      "reason": "Partial schema evidence only; imported structure, sample evidence, or canonical preservation policy remains pending."
+      "reason": "Schema evidence and original fixtures available. Received TrackSys file is malformed; whole-document sample validation remains pending."
     },
     {
       "concept": "Supported SECS Messages",
-      "status": "PENDING",
+      "status": "OBSERVED",
       "evidence": [
-        "X10"
+        "X10",
+        "M01"
       ],
       "fixtures": [
         "relationships/commands-messages-plan.json",
-        "changes/semantic-plan.json"
+        "changes/semantic-plan.json",
+        "relationships/e172-complete.xml"
       ],
-      "reason": "Partial schema evidence only; imported structure, sample evidence, or canonical preservation policy remains pending."
+      "reason": "Schema evidence and original fixtures available. Received TrackSys file is malformed; whole-document sample validation remains pending."
     },
     {
       "concept": "Variable Formats",
-      "status": "PENDING",
+      "status": "OBSERVED",
       "evidence": [
-        "X09"
+        "X09",
+        "M02"
       ],
       "fixtures": [
         "relationships/variables-plan.json",
-        "changes/semantic-plan.json"
+        "changes/semantic-plan.json",
+        "relationships/e172-complete.xml"
       ],
-      "reason": "Partial schema evidence only; imported structure, sample evidence, or canonical preservation policy remains pending."
+      "reason": "Schema evidence and original fixtures available. Received TrackSys file is malformed; whole-document sample validation remains pending."
     },
     {
       "concept": "Default Reports",
@@ -156,9 +174,10 @@
       "fixtures": [
         "relationships/links-plan.json",
         "changes/semantic-plan.json",
-        "relationships/e172-event-alarm-report.xml"
+        "relationships/e172-event-alarm-report.xml",
+        "relationships/e172-complete.xml"
       ],
-      "reason": "Schema declaration evidence available; sample corroboration and complete XSD validation pending."
+      "reason": "Schema evidence and original fixtures available. Received TrackSys file is malformed; whole-document sample validation remains pending."
     },
     {
       "concept": "Event/Report Links",
@@ -169,9 +188,10 @@
       "fixtures": [
         "relationships/links-plan.json",
         "changes/semantic-plan.json",
-        "relationships/e172-event-alarm-report.xml"
+        "relationships/e172-event-alarm-report.xml",
+        "relationships/e172-complete.xml"
       ],
-      "reason": "Schema declaration evidence available; sample corroboration and complete XSD validation pending."
+      "reason": "Schema evidence and original fixtures available. Received TrackSys file is malformed; whole-document sample validation remains pending."
     },
     {
       "concept": "SEMI Standards metadata",
@@ -182,21 +202,23 @@
       "fixtures": [
         "minimal/equipment-plan.json",
         "changes/semantic-plan.json",
-        "relationships/e172-event-alarm-report.xml"
+        "relationships/e172-event-alarm-report.xml",
+        "relationships/e172-complete.xml"
       ],
-      "reason": "Schema declaration evidence available; sample corroboration and complete XSD validation pending."
+      "reason": "Schema evidence and original fixtures available. Received TrackSys file is malformed; whole-document sample validation remains pending."
     },
     {
       "concept": "Well-Known Names",
-      "status": "PENDING",
+      "status": "OBSERVED",
       "evidence": [
         "X12"
       ],
       "fixtures": [
         "relationships/variables-plan.json",
-        "changes/semantic-plan.json"
+        "changes/semantic-plan.json",
+        "relationships/e172-complete.xml"
       ],
-      "reason": "Partial schema evidence only; imported structure, sample evidence, or canonical preservation policy remains pending."
+      "reason": "Schema evidence and original fixtures available. Received TrackSys file is malformed; whole-document sample validation remains pending."
     },
     {
       "concept": "descriptions",
@@ -207,9 +229,10 @@
       "fixtures": [
         "minimal/equipment-plan.json",
         "changes/semantic-plan.json",
-        "minimal/e172-empty.xml"
+        "minimal/e172-empty.xml",
+        "relationships/e172-complete.xml"
       ],
-      "reason": "Schema declaration evidence available; sample corroboration and complete XSD validation pending."
+      "reason": "Schema evidence and original fixtures available. Received TrackSys file is malformed; whole-document sample validation remains pending."
     },
     {
       "concept": "provenance",
@@ -222,7 +245,7 @@
         "relationships/extensions-plan.json",
         "changes/semantic-plan.json"
       ],
-      "reason": "Partial schema evidence only; imported structure, sample evidence, or canonical preservation policy remains pending."
+      "reason": "Evidence collected; canonical policy for runtime provenance or preservation of unknown content remains explicitly pending."
     },
     {
       "concept": "unresolved references",
@@ -233,9 +256,10 @@
       "fixtures": [
         "relationships/links-plan.json",
         "changes/semantic-plan.json",
-        "relationships/e172-event-alarm-report.xml"
+        "relationships/e172-event-alarm-report.xml",
+        "relationships/e172-complete.xml"
       ],
-      "reason": "Schema declaration evidence available; sample corroboration and complete XSD validation pending."
+      "reason": "Schema evidence and original fixtures available. Received TrackSys file is malformed; whole-document sample validation remains pending."
     },
     {
       "concept": "unknown extensions",
@@ -247,7 +271,7 @@
         "relationships/extensions-plan.json",
         "changes/semantic-plan.json"
       ],
-      "reason": "Partial schema evidence only; imported structure, sample evidence, or canonical preservation policy remains pending."
+      "reason": "Evidence collected; canonical policy for runtime provenance or preservation of unknown content remains explicitly pending."
     }
   ],
   "fixtures": [
@@ -393,8 +417,8 @@
     },
     {
       "path": "minimal/e172-empty.xml",
-      "kind": "e172-candidate",
-      "e172_validity": "NOT_ESTABLISHED",
+      "kind": "e172-synthetic",
+      "e172_validity": "XSD_VALID",
       "xml_syntax": "WELL_FORMED",
       "contains_doctype": false,
       "future_processing": "PENDING",
@@ -402,12 +426,12 @@
         "X01",
         "X02"
       ],
-      "validation_blocker": "Missing imported E173 message-notation schema; not validated against full XSD."
+      "expected_xsd_valid": true
     },
     {
       "path": "relationships/e172-event-alarm-report.xml",
-      "kind": "e172-candidate",
-      "e172_validity": "NOT_ESTABLISHED",
+      "kind": "e172-synthetic",
+      "e172_validity": "XSD_VALID",
       "xml_syntax": "WELL_FORMED",
       "contains_doctype": false,
       "future_processing": "PENDING",
@@ -415,12 +439,12 @@
         "X01",
         "X02"
       ],
-      "validation_blocker": "Missing imported E173 message-notation schema; not validated against full XSD."
+      "expected_xsd_valid": true
     },
     {
       "path": "changes/e172-alarm-link-after.xml",
-      "kind": "e172-candidate",
-      "e172_validity": "NOT_ESTABLISHED",
+      "kind": "e172-synthetic",
+      "e172_validity": "XSD_VALID",
       "xml_syntax": "WELL_FORMED",
       "contains_doctype": false,
       "future_processing": "PENDING",
@@ -428,14 +452,14 @@
         "X01",
         "X02"
       ],
-      "validation_blocker": "Missing imported E173 message-notation schema; not validated against full XSD.",
       "paired_with": "relationships/e172-event-alarm-report.xml",
-      "intended_change": "ALARM_EVENT_LINK_CHANGED; prospective comparator expectation, not implemented"
+      "intended_change": "ALARM_EVENT_LINK_CHANGED; prospective comparator expectation, not implemented",
+      "expected_xsd_valid": true
     },
     {
       "path": "malformed/e172-qualified-children.xml",
-      "kind": "e172-candidate",
-      "e172_validity": "NOT_ESTABLISHED",
+      "kind": "e172-synthetic",
+      "e172_validity": "XSD_INVALID",
       "xml_syntax": "WELL_FORMED",
       "contains_doctype": false,
       "future_processing": "PENDING",
@@ -443,8 +467,266 @@
         "X01",
         "X02"
       ],
-      "validation_blocker": "Missing imported E173 message-notation schema; not validated against full XSD.",
-      "expected_schema_result": "INVALID: local child declarations are unqualified; full validation still pending"
+      "expected_schema_result": "INVALID: local child declarations are unqualified.",
+      "expected_xsd_valid": false
+    },
+    {
+      "path": "relationships/e172-complete.xml",
+      "kind": "e172-synthetic",
+      "e172_validity": "XSD_VALID",
+      "xml_syntax": "WELL_FORMED",
+      "contains_doctype": false,
+      "future_processing": "PENDING",
+      "expected_xsd_valid": true,
+      "evidence": [
+        "X04",
+        "M01",
+        "M02"
+      ]
+    },
+    {
+      "path": "changes/e172-name.xml",
+      "kind": "e172-synthetic",
+      "e172_validity": "XSD_VALID",
+      "xml_syntax": "WELL_FORMED",
+      "contains_doctype": false,
+      "future_processing": "PENDING",
+      "expected_xsd_valid": true,
+      "evidence": [
+        "X04",
+        "M01",
+        "M02"
+      ]
+    },
+    {
+      "path": "changes/e172-description.xml",
+      "kind": "e172-synthetic",
+      "e172_validity": "XSD_VALID",
+      "xml_syntax": "WELL_FORMED",
+      "contains_doctype": false,
+      "future_processing": "PENDING",
+      "expected_xsd_valid": true,
+      "evidence": [
+        "X04",
+        "M01",
+        "M02"
+      ]
+    },
+    {
+      "path": "changes/e172-unit.xml",
+      "kind": "e172-synthetic",
+      "e172_validity": "XSD_VALID",
+      "xml_syntax": "WELL_FORMED",
+      "contains_doctype": false,
+      "future_processing": "PENDING",
+      "expected_xsd_valid": true,
+      "evidence": [
+        "X04",
+        "M01",
+        "M02"
+      ]
+    },
+    {
+      "path": "changes/e172-range.xml",
+      "kind": "e172-synthetic",
+      "e172_validity": "XSD_VALID",
+      "xml_syntax": "WELL_FORMED",
+      "contains_doctype": false,
+      "future_processing": "PENDING",
+      "expected_xsd_valid": true,
+      "evidence": [
+        "X04",
+        "M01",
+        "M02"
+      ]
+    },
+    {
+      "path": "changes/e172-default.xml",
+      "kind": "e172-synthetic",
+      "e172_validity": "XSD_VALID",
+      "xml_syntax": "WELL_FORMED",
+      "contains_doctype": false,
+      "future_processing": "PENDING",
+      "expected_xsd_valid": true,
+      "evidence": [
+        "X04",
+        "M01",
+        "M02"
+      ]
+    },
+    {
+      "path": "changes/e172-wkn.xml",
+      "kind": "e172-synthetic",
+      "e172_validity": "XSD_VALID",
+      "xml_syntax": "WELL_FORMED",
+      "contains_doctype": false,
+      "future_processing": "PENDING",
+      "expected_xsd_valid": true,
+      "evidence": [
+        "X04",
+        "M01",
+        "M02"
+      ]
+    },
+    {
+      "path": "changes/e172-report.xml",
+      "kind": "e172-synthetic",
+      "e172_validity": "XSD_VALID",
+      "xml_syntax": "WELL_FORMED",
+      "contains_doctype": false,
+      "future_processing": "PENDING",
+      "expected_xsd_valid": true,
+      "evidence": [
+        "X04",
+        "M01",
+        "M02"
+      ]
+    },
+    {
+      "path": "changes/e172-event-report.xml",
+      "kind": "e172-synthetic",
+      "e172_validity": "XSD_VALID",
+      "xml_syntax": "WELL_FORMED",
+      "contains_doctype": false,
+      "future_processing": "PENDING",
+      "expected_xsd_valid": true,
+      "evidence": [
+        "X04",
+        "M01",
+        "M02"
+      ]
+    },
+    {
+      "path": "changes/e172-alarm-clear.xml",
+      "kind": "e172-synthetic",
+      "e172_validity": "XSD_VALID",
+      "xml_syntax": "WELL_FORMED",
+      "contains_doctype": false,
+      "future_processing": "PENDING",
+      "expected_xsd_valid": true,
+      "evidence": [
+        "X04",
+        "M01",
+        "M02"
+      ]
+    },
+    {
+      "path": "changes/e172-parameter.xml",
+      "kind": "e172-synthetic",
+      "e172_validity": "XSD_VALID",
+      "xml_syntax": "WELL_FORMED",
+      "contains_doctype": false,
+      "future_processing": "PENDING",
+      "expected_xsd_valid": true,
+      "evidence": [
+        "X04",
+        "M01",
+        "M02"
+      ]
+    },
+    {
+      "path": "changes/e172-standard.xml",
+      "kind": "e172-synthetic",
+      "e172_validity": "XSD_VALID",
+      "xml_syntax": "WELL_FORMED",
+      "contains_doctype": false,
+      "future_processing": "PENDING",
+      "expected_xsd_valid": true,
+      "evidence": [
+        "X04",
+        "M01",
+        "M02"
+      ]
+    },
+    {
+      "path": "changes/e172-message-structure.xml",
+      "kind": "e172-synthetic",
+      "e172_validity": "XSD_VALID",
+      "xml_syntax": "WELL_FORMED",
+      "contains_doctype": false,
+      "future_processing": "PENDING",
+      "expected_xsd_valid": true,
+      "evidence": [
+        "X04",
+        "M01",
+        "M02"
+      ]
+    },
+    {
+      "path": "malformed/e172-duplicate-variable-id.xml",
+      "kind": "e172-synthetic",
+      "e172_validity": "XSD_INVALID",
+      "xml_syntax": "WELL_FORMED",
+      "contains_doctype": false,
+      "future_processing": "PENDING",
+      "expected_xsd_valid": false,
+      "evidence": [
+        "X04",
+        "M01",
+        "M02"
+      ]
+    },
+    {
+      "path": "malformed/e172-unknown-format.xml",
+      "kind": "e172-synthetic",
+      "e172_validity": "XSD_INVALID",
+      "xml_syntax": "WELL_FORMED",
+      "contains_doctype": false,
+      "future_processing": "PENDING",
+      "expected_xsd_valid": false,
+      "evidence": [
+        "X04",
+        "M01",
+        "M02"
+      ]
+    },
+    {
+      "path": "malformed/e172-dangling-alarm-event.xml",
+      "kind": "e172-synthetic",
+      "e172_validity": "XSD_VALID",
+      "xml_syntax": "WELL_FORMED",
+      "contains_doctype": false,
+      "future_processing": "PENDING",
+      "expected_xsd_valid": true,
+      "evidence": [
+        "X04",
+        "M01",
+        "M02"
+      ]
+    },
+    {
+      "path": "relationships/e172-multiple-parameters.xml",
+      "kind": "e172-synthetic",
+      "e172_validity": "XSD_VALID",
+      "xml_syntax": "WELL_FORMED",
+      "contains_doctype": false,
+      "future_processing": "PENDING",
+      "expected_xsd_valid": true,
+      "evidence": [
+        "X04",
+        "M01",
+        "M02"
+      ]
+    },
+    {
+      "path": "malformed/e172-unknown-extension.xml",
+      "kind": "e172-synthetic",
+      "e172_validity": "XSD_INVALID",
+      "xml_syntax": "WELL_FORMED",
+      "contains_doctype": false,
+      "future_processing": "PENDING",
+      "expected_xsd_valid": false,
+      "evidence": [
+        "X04",
+        "M01",
+        "M02"
+      ]
+    },
+    {
+      "path": "changes/change-cases.json",
+      "kind": "change-catalog",
+      "e172_validity": "NOT_APPLICABLE",
+      "future_processing": "PENDING"
     }
   ],
   "pending_resource_tests": {

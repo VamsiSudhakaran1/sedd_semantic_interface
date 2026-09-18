@@ -1,0 +1,190 @@
+{
+  "classification": "OBSERVED",
+  "scope": "Synthetic fixture XSD validation only",
+  "schemas": {
+    "E172-0225-SEDD-Schema.xsd": "23678aef0204ffbb654403077895be8db9f48b00c7a30934589c259c74f09810",
+    "E173-0415-SECSIIMessageNotation-Schema.xsd": "cc339254dd145c19b9d73a892890d8f05dedff4a1389ac934762aad55da6ff30"
+  },
+  "lxml_version": [
+    6,
+    1,
+    1,
+    0
+  ],
+  "libxml_version": [
+    2,
+    11,
+    9
+  ],
+  "results": [
+    {
+      "path": "minimal/e172-empty.xml",
+      "sha256": "77f8c38aa49aae2bb29be7834f3dc7dceab553c7425c79f80c93cc5227fc2312",
+      "xsd_valid": true,
+      "expected_xsd_valid": true,
+      "errors": []
+    },
+    {
+      "path": "relationships/e172-event-alarm-report.xml",
+      "sha256": "ea51909213b7679e45aed3e5dc9cc0c7fc05e3352fd1c0aac594d6ca6e5afbdb",
+      "xsd_valid": true,
+      "expected_xsd_valid": true,
+      "errors": []
+    },
+    {
+      "path": "changes/e172-alarm-link-after.xml",
+      "sha256": "d5acd322959b532bc9505cf70986a2aebf4d127c452ca09764d65af16c8a4681",
+      "xsd_valid": true,
+      "expected_xsd_valid": true,
+      "errors": []
+    },
+    {
+      "path": "malformed/e172-qualified-children.xml",
+      "sha256": "a4c6e55686824881574ee0a061057d86fd5a7496691dfcb3556545a512d9da51",
+      "xsd_valid": false,
+      "expected_xsd_valid": false,
+      "errors": [
+        "Element '{urn:semi-org:xsd.SEDD}SEDDHeader': This element is not expected. Expected is ( SEDDHeader )."
+      ]
+    },
+    {
+      "path": "relationships/e172-complete.xml",
+      "sha256": "4114b19844f2fa795e49ed9f04d80348737c0cfffe526f49841cadc7b1b38f01",
+      "xsd_valid": true,
+      "expected_xsd_valid": true,
+      "errors": []
+    },
+    {
+      "path": "changes/e172-name.xml",
+      "sha256": "c1c2a58688d86fe25148b68bad7a2d00d190401ec10c7f09a2e774c6c035ba24",
+      "xsd_valid": true,
+      "expected_xsd_valid": true,
+      "errors": []
+    },
+    {
+      "path": "changes/e172-description.xml",
+      "sha256": "3a405d20ab53d814ce16bceca467948e98e4849e12151354de5978cdcf0cb540",
+      "xsd_valid": true,
+      "expected_xsd_valid": true,
+      "errors": []
+    },
+    {
+      "path": "changes/e172-unit.xml",
+      "sha256": "693166ebd3160d7ea7bc16bd8e091045273203c2f820075b6dd5d8cdf7619018",
+      "xsd_valid": true,
+      "expected_xsd_valid": true,
+      "errors": []
+    },
+    {
+      "path": "changes/e172-range.xml",
+      "sha256": "1599c3998a15cc060690a37b9a65a0517e2d6118c2ac6ad66605f659ef200758",
+      "xsd_valid": true,
+      "expected_xsd_valid": true,
+      "errors": []
+    },
+    {
+      "path": "changes/e172-default.xml",
+      "sha256": "5e0ebf9079585aba4e7922fbcfbd9a285869988b753d068e3ef104900a589fc0",
+      "xsd_valid": true,
+      "expected_xsd_valid": true,
+      "errors": []
+    },
+    {
+      "path": "changes/e172-wkn.xml",
+      "sha256": "a3ddd854211df992fc37bbf1cd37da501772fc1a8e15b6662f501ca3b062cc18",
+      "xsd_valid": true,
+      "expected_xsd_valid": true,
+      "errors": []
+    },
+    {
+      "path": "changes/e172-report.xml",
+      "sha256": "75abd2acdfed73ae003c915d422e7afec9d9db4524ff5c6b68b8050819d3abbd",
+      "xsd_valid": true,
+      "expected_xsd_valid": true,
+      "errors": []
+    },
+    {
+      "path": "changes/e172-event-report.xml",
+      "sha256": "84076bc6bfe5b9e5d7073cd2852de935eddcee6935ec4b3dc458a81bb46fd767",
+      "xsd_valid": true,
+      "expected_xsd_valid": true,
+      "errors": []
+    },
+    {
+      "path": "changes/e172-alarm-clear.xml",
+      "sha256": "9f8390c58b1712a9850818998cda55f691ca6582f0fa4ff2a32f3940be219e4d",
+      "xsd_valid": true,
+      "expected_xsd_valid": true,
+      "errors": []
+    },
+    {
+      "path": "changes/e172-parameter.xml",
+      "sha256": "40b7e4f0fc2952864efdb2e4c5d3d74c03400172ea53599534495549386a4f9a",
+      "xsd_valid": true,
+      "expected_xsd_valid": true,
+      "errors": []
+    },
+    {
+      "path": "changes/e172-standard.xml",
+      "sha256": "cfcf0c174399469298144d1a9b565b619193763c9f725035a036b19ca3a67ab4",
+      "xsd_valid": true,
+      "expected_xsd_valid": true,
+      "errors": []
+    },
+    {
+      "path": "changes/e172-message-structure.xml",
+      "sha256": "459269fe299bf0fe2705ba8c47435b96ea2433180d14cdf22aa405c61256bf98",
+      "xsd_valid": true,
+      "expected_xsd_valid": true,
+      "errors": []
+    },
+    {
+      "path": "malformed/e172-duplicate-variable-id.xml",
+      "sha256": "a4e6c8b78bc7557dda70ce6227e261ba71bf6496d6756faca001eeb3b9276354",
+      "xsd_valid": false,
+      "expected_xsd_valid": false,
+      "errors": [
+        "Element 'StatusVariable': Duplicate key-sequence ['701'] in unique identity-constraint '{urn:semi-org:xsd.SEDD}UniqueVariableID'."
+      ]
+    },
+    {
+      "path": "malformed/e172-unknown-format.xml",
+      "sha256": "26e6d949681930c480fa14ef590cb0c72270c300af43503d20fddf152b46aaa9",
+      "xsd_valid": false,
+      "expected_xsd_valid": false,
+      "errors": [
+        "Element 'StatusVariable': No match found for key-sequence ['UndefinedFormat'] of keyref '{urn:semi-org:xsd.SEDD}SVFormatKeyRef'."
+      ]
+    },
+    {
+      "path": "malformed/e172-dangling-alarm-event.xml",
+      "sha256": "0e9f800be33ab9bfee9b5c640add9469b526c9bde2e4a05766e20488c1f14be1",
+      "xsd_valid": true,
+      "expected_xsd_valid": true,
+      "errors": []
+    },
+    {
+      "path": "relationships/e172-multiple-parameters.xml",
+      "sha256": "d50b8527e33f9a17eabc9a3d766f4a083a12275b5cec5a9d7a65effb459acf09",
+      "xsd_valid": true,
+      "expected_xsd_valid": true,
+      "errors": []
+    },
+    {
+      "path": "malformed/e172-unknown-extension.xml",
+      "sha256": "cd050de78cc0c81fd43a886e21952401b37ea534cc432bac72d630f6e075dd98",
+      "xsd_valid": false,
+      "expected_xsd_valid": false,
+      "errors": [
+        "Element '{urn:sema-sedd:fictional-extension}Hint': This element is not expected. Expected is ( EquipmentCharacterization )."
+      ]
+    }
+  ],
+  "sample": {
+    "sha256": "777d4b5ec3ccf94342fc73aaea1f40ade11d6172c4dad8693fb25bff96fd6ceb",
+    "well_formed": false,
+    "xsd_valid": null,
+    "first_error_line": 7988,
+    "first_error_column": 271
+  }
+}

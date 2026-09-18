@@ -1,5 +1,6 @@
 """Check fixture bookkeeping and XML mechanics, without implementing an adapter."""
 
+import hashlib
 import json
 import xml.etree.ElementTree as ET
 from pathlib import Path
@@ -64,6 +65,9 @@ def test_unavailable_references_cannot_claim_verified_e172_fixtures() -> None:
 @pytest.mark.parametrize("record", RECORDS, ids=[record["path"] for record in RECORDS])
 def test_fixture_classification(record: dict[str, Any]) -> None:
     data = (FIXTURES / record["path"]).read_bytes()
+    if record["kind"] == "change-catalog":
+        assert json.loads(data)
+        return
     if record["kind"] == "scenario-plan":
         plan = json.loads(data)
         assert plan["status"] == "PENDING"
@@ -166,3 +170,40 @@ def test_schema_evidence_matches_received_reference_fingerprint() -> None:
     for row in MANIFEST["coverage"]:
         for evidence in row["evidence"]:
             assert f"OBSERVED {evidence} " in observations
+
+
+def test_recorded_xsd_results_cover_current_fixture_bytes() -> None:
+    report = json.loads((ROOT / "docs/e172_validation_results.json").read_text(encoding="utf-8"))
+    results = {row["path"]: row for row in report["results"]}
+    expected = {r["path"] for r in RECORDS if r["kind"] == "e172-synthetic"}
+    assert set(results) == expected
+    for record in RECORDS:
+        if record["path"] not in results:
+            continue
+        row = results[record["path"]]
+        assert row["sha256"] == hashlib.sha256((FIXTURES / record["path"]).read_bytes()).hexdigest()
+        assert row["xsd_valid"] == record["expected_xsd_valid"]
+        assert record["e172_validity"] == ("XSD_VALID" if row["xsd_valid"] else "XSD_INVALID")
+    assert report["sample"]["well_formed"] is False
+    assert report["sample"]["first_error_line"] == 7988
+
+
+def test_change_catalog_contains_independent_single_field_changes() -> None:
+    cases = json.loads((FIXTURES / "changes/change-cases.json").read_text(encoding="utf-8"))
+    for case in cases:
+        before = ET.parse(FIXTURES / case["before"]).getroot()
+        after = ET.parse(FIXTURES / case["after"]).getroot()
+        old = before.find(case["changed_path"])
+        new = after.find(case["changed_path"])
+        assert old is not None and old.text == case["before_value"]
+        assert new is not None and new.text == case["after_value"]
+        assert new.text != old.text
+        new.text = old.text
+        assert ET.tostring(before) == ET.tostring(after)
+
+
+def test_repeated_sequence_permits_multiple_parameter_fixture() -> None:
+    tree = ET.parse(FIXTURES / "relationships/e172-multiple-parameters.xml")
+    assert len(tree.findall("RemoteCommands/RemoteCommand/AssociatedParameters/Parameter")) == 2
+    record = next(r for r in RECORDS if r["path"].endswith("e172-multiple-parameters.xml"))
+    assert record["e172_validity"] == "XSD_VALID"

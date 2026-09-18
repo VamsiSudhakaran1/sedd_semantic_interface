@@ -1,0 +1,101 @@
+[
+  {
+    "before": "relationships/e172-complete.xml",
+    "after": "changes/e172-name.xml",
+    "changed_path": "StatusVariables/StatusVariable/SVNAME",
+    "before_value": "SyntheticState",
+    "after_value": "SyntheticRenamed",
+    "expected_change": "NAME_CHANGED",
+    "status": "PENDING_COMPARATOR"
+  },
+  {
+    "before": "relationships/e172-complete.xml",
+    "after": "changes/e172-description.xml",
+    "changed_path": "StatusVariables/StatusVariable/Description",
+    "before_value": "Original synthetic variable.",
+    "after_value": "Changed synthetic description.",
+    "expected_change": "DESCRIPTION_CHANGED",
+    "status": "PENDING_COMPARATOR"
+  },
+  {
+    "before": "relationships/e172-complete.xml",
+    "after": "changes/e172-unit.xml",
+    "changed_path": "StatusVariables/StatusVariable/UNITS",
+    "before_value": "count",
+    "after_value": "items",
+    "expected_change": "UNIT_CHANGED",
+    "status": "PENDING_COMPARATOR"
+  },
+  {
+    "before": "relationships/e172-complete.xml",
+    "after": "changes/e172-range.xml",
+    "changed_path": "EquipmentConstants/EquipmentConstant/ECMAX",
+    "before_value": "100",
+    "after_value": "200",
+    "expected_change": "RANGE_CHANGED",
+    "status": "PENDING_COMPARATOR"
+  },
+  {
+    "before": "relationships/e172-complete.xml",
+    "after": "changes/e172-default.xml",
+    "changed_path": "EquipmentConstants/EquipmentConstant/ECDEF",
+    "before_value": "20",
+    "after_value": "21",
+    "expected_change": "DEFAULT_CHANGED",
+    "status": "PENDING_COMPARATOR"
+  },
+  {
+    "before": "relationships/e172-complete.xml",
+    "after": "changes/e172-wkn.xml",
+    "changed_path": "StatusVariables/StatusVariable/WellKnownName",
+    "before_value": "urn:sema-sedd:fictional:702",
+    "after_value": "urn:sema-sedd:fictional:renamed",
+    "expected_change": "WELL_KNOWN_NAME_CHANGED",
+    "status": "PENDING_COMPARATOR"
+  },
+  {
+    "before": "relationships/e172-complete.xml",
+    "after": "changes/e172-report.xml",
+    "changed_path": "DefaultReportDefinitions/DefaultReportDefinition/VIDList/VID",
+    "before_value": "701",
+    "after_value": "703",
+    "expected_change": "REPORT_CONTENT_CHANGED",
+    "status": "PENDING_COMPARATOR"
+  },
+  {
+    "before": "relationships/e172-complete.xml",
+    "after": "changes/e172-event-report.xml",
+    "changed_path": "DefaultEventReportLinks/EventReportLink/CEID",
+    "before_value": "801",
+    "after_value": "802",
+    "expected_change": "EVENT_REPORT_LINK_CHANGED",
+    "status": "PENDING_COMPARATOR"
+  },
+  {
+    "before": "relationships/e172-complete.xml",
+    "after": "changes/e172-alarm-clear.xml",
+    "changed_path": "Alarms/Alarm/ClearEvent",
+    "before_value": "802",
+    "after_value": "801",
+    "expected_change": "ALARM_EVENT_LINK_CHANGED",
+    "status": "PENDING_COMPARATOR"
+  },
+  {
+    "before": "relationships/e172-complete.xml",
+    "after": "changes/e172-parameter.xml",
+    "changed_path": "RemoteCommands/RemoteCommand/AssociatedParameters/Parameter/Name",
+    "before_value": "MODE",
+    "after_value": "PROFILE",
+    "expected_change": "COMMAND_PARAMETER_CHANGED",
+    "status": "PENDING_COMPARATOR"
+  },
+  {
+    "before": "relationships/e172-complete.xml",
+    "after": "changes/e172-standard.xml",
+    "changed_path": "SEMIStandards/SupportedSEMIStandard/SEMIStandard",
+    "before_value": "Synthetic-Only",
+    "after_value": "Synthetic-Only-v2",
+    "expected_change": "STANDARD_METADATA_CHANGED",
+    "status": "PENDING_COMPARATOR"
+  }
+]
