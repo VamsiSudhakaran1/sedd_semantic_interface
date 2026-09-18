@@ -1,7 +1,9 @@
 # E172-0225 engineering observations and fixture strategy
 
-**OBSERVED — Status: both reference schemas analyzed; synthetic fixtures validated;
-supplied TrackSys sample analyzed with explicit XML-syntax limitations.**
+**OBSERVED — Prompt 2 reference analysis and fixture strategy complete. Both original
+reference schemas and the complete TrackSys download have been analyzed. The
+unmodified sample and positive synthetic fixtures pass offline XSD validation.
+Remaining semantic design questions are explicitly ASSUMPTION / PENDING.**
 No runtime parser, adapter or comparator was implemented. Findings derive from
 XML declarations and the received sample, not copied standards prose.
 
@@ -26,15 +28,15 @@ This imported schema has no further imports/includes. Both unmodified schemas
 compile offline. Declaration locations are in `e173_schema_inventory.json`.
 The earlier missing-dependency blocker is resolved.
 
-**OBSERVED X00c — Sample received.** `tracksys_sample.xml` is 342,528 bytes,
-SHA-256 `777d4b5ec3ccf94342fc73aaea1f40ade11d6172c4dad8693fb25bff96fd6ceb`.
-The supplied bytes are preserved locally without repair. The first XML error is
-line 7988, column 271: angle-bracket text inside Exception is interpreted as
-unclosed DATAID/RPTID elements. Additional syntax errors occur around lines
-8081, 8343 and 8347. Whole-document XSD validation is therefore not possible.
-A browser-style introductory comment is present; the download/copy transformation
-history is unknown. Do not attribute these defects to the original SEMI file
-without obtaining its original bytes.
+**OBSERVED X00c — Original sample received and validated.**
+`SEDD_TrackSys_Model404_0225.xml` is 387,563 bytes, SHA-256
+`10de748939ba7ac2fd9b233d6df5361aa2bef9a98dd1d3961853eda4da2b765b`.
+The supplied original download is well-formed and passes both unmodified schemas
+without repair, entity resolution or network retrieval. Source URL:
+[TrackSys Model 404 XML](https://dom.semi.org/web/wstandards.nsf/3F009B878C57ABB388258C44006550D6/$file/SEDD_TrackSys_Model404_0225.xml).
+The earlier 342,528-byte `tracksys_sample.xml` copy was malformed; it is superseded
+as reference evidence. All sample source lines and counts below now refer to the
+387,563-byte original download. The access and syntax blockers are resolved.
 
 ## Namespace and top-level structure
 
@@ -80,8 +82,8 @@ schema `version` attribute is declared. SOFTREV occurs in the equipment header.
 The filename supplies an external revision label, not an in-document revision
 selector. The supplied XSD alone does not establish reliable adapter detection.
 
-**ASSUMPTION A01 — Revision detection, PENDING.** Inspect the TrackSys root and
-metadata before choosing revision signals; do not treat SOFTREV, a prefix, a
+**ASSUMPTION A01 — Revision detection, PENDING.** The inspected TrackSys root provides a schemaLocation hint, but revision-selection
+policy still requires a deliberate adapter design; do not treat SOFTREV, a prefix, a
 filename or a schemaLocation URL as conclusive revision evidence.
 
 ## Entities, identity and references
@@ -114,8 +116,8 @@ attribute. StateTransition has StateModel, TransitionID, PreviousState and NewSt
 strings. These are two distinct variable lists; merging their meanings loses data.
 
 **ASSUMPTION A02 — Event reference semantics, PENDING.** The field structures are
-observed, but target-kind restrictions, direct relationship labels and the sample's
-actual usage must be reviewed. Do not synthesize a state-machine entity or an edge
+observed and sample membership is inspected in S04. General target-kind restrictions
+and direct relationship labels still require an explicit canonical design. Do not synthesize a state-machine entity or an edge
 from descriptive text. Report traversal is distinct from an explicit event VID.
 
 **OBSERVED X07 — Alarms (lines 513–601).** Alarm declares ALCD as xs:byte, ALID as
@@ -205,47 +207,75 @@ name does not itself enforce numeric payload validity in this schema. Attributes
 include name, id, length, description, dataItemName, maxLength and minLength;
 length bounds are strings. SET (line 431), ENU (478) and BIT (525) have distinct
 nested shapes. E172's unqualified SECSData/ValueFormat wrappers use this imported
-type, whose child elements are SMN-qualified. Synthetic examples exercise UI4,
-ASC and LST; exhaustive compound-type semantics are explicitly pending.
+type, whose child elements are SMN-qualified. Synthetic examples exercise UI4, ASC, LST, ENU, BIT and SET. These fixtures verify
+structural syntax; exhaustive compound-type semantics remain explicitly pending.
 
 **ASSUMPTION A08 — Semantic bounds, PENDING.** Do not infer complete SECS numeric
 ranges, encoding, length-expression grammar, enum/bit meaning or sequence
 normalization from successful XSD validation. Further domain evidence is needed
 before those rules become adapter or comparison behavior.
 
-## TrackSys observations and limits
+## TrackSys observations
 
 **OBSERVED S01 — Root/header.** Line 2 uses a qualified DataDictionary root with
 unqualified SEDD children and xsi:schemaLocation naming the E172-0225 XSD. Header
 at line 18 has MDLN Model404, SOFTREV 1.0 and Supplier TrackSys; EquipmentID is
-present but empty. CreateDate is 2014-06-12. These values demonstrate why equipment
-software/date metadata cannot be treated as the SEDD schema revision.
+present but empty. CreateDate is 2014-06-12. Equipment software/date metadata
+therefore cannot be treated as the SEDD schema revision.
 
-**OBSERVED S02 — Successfully closed prefix.** A non-recovering XML pull parse
-stopped at the first syntax error. Before that point, complete sections contained
-185 CollectionEvent, 93 DataVariable, 104 StatusVariable, 7 EquipmentConstant,
-46 Alarm and 67 VariableFormat elements. Comments are excluded from these counts.
-There are two complete RecipeVariableParameters containers. Entity examples start
-at lines 27, 3927, 4674, 5488, 5556 and 6101 respectively. The prefix includes
-161 StateTransition elements and both SetEvent and ClearEvent on all 46 alarms.
-No WellKnownName appears in this parsed prefix; that is not a claim about the
-standard's support or the unparsed remainder. The prefix contains 28 closed
-SECSMessage elements; that is not the document's total message count.
+**OBSERVED S02 — Complete document inventory.** `tracksys_observations.json`
+records counts, source paths and lines from a strict, non-recovering full parse:
 
-**OBSERVED S03 — Independently inspected fragments.** Complete, unchanged textual
-sections following the error were separately parsed as XML fragments, without
-repairing or pretending to parse the complete document. RemoteCommands starts at
-line 9168 and contains 7 commands; one has one Parameter. SEMIStandards at line
-9209 has one SupportedSEMIStandard. DefaultReportDefinitions at line 9346 has one
-report plus CanBeDeleted; DefaultEventReportLinks at line 9358 has one link plus
-CanBeDeleted. EquipmentCharacterization at line 9367 contains its five declared
-sections. Fragment observations do not establish whole-document nesting, global
-identity constraints, or schema validity.
+| Entity or field | Count | First source line |
+| --- | --- | --- |
+| CollectionEvent | 185 | 27 |
+| DataVariable | 93 | 3927 |
+| StatusVariable | 104 | 4674 |
+| EquipmentConstant | 7 | 5488 |
+| Alarm | 46 | 5556 |
+| VariableFormat | 67 | 6101 |
+| SMN SECSMessage | 92 | 7635 |
+| RemoteCommand | 7 | 9322 |
+| Associated Parameter | 1 | 9325 |
+| SupportedSEMIStandard | 1 | 9364 |
+| DefaultReportDefinition | 1 | 9504 |
+| EventReportLink | 1 | 9520 |
+| StateTransition | 161 | 31 |
+| WellKnownName | 0 | Not present |
 
-**ASSUMPTION A09 — Sample verification, PENDING.** Original well-formed download
-bytes are needed to validate the entire TrackSys document and resolve any
-sample/schema discrepancies. No recovered tree is used as a parser contract.
-The observed filename/schemaLocation alone does not authenticate a revision.
+**OBSERVED S03 — Structure and optionality.** Two RecipeVariableParameters
+containers occur. All 46 alarms have both set and clear identifiers. Six of the
+seven commands have no associated Parameter; schema optionality accommodates
+this. No RelevantVariables entries or WellKnownName elements occur anywhere in
+this sample. Their schema support is nonetheless observed; sample absence is not
+an unsupported-feature rule. Variable formats use primitive values, nested LST,
+ENU and BIT shapes, including 47 ENU nodes and one BIT node. The sample contains
+EquipmentCharacterization's five named sections. All counts exclude XML comments.
+
+**OBSERVED S04 — Explicit references can remain unresolved.** Numeric target
+membership checks find 1,327 event VALIDDVS/VID occurrences; value 0 has no declared
+DataVariable target. The 46 alarm SetEvent values (4000 through 4090, even) and
+46 ClearEvent values (4001 through 4091, odd) have no declared CollectionEvent
+targets. The event/report link points to RPTID 101, while the declared default
+report has RPTID 87001. The link's CEID exists, and all three default report VIDs
+have declared variable targets. Exact field paths are in the observation JSON.
+These results coexist with successful XSD validation: the XSD has no keyrefs for
+these fields. Preserve unresolved identifiers and evidence; never invent missing
+entities or silently retarget identifiers to a plausible match.
+
+**ASSUMPTION A09 — Special identifier meaning, PENDING.** The absent target for
+VID 0 does not establish whether 0 is a sentinel or a sample omission. The alarm
+and report mismatches likewise do not establish intent. Preserve the observed
+values; do not repair the sample or infer semantics from numeric proximity.
+
+**OBSERVED S05 — Message identities can be ambiguous.** S1F1, S1F2, S1F13 and
+S1F14 each occur twice. S1F1 (lines 7635/8882) and S1F2 (7641/8888) even repeat
+with the same direction. The S1F13 and S1F14 pairs have opposite directions.
+Thus stream/function alone, or even stream/function/direction, does not uniquely
+identify every message entry in this sample. Strong-evidence collisions need an
+explicit ambiguous state rather than first-match behavior. The original synthetic
+`e172-ambiguous-message.xml` repeats a stream/function/direction combination with
+a different name to keep this issue visible without copying sample content.
 
 ## Fixture strategy and current checks
 
@@ -259,7 +289,7 @@ or truncated TrackSys document; fictional WKNs are not claimed to be official.
 
 **OBSERVED X15b — Validation.** `docs/e172_validation_results.json` records schema
 fingerprints, fixture fingerprints, validator versions and the actual outcomes
-for 22 schema-based fixtures. 18 are XSD-valid; 4 are deliberately XSD-invalid:
+for 26 schema-based fixtures. 22 are XSD-valid; 4 are deliberately XSD-invalid:
 qualified local children, duplicate variable IDs across categories, undefined
 format, and unknown foreign extension. Dangling report/variable and alarm/event
 identifiers can be XSD-valid because their target relationships lack XSD keyrefs.
@@ -292,8 +322,8 @@ Git; no standards prose is copied into the source distribution.
 
 **OBSERVED X17 — Accounting.** Evidence status refers only to inspected schema
 structure. Every concept has a source observation or an explicit PENDING entry.
-Full sample validation remains pending because the supplied sample is malformed.
-Synthetic XSD results are recorded separately from canonical implementation status.
+The complete original sample passes XSD validation. This does not establish
+semantic reference completeness or canonical implementation status.
 
 | Canonical concept | Label | Status | Evidence | Original XML / plans |
 | --- | --- | --- | --- | --- |
@@ -305,15 +335,15 @@ Synthetic XSD results are recorded separately from canonical implementation stat
 | Alarms | OBSERVED | OBSERVED | X07 | `relationships/e172-event-alarm-report.xml`, `relationships/e172-complete.xml` |
 | Remote Commands | OBSERVED | OBSERVED | X08 | `relationships/e172-event-alarm-report.xml`, `relationships/e172-complete.xml` |
 | Remote Command Parameters | OBSERVED | OBSERVED | X08, M02 | `relationships/e172-complete.xml` |
-| Supported SECS Messages | OBSERVED | OBSERVED | X10, M01 | `relationships/e172-complete.xml` |
-| Variable Formats | OBSERVED | OBSERVED | X09, M02 | `relationships/e172-complete.xml` |
+| Supported SECS Messages | OBSERVED | OBSERVED | X10, M01, S05 | `relationships/e172-complete.xml`, `relationships/e172-ambiguous-message.xml` |
+| Variable Formats | OBSERVED | OBSERVED | X09, M02 | `relationships/e172-complete.xml`, `relationships/e172-compound-formats.xml` |
 | Default Reports | OBSERVED | OBSERVED | X11 | `relationships/e172-event-alarm-report.xml`, `relationships/e172-complete.xml` |
 | Event/Report Links | OBSERVED | OBSERVED | X11 | `relationships/e172-event-alarm-report.xml`, `relationships/e172-complete.xml` |
 | SEMI Standards metadata | OBSERVED | OBSERVED | X12 | `relationships/e172-event-alarm-report.xml`, `relationships/e172-complete.xml` |
 | Well-Known Names | OBSERVED | OBSERVED | X12 | `relationships/e172-complete.xml` |
 | descriptions | OBSERVED | OBSERVED | X13 | `minimal/e172-empty.xml`, `relationships/e172-complete.xml` |
 | provenance | ASSUMPTION | PENDING | X13 | `minimal/equipment-plan.json`, `relationships/extensions-plan.json` |
-| unresolved references | OBSERVED | OBSERVED | X05 | `relationships/e172-event-alarm-report.xml`, `relationships/e172-complete.xml` |
+| unresolved references | OBSERVED | OBSERVED | X05, S04 | `relationships/e172-event-alarm-report.xml`, `relationships/e172-complete.xml`, `relationships/e172-dangling-event-variable.xml`, `relationships/e172-dangling-report-link.xml` |
 | unknown extensions | ASSUMPTION | PENDING | X14 | `relationships/extensions-plan.json` |
 
 ## Relationship evidence and remaining work
@@ -325,18 +355,19 @@ Entity WKN/standard fields: X12. Variable-to-format keyrefs: X09.
 Supported message wrapper/import: X10. All eleven requested patterns are accounted
 for; identifier resolution policy remains pending; imported structures now have M01/M02 evidence.
 
-**ASSUMPTION A07 — Remaining evidence, PENDING.** The schemas and available sample
-content have been studied. A well-formed original TrackSys download is still
-needed for full-document validation. Runtime identity resolution, provenance,
-unknown preservation and unexercised compound-format semantics remain explicitly
-pending. These gaps must not silently become parser behavior.
+**ASSUMPTION A07 — Remaining semantic design, PENDING.** Both schemas and the
+full original sample have been studied; no reference file is outstanding.
+Runtime identity resolution, provenance retention, unknown preservation and full
+compound-format interpretation are future increments. Their pending status is
+explicit in this ledger and coverage matrix. They must not silently become parser
+behavior. Completing this research increment does not claim a working parser.
 
 **OBSERVED X19 — Reproducing developer validation.** With the original supplied
 schemas in `work/references/`, install `.[references]` and run:
 
 ```sh
-python tools/validate_reference_fixtures.py --references work/references --sample work/references/tracksys_sample.xml --output docs/e172_validation_results.json
+python tools/validate_reference_fixtures.py --references work/references --sample work/references/SEDD_TrackSys_Model404_0225.xml --output docs/e172_validation_results.json
 ```
 
-The utility checks source fingerprints and records the sample's syntax failure
-without attempting recovery. It does not fetch schemaLocation URLs.
+The utility checks source fingerprints and requires the recorded original sample
+to remain well-formed and XSD-valid. It does not recover or rewrite XML. It does not fetch schemaLocation URLs.

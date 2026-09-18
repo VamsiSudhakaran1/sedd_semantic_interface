@@ -184,8 +184,10 @@ def test_recorded_xsd_results_cover_current_fixture_bytes() -> None:
         assert row["sha256"] == hashlib.sha256((FIXTURES / record["path"]).read_bytes()).hexdigest()
         assert row["xsd_valid"] == record["expected_xsd_valid"]
         assert record["e172_validity"] == ("XSD_VALID" if row["xsd_valid"] else "XSD_INVALID")
-    assert report["sample"]["well_formed"] is False
-    assert report["sample"]["first_error_line"] == 7988
+    assert report["sample"]["sha256"] == MANIFEST["sources"]["sample"]["sha256"]
+    assert report["sample"]["well_formed"] is True
+    assert report["sample"]["xsd_valid"] is True
+    assert report["sample"]["errors"] == []
 
 
 def test_change_catalog_contains_independent_single_field_changes() -> None:
@@ -207,3 +209,44 @@ def test_repeated_sequence_permits_multiple_parameter_fixture() -> None:
     assert len(tree.findall("RemoteCommands/RemoteCommand/AssociatedParameters/Parameter")) == 2
     record = next(r for r in RECORDS if r["path"].endswith("e172-multiple-parameters.xml"))
     assert record["e172_validity"] == "XSD_VALID"
+
+
+def test_complete_sample_observations_are_bound_to_original_download() -> None:
+    observations = json.loads(
+        (ROOT / "docs/tracksys_observations.json").read_text(encoding="utf-8")
+    )
+    assert observations["source_sha256"] == MANIFEST["sources"]["sample"]["sha256"]
+    assert observations["counts"]["messages"] == 92
+    assert observations["counts"]["events"] == 185
+    assert observations["counts"]["wkn"] == 0
+    assert observations["reference_membership"]["link_report"]["missing_target_values"] == ["101"]
+
+
+def test_ambiguous_message_fixture_repeats_strong_identity_fields() -> None:
+    root = ET.parse(FIXTURES / "relationships/e172-ambiguous-message.xml").getroot()
+    messages = root.findall("SECSMessages/{urn:semi-org:xsd.SMN}SECSMessage")
+    assert len(messages) == 2
+    for key in ["s", "f", "direction"]:
+        assert messages[0].get(key) == messages[1].get(key)
+    assert messages[0].get("name") != messages[1].get("name")
+
+
+def test_dangling_report_fixture_has_no_fabricated_target() -> None:
+    root = ET.parse(FIXTURES / "relationships/e172-dangling-report-link.xml").getroot()
+    target = root.findtext("DefaultEventReportLinks/EventReportLink/RPTIDList/RPTID")
+    declared = {
+        e.text for e in root.findall("DefaultReportDefinitions/DefaultReportDefinition/RPTID")
+    }
+    assert target == "999"
+    assert target not in declared
+
+
+def test_compound_format_fixture_preserves_distinct_shapes() -> None:
+    root = ET.parse(FIXTURES / "relationships/e172-compound-formats.xml").getroot()
+    smn = "{urn:semi-org:xsd.SMN}"
+    shapes = {
+        child.tag
+        for wrapper in root.findall("VariableFormats/VariableFormat/SECSData")
+        for child in wrapper
+    }
+    assert {smn + kind for kind in ["ENU", "BIT", "SET"]} <= shapes

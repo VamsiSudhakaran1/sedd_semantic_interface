@@ -50,14 +50,21 @@ SEMI endorsement or certification.
 
 ## Reference analysis status
 
-The [Prompt 2 observations and coverage matrix](docs/e172_observations.md) cover
-both supplied schemas and the readable portions of the TrackSys sample. All 22
-synthetic XSD checks match expectations. The supplied sample itself has XML syntax
-errors; full-document sample validation is explicitly pending. Runtime canonical
-processing remains unimplemented.
+[Prompt 2 observations and coverage matrix](docs/e172_observations.md) cover the
+E172/E173 schemas and the complete original TrackSys sample. The unmodified sample
+passes offline XSD validation. All 26 synthetic XSD outcomes match expectations
+(22 valid and 4 intentionally invalid). The sample also demonstrates unresolved
+identifiers and repeated message identities despite schema validity. Remaining
+semantic design questions are explicitly pending; runtime canonical processing
+remains unimplemented.
 
-To reproduce the offline reference checks, install `python -m pip install -e
-".[references]"` and run `python tools/validate_reference_fixtures.py --references
-work/references --sample work/references/tracksys_sample.xml --output
-docs/e172_validation_results.json` as one command. The two original XSD files and
-sample are local research inputs, intentionally excluded from the repository.
+To reproduce the reference checks, place the original supplied XSDs and sample in
+`work/references/`, then run:
+
+```sh
+python -m pip install -e ".[references]"
+python tools/validate_reference_fixtures.py --references work/references --sample work/references/SEDD_TrackSys_Model404_0225.xml --output docs/e172_validation_results.json
+```
+
+The utility uses only pinned local schemas and performs no network requests.
+The original reference inputs are intentionally excluded from version control.

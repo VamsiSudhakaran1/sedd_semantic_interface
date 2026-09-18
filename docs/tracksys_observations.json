@@ -1,0 +1,263 @@
+{
+  "classification": "OBSERVED",
+  "source_filename": "SEDD_TrackSys_Model404_0225.xml",
+  "source_sha256": "10de748939ba7ac2fd9b233d6df5361aa2bef9a98dd1d3961853eda4da2b765b",
+  "scope": "Whole unmodified sample; numeric target membership checks are observations, not general adapter rules.",
+  "counts": {
+    "events": 185,
+    "data_variables": 93,
+    "status_variables": 104,
+    "equipment_constants": 7,
+    "alarms": 46,
+    "variable_formats": 67,
+    "messages": 92,
+    "commands": 7,
+    "parameters": 1,
+    "standards": 1,
+    "reports": 1,
+    "event_report_links": 1,
+    "wkn": 0,
+    "state_transitions": 161
+  },
+  "examples": {
+    "events": {
+      "path": "/SEDD:DataDictionary/CollectionEvents/CollectionEvent[1]",
+      "line": 27
+    },
+    "data_variables": {
+      "path": "/SEDD:DataDictionary/DataVariables/DataVariable[1]",
+      "line": 3927
+    },
+    "status_variables": {
+      "path": "/SEDD:DataDictionary/StatusVariables/StatusVariable[1]",
+      "line": 4674
+    },
+    "equipment_constants": {
+      "path": "/SEDD:DataDictionary/EquipmentConstants/EquipmentConstant[1]",
+      "line": 5488
+    },
+    "alarms": {
+      "path": "/SEDD:DataDictionary/Alarms/Alarm[1]",
+      "line": 5556
+    },
+    "variable_formats": {
+      "path": "/SEDD:DataDictionary/VariableFormats/VariableFormat[1]",
+      "line": 6101
+    },
+    "messages": {
+      "path": "/SEDD:DataDictionary/SECSMessages/*[1]",
+      "line": 7635
+    },
+    "commands": {
+      "path": "/SEDD:DataDictionary/RemoteCommands/RemoteCommand[1]",
+      "line": 9322
+    },
+    "parameters": {
+      "path": "/SEDD:DataDictionary/RemoteCommands/RemoteCommand[1]/AssociatedParameters/Parameter",
+      "line": 9325
+    },
+    "standards": {
+      "path": "/SEDD:DataDictionary/SEMIStandards/SupportedSEMIStandard",
+      "line": 9364
+    },
+    "reports": {
+      "path": "/SEDD:DataDictionary/DefaultReportDefinitions/DefaultReportDefinition",
+      "line": 9504
+    },
+    "event_report_links": {
+      "path": "/SEDD:DataDictionary/DefaultEventReportLinks/EventReportLink",
+      "line": 9520
+    },
+    "state_transitions": {
+      "path": "/SEDD:DataDictionary/CollectionEvents/CollectionEvent[1]/StateTransition",
+      "line": 31
+    }
+  },
+  "reference_membership": {
+    "event_valid_dv": {
+      "field_count": 1327,
+      "missing_target_values": [
+        "0"
+      ],
+      "example_path": "/SEDD:DataDictionary/CollectionEvents/CollectionEvent[15]/VALIDDVS/VID[1]",
+      "example_line": 221
+    },
+    "event_relevant_variable": {
+      "field_count": 0,
+      "missing_target_values": [],
+      "example_path": null,
+      "example_line": null
+    },
+    "alarm_set": {
+      "field_count": 46,
+      "missing_target_values": [
+        "4000",
+        "4002",
+        "4004",
+        "4006",
+        "4008",
+        "4010",
+        "4012",
+        "4014",
+        "4016",
+        "4018",
+        "4020",
+        "4022",
+        "4024",
+        "4026",
+        "4028",
+        "4030",
+        "4032",
+        "4034",
+        "4036",
+        "4038",
+        "4040",
+        "4042",
+        "4044",
+        "4046",
+        "4048",
+        "4050",
+        "4052",
+        "4054",
+        "4056",
+        "4058",
+        "4060",
+        "4062",
+        "4064",
+        "4066",
+        "4068",
+        "4070",
+        "4072",
+        "4074",
+        "4076",
+        "4078",
+        "4080",
+        "4082",
+        "4084",
+        "4086",
+        "4088",
+        "4090"
+      ],
+      "example_path": "/SEDD:DataDictionary/Alarms/Alarm[1]/SetEvent",
+      "example_line": 5561
+    },
+    "alarm_clear": {
+      "field_count": 46,
+      "missing_target_values": [
+        "4001",
+        "4003",
+        "4005",
+        "4007",
+        "4009",
+        "4011",
+        "4013",
+        "4015",
+        "4017",
+        "4019",
+        "4021",
+        "4023",
+        "4025",
+        "4027",
+        "4029",
+        "4031",
+        "4033",
+        "4035",
+        "4037",
+        "4039",
+        "4041",
+        "4043",
+        "4045",
+        "4047",
+        "4049",
+        "4051",
+        "4053",
+        "4055",
+        "4057",
+        "4059",
+        "4061",
+        "4063",
+        "4065",
+        "4067",
+        "4069",
+        "4071",
+        "4073",
+        "4075",
+        "4077",
+        "4079",
+        "4081",
+        "4083",
+        "4085",
+        "4087",
+        "4089",
+        "4091"
+      ],
+      "example_path": "/SEDD:DataDictionary/Alarms/Alarm[1]/ClearEvent",
+      "example_line": 5562
+    },
+    "report_member": {
+      "field_count": 3,
+      "missing_target_values": [],
+      "example_path": "/SEDD:DataDictionary/DefaultReportDefinitions/DefaultReportDefinition/VIDList/VID[1]",
+      "example_line": 9508
+    },
+    "link_event": {
+      "field_count": 1,
+      "missing_target_values": [],
+      "example_path": "/SEDD:DataDictionary/DefaultEventReportLinks/EventReportLink/CEID",
+      "example_line": 9521
+    },
+    "link_report": {
+      "field_count": 1,
+      "missing_target_values": [
+        "101"
+      ],
+      "example_path": "/SEDD:DataDictionary/DefaultEventReportLinks/EventReportLink/RPTIDList/RPTID",
+      "example_line": 9523
+    }
+  },
+  "format_element_usage": {
+    "BOO": 1,
+    "FP8": 1,
+    "ASC": 23,
+    "UI1": 4,
+    "UI2": 1,
+    "UI4": 2,
+    "ENU": 47,
+    "EnumFormat": 47,
+    "EnumerationChoices": 47,
+    "EnumValue": 202,
+    "Value": 202,
+    "Description": 202,
+    "BIT": 1,
+    "BitFieldFormat": 1,
+    "BitFieldDefinitions": 1,
+    "BitPosition": 4,
+    "BitNumber": 4,
+    "OnValue": 4,
+    "LST": 43,
+    "FP4": 5,
+    "ANY": 3
+  },
+  "message_identity_duplicates": [
+    {
+      "s": "1",
+      "f": "1",
+      "count": 2
+    },
+    {
+      "s": "1",
+      "f": "2",
+      "count": 2
+    },
+    {
+      "s": "1",
+      "f": "13",
+      "count": 2
+    },
+    {
+      "s": "1",
+      "f": "14",
+      "count": 2
+    }
+  ]
+}

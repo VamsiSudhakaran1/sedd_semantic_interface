@@ -82,8 +82,11 @@ def main() -> None:
         sample_result = {"sha256": digest, "well_formed": False, "xsd_valid": None}
         try:
             sample = etree.fromstring(data, parser=xml_parser)
+            if sample.getroottree().docinfo.doctype:
+                raise ValueError("Unexpected sample DTD")
             sample_result["well_formed"] = True
             sample_result["xsd_valid"] = schema.validate(sample)
+            sample_result["errors"] = [e.message for e in schema.error_log]
         except etree.XMLSyntaxError as error:
             sample_result["first_error_line"] = error.position[0]
             sample_result["first_error_column"] = error.position[1]
@@ -92,6 +95,9 @@ def main() -> None:
     mismatches = [r["path"] for r in results if r["xsd_valid"] != r["expected_xsd_valid"]]
     if mismatches:
         raise SystemExit(f"Unexpected validation results: {mismatches}")
+    if args.sample is not None and manifest["sources"]["sample"]["status"] == "OBSERVED_XSD_VALID":
+        if not sample_result["well_formed"] or not sample_result["xsd_valid"]:
+            raise SystemExit("Sample no longer matches its recorded valid status")
     print(f"{len(results)} fixture schema outcomes matched expectations.")
 
 
