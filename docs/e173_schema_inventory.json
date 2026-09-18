@@ -1,0 +1,948 @@
+{
+  "classification": "OBSERVED",
+  "source_sha256": "cc339254dd145c19b9d73a892890d8f05dedff4a1389ac934762aad55da6ff30",
+  "declarations": [
+    {
+      "line": 19,
+      "schema_xpath": "/xs:schema/xs:element[1]",
+      "declaration": "element",
+      "attributes": {
+        "name": "SECSMessageScenario"
+      }
+    },
+    {
+      "line": 29,
+      "schema_xpath": "/xs:schema/xs:element[1]/xs:complexType/xs:sequence/xs:element[1]",
+      "declaration": "element",
+      "attributes": {
+        "ref": "SECSMessage",
+        "minOccurs": "0",
+        "maxOccurs": "unbounded"
+      }
+    },
+    {
+      "line": 30,
+      "schema_xpath": "/xs:schema/xs:element[1]/xs:complexType/xs:sequence/xs:element[2]",
+      "declaration": "element",
+      "attributes": {
+        "ref": "Comment",
+        "minOccurs": "0",
+        "maxOccurs": "unbounded"
+      }
+    },
+    {
+      "line": 31,
+      "schema_xpath": "/xs:schema/xs:element[1]/xs:complexType/xs:sequence/xs:element[3]",
+      "declaration": "element",
+      "attributes": {
+        "ref": "HSMSMessage",
+        "minOccurs": "0",
+        "maxOccurs": "unbounded"
+      }
+    },
+    {
+      "line": 32,
+      "schema_xpath": "/xs:schema/xs:element[1]/xs:complexType/xs:sequence/xs:element[4]",
+      "declaration": "element",
+      "attributes": {
+        "ref": "SECS-IMessage",
+        "minOccurs": "0",
+        "maxOccurs": "unbounded"
+      }
+    },
+    {
+      "line": 34,
+      "schema_xpath": "/xs:schema/xs:element[1]/xs:complexType/xs:attribute",
+      "declaration": "attribute",
+      "attributes": {
+        "name": "description",
+        "type": "xs:string",
+        "use": "optional"
+      }
+    },
+    {
+      "line": 42,
+      "schema_xpath": "/xs:schema/xs:element[2]",
+      "declaration": "element",
+      "attributes": {
+        "name": "SECSMessage"
+      }
+    },
+    {
+      "line": 48,
+      "schema_xpath": "/xs:schema/xs:element[2]/xs:complexType/xs:sequence/xs:element[1]",
+      "declaration": "element",
+      "attributes": {
+        "name": "Description",
+        "type": "xs:string",
+        "minOccurs": "0"
+      }
+    },
+    {
+      "line": 53,
+      "schema_xpath": "/xs:schema/xs:element[2]/xs:complexType/xs:sequence/xs:element[2]",
+      "declaration": "element",
+      "attributes": {
+        "name": "Header",
+        "type": "xs:string",
+        "minOccurs": "0"
+      }
+    },
+    {
+      "line": 58,
+      "schema_xpath": "/xs:schema/xs:element[2]/xs:complexType/xs:sequence/xs:element[3]",
+      "declaration": "element",
+      "attributes": {
+        "ref": "SECSData",
+        "minOccurs": "0",
+        "maxOccurs": "unbounded"
+      }
+    },
+    {
+      "line": 59,
+      "schema_xpath": "/xs:schema/xs:element[2]/xs:complexType/xs:sequence/xs:element[4]",
+      "declaration": "element",
+      "attributes": {
+        "name": "Exception",
+        "type": "xs:string",
+        "minOccurs": "0"
+      }
+    },
+    {
+      "line": 65,
+      "schema_xpath": "/xs:schema/xs:element[2]/xs:complexType/xs:attribute[1]",
+      "declaration": "attribute",
+      "attributes": {
+        "name": "s",
+        "type": "xs:integer",
+        "use": "required"
+      }
+    },
+    {
+      "line": 70,
+      "schema_xpath": "/xs:schema/xs:element[2]/xs:complexType/xs:attribute[2]",
+      "declaration": "attribute",
+      "attributes": {
+        "name": "f",
+        "type": "xs:integer",
+        "use": "required"
+      }
+    },
+    {
+      "line": 75,
+      "schema_xpath": "/xs:schema/xs:element[2]/xs:complexType/xs:attribute[3]",
+      "declaration": "attribute",
+      "attributes": {
+        "name": "time",
+        "type": "xs:dateTime",
+        "use": "optional"
+      }
+    },
+    {
+      "line": 80,
+      "schema_xpath": "/xs:schema/xs:element[2]/xs:complexType/xs:attribute[4]",
+      "declaration": "attribute",
+      "attributes": {
+        "name": "txid",
+        "type": "xs:unsignedLong",
+        "use": "optional"
+      }
+    },
+    {
+      "line": 85,
+      "schema_xpath": "/xs:schema/xs:element[2]/xs:complexType/xs:attribute[5]",
+      "declaration": "attribute",
+      "attributes": {
+        "name": "deviceID",
+        "type": "xs:unsignedLong",
+        "use": "optional"
+      }
+    },
+    {
+      "line": 90,
+      "schema_xpath": "/xs:schema/xs:element[2]/xs:complexType/xs:attribute[6]",
+      "declaration": "attribute",
+      "attributes": {
+        "name": "replyBit",
+        "type": "xs:boolean",
+        "use": "optional"
+      }
+    },
+    {
+      "line": 95,
+      "schema_xpath": "/xs:schema/xs:element[2]/xs:complexType/xs:attribute[7]",
+      "declaration": "attribute",
+      "attributes": {
+        "name": "direction",
+        "use": "optional"
+      }
+    },
+    {
+      "line": 107,
+      "schema_xpath": "/xs:schema/xs:element[2]/xs:complexType/xs:attribute[8]",
+      "declaration": "attribute",
+      "attributes": {
+        "name": "blocking",
+        "use": "optional"
+      }
+    },
+    {
+      "line": 126,
+      "schema_xpath": "/xs:schema/xs:element[2]/xs:complexType/xs:attribute[9]",
+      "declaration": "attribute",
+      "attributes": {
+        "name": "name",
+        "type": "xs:string",
+        "use": "optional"
+      }
+    },
+    {
+      "line": 131,
+      "schema_xpath": "/xs:schema/xs:element[2]/xs:complexType/xs:attribute[10]",
+      "declaration": "attribute",
+      "attributes": {
+        "name": "mnenomic",
+        "type": "xs:string",
+        "use": "optional"
+      }
+    },
+    {
+      "line": 136,
+      "schema_xpath": "/xs:schema/xs:element[2]/xs:complexType/xs:attribute[11]",
+      "declaration": "attribute",
+      "attributes": {
+        "name": "replyOption",
+        "use": "optional"
+      }
+    },
+    {
+      "line": 151,
+      "schema_xpath": "/xs:schema/xs:element[3]",
+      "declaration": "element",
+      "attributes": {
+        "name": "HSMSMessage"
+      }
+    },
+    {
+      "line": 157,
+      "schema_xpath": "/xs:schema/xs:element[3]/xs:complexType/xs:sequence/xs:element[1]",
+      "declaration": "element",
+      "attributes": {
+        "name": "Description",
+        "type": "xs:string",
+        "minOccurs": "0"
+      }
+    },
+    {
+      "line": 158,
+      "schema_xpath": "/xs:schema/xs:element[3]/xs:complexType/xs:sequence/xs:element[2]",
+      "declaration": "element",
+      "attributes": {
+        "name": "Header",
+        "type": "xs:hexBinary",
+        "minOccurs": "0"
+      }
+    },
+    {
+      "line": 163,
+      "schema_xpath": "/xs:schema/xs:element[3]/xs:complexType/xs:sequence/xs:element[3]",
+      "declaration": "element",
+      "attributes": {
+        "name": "Data",
+        "type": "xs:hexBinary",
+        "minOccurs": "0"
+      }
+    },
+    {
+      "line": 169,
+      "schema_xpath": "/xs:schema/xs:element[3]/xs:complexType/xs:attribute[1]",
+      "declaration": "attribute",
+      "attributes": {
+        "name": "time",
+        "type": "xs:dateTime",
+        "use": "optional"
+      }
+    },
+    {
+      "line": 174,
+      "schema_xpath": "/xs:schema/xs:element[3]/xs:complexType/xs:attribute[2]",
+      "declaration": "attribute",
+      "attributes": {
+        "name": "txid",
+        "type": "xs:unsignedLong",
+        "use": "optional"
+      }
+    },
+    {
+      "line": 179,
+      "schema_xpath": "/xs:schema/xs:element[3]/xs:complexType/xs:attribute[3]",
+      "declaration": "attribute",
+      "attributes": {
+        "name": "replyBit",
+        "type": "xs:boolean",
+        "use": "optional"
+      }
+    },
+    {
+      "line": 184,
+      "schema_xpath": "/xs:schema/xs:element[3]/xs:complexType/xs:attribute[4]",
+      "declaration": "attribute",
+      "attributes": {
+        "name": "direction",
+        "use": "optional"
+      }
+    },
+    {
+      "line": 196,
+      "schema_xpath": "/xs:schema/xs:element[3]/xs:complexType/xs:attribute[5]",
+      "declaration": "attribute",
+      "attributes": {
+        "name": "sType",
+        "use": "optional"
+      }
+    },
+    {
+      "line": 214,
+      "schema_xpath": "/xs:schema/xs:element[3]/xs:complexType/xs:attribute[6]",
+      "declaration": "attribute",
+      "attributes": {
+        "name": "name",
+        "type": "xs:string",
+        "use": "optional"
+      }
+    },
+    {
+      "line": 222,
+      "schema_xpath": "/xs:schema/xs:element[4]",
+      "declaration": "element",
+      "attributes": {
+        "name": "SECS-IMessage"
+      }
+    },
+    {
+      "line": 228,
+      "schema_xpath": "/xs:schema/xs:element[4]/xs:complexType/xs:sequence/xs:element[1]",
+      "declaration": "element",
+      "attributes": {
+        "name": "Description",
+        "type": "xs:string",
+        "minOccurs": "0"
+      }
+    },
+    {
+      "line": 229,
+      "schema_xpath": "/xs:schema/xs:element[4]/xs:complexType/xs:sequence/xs:element[2]",
+      "declaration": "element",
+      "attributes": {
+        "name": "Header",
+        "type": "xs:hexBinary",
+        "minOccurs": "0"
+      }
+    },
+    {
+      "line": 234,
+      "schema_xpath": "/xs:schema/xs:element[4]/xs:complexType/xs:sequence/xs:element[3]",
+      "declaration": "element",
+      "attributes": {
+        "name": "Data",
+        "type": "xs:hexBinary",
+        "minOccurs": "0"
+      }
+    },
+    {
+      "line": 240,
+      "schema_xpath": "/xs:schema/xs:element[4]/xs:complexType/xs:attribute[1]",
+      "declaration": "attribute",
+      "attributes": {
+        "name": "time",
+        "type": "xs:dateTime",
+        "use": "optional"
+      }
+    },
+    {
+      "line": 245,
+      "schema_xpath": "/xs:schema/xs:element[4]/xs:complexType/xs:attribute[2]",
+      "declaration": "attribute",
+      "attributes": {
+        "name": "txid",
+        "type": "xs:unsignedLong",
+        "use": "optional"
+      }
+    },
+    {
+      "line": 250,
+      "schema_xpath": "/xs:schema/xs:element[4]/xs:complexType/xs:attribute[3]",
+      "declaration": "attribute",
+      "attributes": {
+        "name": "blockNumber",
+        "type": "xs:unsignedLong",
+        "use": "optional"
+      }
+    },
+    {
+      "line": 255,
+      "schema_xpath": "/xs:schema/xs:element[4]/xs:complexType/xs:attribute[4]",
+      "declaration": "attribute",
+      "attributes": {
+        "name": "replyBit",
+        "type": "xs:boolean",
+        "use": "optional"
+      }
+    },
+    {
+      "line": 260,
+      "schema_xpath": "/xs:schema/xs:element[4]/xs:complexType/xs:attribute[5]",
+      "declaration": "attribute",
+      "attributes": {
+        "name": "endBit",
+        "type": "xs:boolean",
+        "use": "optional"
+      }
+    },
+    {
+      "line": 265,
+      "schema_xpath": "/xs:schema/xs:element[4]/xs:complexType/xs:attribute[6]",
+      "declaration": "attribute",
+      "attributes": {
+        "name": "direction",
+        "use": "optional"
+      }
+    },
+    {
+      "line": 277,
+      "schema_xpath": "/xs:schema/xs:element[4]/xs:complexType/xs:attribute[7]",
+      "declaration": "attribute",
+      "attributes": {
+        "name": "name",
+        "type": "xs:string",
+        "use": "optional"
+      }
+    },
+    {
+      "line": 285,
+      "schema_xpath": "/xs:schema/xs:element[5]",
+      "declaration": "element",
+      "attributes": {
+        "name": "SECSData",
+        "type": "DataItem"
+      }
+    },
+    {
+      "line": 291,
+      "schema_xpath": "/xs:schema/xs:complexType[1]",
+      "declaration": "complexType",
+      "attributes": {
+        "name": "DataItem"
+      }
+    },
+    {
+      "line": 298,
+      "schema_xpath": "/xs:schema/xs:complexType[1]/xs:choice/xs:element[1]",
+      "declaration": "element",
+      "attributes": {
+        "name": "LST",
+        "type": "DataItem"
+      }
+    },
+    {
+      "line": 303,
+      "schema_xpath": "/xs:schema/xs:complexType[1]/xs:choice/xs:element[2]",
+      "declaration": "element",
+      "attributes": {
+        "name": "BIN",
+        "type": "DataItemBase"
+      }
+    },
+    {
+      "line": 311,
+      "schema_xpath": "/xs:schema/xs:complexType[1]/xs:choice/xs:element[3]",
+      "declaration": "element",
+      "attributes": {
+        "name": "BOO",
+        "type": "DataItemBase"
+      }
+    },
+    {
+      "line": 319,
+      "schema_xpath": "/xs:schema/xs:complexType[1]/xs:choice/xs:element[4]",
+      "declaration": "element",
+      "attributes": {
+        "name": "ASC",
+        "type": "DataItemBase"
+      }
+    },
+    {
+      "line": 327,
+      "schema_xpath": "/xs:schema/xs:complexType[1]/xs:choice/xs:element[5]",
+      "declaration": "element",
+      "attributes": {
+        "name": "JIS",
+        "type": "DataItemBase"
+      }
+    },
+    {
+      "line": 335,
+      "schema_xpath": "/xs:schema/xs:complexType[1]/xs:choice/xs:element[6]",
+      "declaration": "element",
+      "attributes": {
+        "name": "MBC",
+        "type": "DataItemBase"
+      }
+    },
+    {
+      "line": 343,
+      "schema_xpath": "/xs:schema/xs:complexType[1]/xs:choice/xs:element[7]",
+      "declaration": "element",
+      "attributes": {
+        "name": "SI8",
+        "type": "DataItemBase"
+      }
+    },
+    {
+      "line": 351,
+      "schema_xpath": "/xs:schema/xs:complexType[1]/xs:choice/xs:element[8]",
+      "declaration": "element",
+      "attributes": {
+        "name": "SI1",
+        "type": "DataItemBase"
+      }
+    },
+    {
+      "line": 359,
+      "schema_xpath": "/xs:schema/xs:complexType[1]/xs:choice/xs:element[9]",
+      "declaration": "element",
+      "attributes": {
+        "name": "SI2",
+        "type": "DataItemBase"
+      }
+    },
+    {
+      "line": 367,
+      "schema_xpath": "/xs:schema/xs:complexType[1]/xs:choice/xs:element[10]",
+      "declaration": "element",
+      "attributes": {
+        "name": "SI4",
+        "type": "DataItemBase"
+      }
+    },
+    {
+      "line": 375,
+      "schema_xpath": "/xs:schema/xs:complexType[1]/xs:choice/xs:element[11]",
+      "declaration": "element",
+      "attributes": {
+        "name": "FP8",
+        "type": "DataItemBase"
+      }
+    },
+    {
+      "line": 383,
+      "schema_xpath": "/xs:schema/xs:complexType[1]/xs:choice/xs:element[12]",
+      "declaration": "element",
+      "attributes": {
+        "name": "FP4",
+        "type": "DataItemBase"
+      }
+    },
+    {
+      "line": 391,
+      "schema_xpath": "/xs:schema/xs:complexType[1]/xs:choice/xs:element[13]",
+      "declaration": "element",
+      "attributes": {
+        "name": "UI8",
+        "type": "DataItemBase"
+      }
+    },
+    {
+      "line": 399,
+      "schema_xpath": "/xs:schema/xs:complexType[1]/xs:choice/xs:element[14]",
+      "declaration": "element",
+      "attributes": {
+        "name": "UI1",
+        "type": "DataItemBase"
+      }
+    },
+    {
+      "line": 407,
+      "schema_xpath": "/xs:schema/xs:complexType[1]/xs:choice/xs:element[15]",
+      "declaration": "element",
+      "attributes": {
+        "name": "UI2",
+        "type": "DataItemBase"
+      }
+    },
+    {
+      "line": 415,
+      "schema_xpath": "/xs:schema/xs:complexType[1]/xs:choice/xs:element[16]",
+      "declaration": "element",
+      "attributes": {
+        "name": "UI4",
+        "type": "DataItemBase"
+      }
+    },
+    {
+      "line": 423,
+      "schema_xpath": "/xs:schema/xs:complexType[1]/xs:choice/xs:element[17]",
+      "declaration": "element",
+      "attributes": {
+        "name": "ANY",
+        "type": "DataItemBase"
+      }
+    },
+    {
+      "line": 431,
+      "schema_xpath": "/xs:schema/xs:complexType[1]/xs:choice/xs:element[18]",
+      "declaration": "element",
+      "attributes": {
+        "name": "SET"
+      }
+    },
+    {
+      "line": 440,
+      "schema_xpath": "/xs:schema/xs:complexType[1]/xs:choice/xs:element[18]/xs:complexType/xs:choice/xs:element",
+      "declaration": "element",
+      "attributes": {
+        "name": "Format",
+        "type": "DataItem"
+      }
+    },
+    {
+      "line": 446,
+      "schema_xpath": "/xs:schema/xs:complexType[1]/xs:choice/xs:element[19]",
+      "declaration": "element",
+      "attributes": {
+        "name": "SIA",
+        "type": "DataItemBase"
+      }
+    },
+    {
+      "line": 454,
+      "schema_xpath": "/xs:schema/xs:complexType[1]/xs:choice/xs:element[20]",
+      "declaration": "element",
+      "attributes": {
+        "name": "UIA",
+        "type": "DataItemBase"
+      }
+    },
+    {
+      "line": 462,
+      "schema_xpath": "/xs:schema/xs:complexType[1]/xs:choice/xs:element[21]",
+      "declaration": "element",
+      "attributes": {
+        "name": "INT",
+        "type": "DataItemBase"
+      }
+    },
+    {
+      "line": 470,
+      "schema_xpath": "/xs:schema/xs:complexType[1]/xs:choice/xs:element[22]",
+      "declaration": "element",
+      "attributes": {
+        "name": "FPA",
+        "type": "DataItemBase"
+      }
+    },
+    {
+      "line": 478,
+      "schema_xpath": "/xs:schema/xs:complexType[1]/xs:choice/xs:element[23]",
+      "declaration": "element",
+      "attributes": {
+        "name": "ENU"
+      }
+    },
+    {
+      "line": 484,
+      "schema_xpath": "/xs:schema/xs:complexType[1]/xs:choice/xs:element[23]/xs:complexType/xs:sequence/xs:element[1]",
+      "declaration": "element",
+      "attributes": {
+        "name": "EnumFormat",
+        "type": "SECSItemFormat"
+      }
+    },
+    {
+      "line": 489,
+      "schema_xpath": "/xs:schema/xs:complexType[1]/xs:choice/xs:element[23]/xs:complexType/xs:sequence/xs:element[2]",
+      "declaration": "element",
+      "attributes": {
+        "name": "EnumerationChoices",
+        "minOccurs": "0"
+      }
+    },
+    {
+      "line": 495,
+      "schema_xpath": "/xs:schema/xs:complexType[1]/xs:choice/xs:element[23]/xs:complexType/xs:sequence/xs:element[2]/xs:complexType/xs:sequence/xs:element",
+      "declaration": "element",
+      "attributes": {
+        "name": "EnumValue",
+        "maxOccurs": "unbounded"
+      }
+    },
+    {
+      "line": 498,
+      "schema_xpath": "/xs:schema/xs:complexType[1]/xs:choice/xs:element[23]/xs:complexType/xs:sequence/xs:element[2]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[1]",
+      "declaration": "element",
+      "attributes": {
+        "name": "Value"
+      }
+    },
+    {
+      "line": 508,
+      "schema_xpath": "/xs:schema/xs:complexType[1]/xs:choice/xs:element[23]/xs:complexType/xs:sequence/xs:element[2]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[2]",
+      "declaration": "element",
+      "attributes": {
+        "name": "Description",
+        "minOccurs": "0"
+      }
+    },
+    {
+      "line": 525,
+      "schema_xpath": "/xs:schema/xs:complexType[1]/xs:choice/xs:element[24]",
+      "declaration": "element",
+      "attributes": {
+        "name": "BIT"
+      }
+    },
+    {
+      "line": 531,
+      "schema_xpath": "/xs:schema/xs:complexType[1]/xs:choice/xs:element[24]/xs:complexType/xs:sequence/xs:element[1]",
+      "declaration": "element",
+      "attributes": {
+        "name": "BitFieldFormat",
+        "type": "SECSItemFormat"
+      }
+    },
+    {
+      "line": 536,
+      "schema_xpath": "/xs:schema/xs:complexType[1]/xs:choice/xs:element[24]/xs:complexType/xs:sequence/xs:element[2]",
+      "declaration": "element",
+      "attributes": {
+        "name": "BitFieldDefinitions",
+        "minOccurs": "0"
+      }
+    },
+    {
+      "line": 542,
+      "schema_xpath": "/xs:schema/xs:complexType[1]/xs:choice/xs:element[24]/xs:complexType/xs:sequence/xs:element[2]/xs:complexType/xs:sequence/xs:element",
+      "declaration": "element",
+      "attributes": {
+        "name": "BitPosition",
+        "maxOccurs": "unbounded"
+      }
+    },
+    {
+      "line": 545,
+      "schema_xpath": "/xs:schema/xs:complexType[1]/xs:choice/xs:element[24]/xs:complexType/xs:sequence/xs:element[2]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[1]",
+      "declaration": "element",
+      "attributes": {
+        "name": "BitNumber",
+        "type": "xs:int"
+      }
+    },
+    {
+      "line": 550,
+      "schema_xpath": "/xs:schema/xs:complexType[1]/xs:choice/xs:element[24]/xs:complexType/xs:sequence/xs:element[2]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[2]",
+      "declaration": "element",
+      "attributes": {
+        "name": "OnValue"
+      }
+    },
+    {
+      "line": 560,
+      "schema_xpath": "/xs:schema/xs:complexType[1]/xs:choice/xs:element[24]/xs:complexType/xs:sequence/xs:element[2]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence/xs:element[3]",
+      "declaration": "element",
+      "attributes": {
+        "name": "OffValue",
+        "minOccurs": "0"
+      }
+    },
+    {
+      "line": 584,
+      "schema_xpath": "/xs:schema/xs:element[6]",
+      "declaration": "element",
+      "attributes": {
+        "name": "Comment"
+      }
+    },
+    {
+      "line": 591,
+      "schema_xpath": "/xs:schema/xs:element[6]/xs:complexType/xs:simpleContent/xs:extension/xs:attribute",
+      "declaration": "attribute",
+      "attributes": {
+        "name": "time",
+        "type": "xs:dateTime",
+        "use": "optional"
+      }
+    },
+    {
+      "line": 601,
+      "schema_xpath": "/xs:schema/xs:attributeGroup",
+      "declaration": "attributeGroup",
+      "attributes": {
+        "name": "DataItemAttributes"
+      }
+    },
+    {
+      "line": 602,
+      "schema_xpath": "/xs:schema/xs:attributeGroup/xs:attribute[1]",
+      "declaration": "attribute",
+      "attributes": {
+        "name": "name",
+        "type": "xs:string",
+        "use": "optional"
+      }
+    },
+    {
+      "line": 607,
+      "schema_xpath": "/xs:schema/xs:attributeGroup/xs:attribute[2]",
+      "declaration": "attribute",
+      "attributes": {
+        "name": "id",
+        "type": "xs:unsignedLong",
+        "use": "optional"
+      }
+    },
+    {
+      "line": 612,
+      "schema_xpath": "/xs:schema/xs:attributeGroup/xs:attribute[3]",
+      "declaration": "attribute",
+      "attributes": {
+        "name": "length",
+        "type": "xs:string",
+        "use": "optional"
+      }
+    },
+    {
+      "line": 618,
+      "schema_xpath": "/xs:schema/xs:attributeGroup/xs:attribute[4]",
+      "declaration": "attribute",
+      "attributes": {
+        "name": "description",
+        "type": "xs:string",
+        "use": "optional"
+      }
+    },
+    {
+      "line": 623,
+      "schema_xpath": "/xs:schema/xs:attributeGroup/xs:attribute[5]",
+      "declaration": "attribute",
+      "attributes": {
+        "name": "dataItemName",
+        "type": "xs:string",
+        "use": "optional"
+      }
+    },
+    {
+      "line": 628,
+      "schema_xpath": "/xs:schema/xs:attributeGroup/xs:attribute[6]",
+      "declaration": "attribute",
+      "attributes": {
+        "name": "maxLength",
+        "type": "xs:string",
+        "use": "optional"
+      }
+    },
+    {
+      "line": 633,
+      "schema_xpath": "/xs:schema/xs:attributeGroup/xs:attribute[7]",
+      "declaration": "attribute",
+      "attributes": {
+        "name": "minLength",
+        "type": "xs:string",
+        "use": "optional"
+      }
+    },
+    {
+      "line": 640,
+      "schema_xpath": "/xs:schema/xs:complexType[2]",
+      "declaration": "complexType",
+      "attributes": {
+        "name": "DataItemBase"
+      }
+    }
+  ],
+  "compositors": [
+    {
+      "line": 28,
+      "schema_xpath": "/xs:schema/xs:element[1]/xs:complexType/xs:sequence",
+      "kind": "sequence",
+      "minOccurs": "0",
+      "maxOccurs": "unbounded"
+    },
+    {
+      "line": 47,
+      "schema_xpath": "/xs:schema/xs:element[2]/xs:complexType/xs:sequence",
+      "kind": "sequence",
+      "minOccurs": "1",
+      "maxOccurs": "1"
+    },
+    {
+      "line": 156,
+      "schema_xpath": "/xs:schema/xs:element[3]/xs:complexType/xs:sequence",
+      "kind": "sequence",
+      "minOccurs": "1",
+      "maxOccurs": "1"
+    },
+    {
+      "line": 227,
+      "schema_xpath": "/xs:schema/xs:element[4]/xs:complexType/xs:sequence",
+      "kind": "sequence",
+      "minOccurs": "1",
+      "maxOccurs": "1"
+    },
+    {
+      "line": 297,
+      "schema_xpath": "/xs:schema/xs:complexType[1]/xs:choice",
+      "kind": "choice",
+      "minOccurs": "0",
+      "maxOccurs": "unbounded"
+    },
+    {
+      "line": 439,
+      "schema_xpath": "/xs:schema/xs:complexType[1]/xs:choice/xs:element[18]/xs:complexType/xs:choice",
+      "kind": "choice",
+      "minOccurs": "1",
+      "maxOccurs": "unbounded"
+    },
+    {
+      "line": 483,
+      "schema_xpath": "/xs:schema/xs:complexType[1]/xs:choice/xs:element[23]/xs:complexType/xs:sequence",
+      "kind": "sequence",
+      "minOccurs": "1",
+      "maxOccurs": "1"
+    },
+    {
+      "line": 494,
+      "schema_xpath": "/xs:schema/xs:complexType[1]/xs:choice/xs:element[23]/xs:complexType/xs:sequence/xs:element[2]/xs:complexType/xs:sequence",
+      "kind": "sequence",
+      "minOccurs": "1",
+      "maxOccurs": "1"
+    },
+    {
+      "line": 497,
+      "schema_xpath": "/xs:schema/xs:complexType[1]/xs:choice/xs:element[23]/xs:complexType/xs:sequence/xs:element[2]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence",
+      "kind": "sequence",
+      "minOccurs": "1",
+      "maxOccurs": "1"
+    },
+    {
+      "line": 530,
+      "schema_xpath": "/xs:schema/xs:complexType[1]/xs:choice/xs:element[24]/xs:complexType/xs:sequence",
+      "kind": "sequence",
+      "minOccurs": "1",
+      "maxOccurs": "1"
+    },
+    {
+      "line": 541,
+      "schema_xpath": "/xs:schema/xs:complexType[1]/xs:choice/xs:element[24]/xs:complexType/xs:sequence/xs:element[2]/xs:complexType/xs:sequence",
+      "kind": "sequence",
+      "minOccurs": "1",
+      "maxOccurs": "1"
+    },
+    {
+      "line": 544,
+      "schema_xpath": "/xs:schema/xs:complexType[1]/xs:choice/xs:element[24]/xs:complexType/xs:sequence/xs:element[2]/xs:complexType/xs:sequence/xs:element/xs:complexType/xs:sequence",
+      "kind": "sequence",
+      "minOccurs": "1",
+      "maxOccurs": "1"
+    }
+  ]
+}

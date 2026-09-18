@@ -1,16 +1,18 @@
-# Synthetic fixture inventory
+# Original synthetic fixtures
 
-See [the observations](../../docs/e172_observations.md) for evidence and limitations.
+See [observations](../../docs/e172_observations.md) and `manifest.json` for evidence,
+classifications and pending work. These original inputs are not copies of the
+TrackSys sample. `e172-*.xml` files have recorded full-XSD outcomes in
+`../../docs/e172_validation_results.json`; an XSD-valid file can still contain an
+unresolved semantic reference. The malformed folder includes syntax-invalid,
+schema-invalid and schema-valid adversarial cases, each explicitly classified.
 
-The E172 schema has been inspected. The TrackSys sample and imported E173 schema
-are still absent. No fixture is claimed to have passed complete XSD validation.
-`e172-*.xml` files are candidates derived from inspected declarations; the qualified
-children candidate is deliberately invalid. The report candidate has a deliberately
-unresolved VID 799. Other XML files test generic mechanics and use generic names or
-the unrelated `urn:sema-sedd:fixture-only:1` namespace.
+The complete relationship baseline covers entities, formats, messages, commands,
+reports, event/alarm links, and fictional WKN/standard strings. They do not claim
+official vocabulary status. The change catalog records eleven single-field variants
+and prospective comparator expectations. Other JSON files remain scenario plans.
+Generic XML probes use a deliberately unrelated namespace and do not claim E172
+validity. Never expand DTD/entity payloads or execute markup in descriptions.
 
-JSON files are pending scenario plans, not canonical serialization. The reused IDs
-in variables-plan are an adversarial cross-category collision, not a valid baseline.
-`manifest.json` lists all inputs and evidence. The malformed folder includes both
-syntax errors and well-formed adversarial inputs. Never expand its entities or
-execute report text. Runtime parsing/security behavior remains unimplemented.
+The received sample has XML syntax errors. Prefix and isolated-fragment observations
+are labeled separately; no recovered sample becomes an adapter contract.
