@@ -1,0 +1,42 @@
+{
+  "purpose": "Command-local parameters and supported message structure",
+  "concepts": [
+    "Remote Commands",
+    "Remote Command Parameters",
+    "Supported SECS Messages"
+  ],
+  "data": {
+    "commands": [
+      {
+        "name": "SYNTH_PREPARE",
+        "parameters": [
+          "MODE"
+        ]
+      },
+      {
+        "name": "SYNTH_RELEASE",
+        "parameters": [
+          "MODE"
+        ]
+      }
+    ],
+    "message_candidate": {
+      "stream": 99,
+      "function": 1,
+      "structure_labels": [
+        "counter",
+        "text"
+      ]
+    }
+  },
+  "pending": [
+    "Command identity syntax",
+    "Parameter ownership and identity scope",
+    "Stream/function bounds and direction metadata",
+    "Structure grammar and meaningful sequence"
+  ],
+  "status": "PENDING",
+  "classification": "ASSUMPTION",
+  "kind": "scenario-plan",
+  "e172_validity": "NOT_ESTABLISHED"
+}

@@ -47,3 +47,10 @@ See [docs/architecture.md](docs/architecture.md) for module responsibilities and
 [docs/build-prompts.md](docs/build-prompts.md) for the supplied sequential roadmap.
 The repository is MIT licensed; it does not reproduce SEMI standards or imply
 SEMI endorsement or certification.
+
+## Reference analysis status
+
+Prompt 2 has an [evidence ledger and fixture coverage matrix](docs/e172_observations.md).
+Reference file retrieval is blocked; every E172 mapping is explicitly pending.
+Original XML mechanics probes and JSON scenario plans are available in
+`tests/fixtures/`; these do not imply E172 parsing support.

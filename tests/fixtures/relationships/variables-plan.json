@@ -1,0 +1,40 @@
+{
+  "purpose": "Distinct variable categories with reused IDs and shared format",
+  "concepts": [
+    "Status Variables",
+    "Data Variables",
+    "Equipment Constants",
+    "Variable Formats",
+    "Well-Known Names"
+  ],
+  "data": {
+    "entities": [
+      {
+        "category": "Status Variables",
+        "native_id": "701",
+        "label": "Chamber temperature"
+      },
+      {
+        "category": "Data Variables",
+        "native_id": "701",
+        "label": "Last batch count"
+      },
+      {
+        "category": "Equipment Constants",
+        "native_id": "703",
+        "label": "Setpoint ceiling"
+      }
+    ],
+    "synthetic_wkn": "urn:sema-sedd:fictional:temperature"
+  },
+  "pending": [
+    "Identifier lexical types and uniqueness scopes",
+    "Format representation and scope",
+    "WKN representation and official identity evidence",
+    "Range/unit/default representation"
+  ],
+  "status": "PENDING",
+  "classification": "ASSUMPTION",
+  "kind": "scenario-plan",
+  "e172_validity": "NOT_ESTABLISHED"
+}

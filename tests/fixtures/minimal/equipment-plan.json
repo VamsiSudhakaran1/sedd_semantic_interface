@@ -1,0 +1,24 @@
+{
+  "purpose": "Smallest evidence-backed equipment document",
+  "concepts": [
+    "Equipment metadata",
+    "SEMI Standards metadata",
+    "descriptions",
+    "provenance"
+  ],
+  "data": {
+    "equipment_label": "Synthetic Lantern 17",
+    "supplier": "Example Fabrication Lab",
+    "description": "An original fictional interface for tests."
+  },
+  "pending": [
+    "Root QName",
+    "Required children and attributes",
+    "Revision signal",
+    "Optional versus empty metadata"
+  ],
+  "status": "PENDING",
+  "classification": "ASSUMPTION",
+  "kind": "scenario-plan",
+  "e172_validity": "NOT_ESTABLISHED"
+}
