@@ -99,7 +99,7 @@ The implementation follows X01–X14, M01–M02 and S01–S05 in
 | SMN SECSMessage | Stream/function, direction, mnemonic, reply/blocking/header/exception metadata and ordered structures |
 | VariableFormat | Named format with an explicit sequence wrapper and ordered DataStructure nodes |
 | DefaultReport / EventReportLink | Ordered member selectors; deletion flags retained at interface level |
-| SupportedSEMIStandard | Name/designation plus retained opaque requirement metadata |
+| SupportedSEMIStandard | Name/designation, ordered structured requirement groups and standard notes |
 | WellKnownName / Source / SEMIStandard | Unverified WKN, declared source text, standard reference selector |
 
 No native ID, name, WKN, or repeated message identity is used as a unique dictionary
@@ -132,9 +132,11 @@ invalid fields are kept as `UnknownExtension` with provenance. Known scalar fiel
 with unsupported attributes retain those attributes. Structured scalars and
 significant mixed content retain complete opaque nodes to avoid losing order.
 Unknown data-item tags are retained rather than assigned a known format meaning.
-RecipeVariableParameters, EquipmentCharacterization, detailed standard requirement
-groups, and logging attributes outside the mapped message fields are deliberately
-opaque in this increment. Source preservation is not a claim of XSD validity.
+RecipeVariableParameters, EquipmentCharacterization, and logging attributes outside
+the mapped message fields are deliberately opaque. Requirement groups map their
+observed name, requirements, sections, identifiers, implementation/compliance
+fields, notes, and source locations. Unknown nested requirement material remains
+opaque. Source preservation is not a claim of XSD validity.
 
 Repeated singleton fields/sections produce `AMBIGUOUS_FIELD` and retain all
 occurrences; the mapper does not silently pick the first. Missing required IDs,
@@ -169,3 +171,6 @@ matches the recorded 104 SV / 93 DV / 7 EC / 185 CE / 46 alarms / 67 formats /
 selectors remain pending; sample schema validity never implies resolved links.
 The original sample remains untracked and that integration check skips when it is
 not available. Versioned synthetic fixture checks always run.
+
+The full field-level mapping and Prompt 6 fixture coverage are described in
+[e172_entity_parser.md](e172_entity_parser.md).

@@ -32,6 +32,8 @@ from sema_sedd.exceptions import (
 from sema_sedd.model import (
     EquipmentInterface,
     EquipmentMetadata,
+    JsonArray,
+    JsonObject,
     MessageDirection,
     Requiredness,
     SourceProvenance,
@@ -250,6 +252,36 @@ def test_synthetic_complete_fixture_maps_all_core_concepts() -> None:
     assert variable.key.endswith("/StatusVariable[1]")
 
 
+def test_every_evidenced_entity_has_document_identity_and_source_path() -> None:
+    model = load_interface(
+        FIXTURES / "relationships/e172-complete.xml", revision="E172-0225"
+    ).interface
+    expected_types = {
+        "status_variable",
+        "data_variable",
+        "equipment_constant",
+        "collection_event",
+        "alarm",
+        "remote_command",
+        "remote_command_parameter",
+        "supported_message",
+        "variable_format",
+        "default_report",
+        "event_report_link",
+        "standard_reference",
+    }
+    assert {entity.canonical_type.value for entity in model.entities()} == expected_types
+    assert model.equipment.provenance
+    for entity in model.entities():
+        assert entity.provenance
+        source = entity.provenance[0]
+        assert source.source_document.endswith("e172-complete.xml")
+        assert source.source_revision == "E172-0225"
+        assert source.path_kind == "expanded_name_path"
+        assert source.source_path == entity.key
+        assert source.line is not None and source.column is not None
+
+
 def test_parameters_and_compound_formats_keep_order_and_wrappers() -> None:
     parameters = (
         load_interface(
@@ -390,6 +422,116 @@ direction="secret" replyBit="secret"/></SECSMessages>""",
     assert "secret" in to_canonical_json(result.interface)
 
 
+@pytest.mark.parametrize(("lexical", "expected"), [("-128", -128), ("+127", 127)])
+def test_alarm_code_preserves_the_observed_xsd_byte_boundaries(
+    tmp_path: Path, lexical: str, expected: int
+) -> None:
+    doc = document(
+        tmp_path,
+        f"<Alarms><Alarm><ALCD>{lexical}</ALCD><ALID>007</ALID>"
+        "<ALTX>text</ALTX><AlarmName>Alarm</AlarmName>"
+        "<Description>description</Description></Alarm></Alarms>",
+    )
+    alarm = default_registry().adapt(doc).interface.alarms[0]
+    assert alarm.code == expected
+    assert alarm.implementation_id == "007"
+
+
+@pytest.mark.parametrize("lexical", ["-129", "128"])
+def test_out_of_range_alarm_code_is_retained_as_unknown(tmp_path: Path, lexical: str) -> None:
+    doc = document(
+        tmp_path,
+        f"<Alarms><Alarm><ALCD>{lexical}</ALCD><ALID>1</ALID>"
+        "<ALTX>text</ALTX><AlarmName>Alarm</AlarmName>"
+        "<Description>description</Description></Alarm></Alarms>",
+    )
+    result = default_registry().adapt(doc)
+    alarm = result.interface.alarms[0]
+    assert alarm.code is None
+    assert any(extension.name == "ALCD" for extension in alarm.unknown_extensions)
+    assert "INVALID_FIELD" in {diagnostic.code for diagnostic in result.diagnostics}
+
+
+def test_standard_requirement_groups_map_to_structured_metadata(tmp_path: Path) -> None:
+    doc = document(
+        tmp_path,
+        """<SEMIStandards><SupportedSEMIStandard>
+<SEMIStandardName>Fictional Interface</SEMIStandardName>
+<SEMIStandard>F-1</SEMIStandard>
+<RequirementGroup><Name>Core</Name><Requirement>
+<Name>Report status</Name><Section>2.1</Section><Section>Annex A</Section>
+<RequirementID>REQ-007</RequirementID><ParentRequirementID>REQ-001</ParentRequirementID>
+<Implemented>false</Implemented><Compliant>Partial</Compliant>
+<Note>First note</Note><Note>Second note</Note><VendorDetail>preserve me</VendorDetail>
+</Requirement></RequirementGroup>
+<RequirementGroup><Name>Empty group</Name></RequirementGroup>
+<Note>Standard note</Note><Note>Another standard note</Note>
+</SupportedSEMIStandard></SEMIStandards>""",
+    )
+    result = default_registry().adapt(doc)
+    standard = result.interface.standard_references[0]
+    assert standard.name == "Fictional Interface"
+    assert standard.designation == "F-1"
+    assert standard.notes == ("Standard note", "Another standard note")
+    assert len(standard.requirements) == 2
+
+    group = dict(standard.requirements[0].entries)
+    assert group["kind"] == "requirement_group"
+    assert group["name"] == "Core"
+    assert isinstance(group["requirements"], JsonArray)
+    requirement_item = group["requirements"].items[0]
+    assert isinstance(requirement_item, JsonObject)
+    requirement = dict(requirement_item.entries)
+    assert requirement["name"] == "Report status"
+    assert isinstance(requirement["sections"], JsonArray)
+    assert requirement["sections"].items == ("2.1", "Annex A")
+    assert requirement["requirement_id"] == "REQ-007"
+    assert requirement["parent_requirement_id"] == "REQ-001"
+    assert requirement["implemented"] is False
+    assert requirement["compliant"] == "Partial"
+    assert isinstance(requirement["notes"], JsonArray)
+    assert requirement["notes"].items == ("First note", "Second note")
+    assert isinstance(requirement["source_path"], str)
+    assert requirement["line"] is not None and requirement["column"] is not None
+
+    empty_group = dict(standard.requirements[1].entries)
+    assert empty_group["name"] == "Empty group"
+    assert isinstance(empty_group["requirements"], JsonArray)
+    assert empty_group["requirements"].items == ()
+    vendor = next(
+        extension for extension in standard.unknown_extensions if extension.name == "VendorDetail"
+    )
+    assert vendor.content == ("preserve me",)
+    assert vendor.provenance[0].source_path is not None
+    assert "UNKNOWN_CONTENT" in {diagnostic.code for diagnostic in result.diagnostics}
+
+
+def test_invalid_closed_standard_and_message_values_are_retained(tmp_path: Path) -> None:
+    doc = document(
+        tmp_path,
+        """<SEMIStandards><SupportedSEMIStandard>
+<SEMIStandardName>Fictional</SEMIStandardName><SEMIStandard>F-1</SEMIStandard>
+<RequirementGroup><Requirement><Compliant>FutureValue</Compliant></Requirement></RequirementGroup>
+</SupportedSEMIStandard></SEMIStandards>
+<SECSMessages><m:SECSMessage xmlns:m="urn:semi-org:xsd.SMN" s="1" f="2"
+blocking="FutureBlock" replyOption="future-option"/></SECSMessages>""",
+    )
+    result = default_registry().adapt(doc)
+    standard = result.interface.standard_references[0]
+    group = dict(standard.requirements[0].entries)
+    assert isinstance(group["requirements"], JsonArray)
+    requirement_item = group["requirements"].items[0]
+    assert isinstance(requirement_item, JsonObject)
+    requirement = dict(requirement_item.entries)
+    assert requirement["compliant"] is None
+    assert any(extension.name == "Compliant" for extension in standard.unknown_extensions)
+    message = result.interface.supported_messages[0]
+    assert message.blocking is None and message.reply_option is None
+    unknown_attributes = dict(message.unknown_extensions[0].attributes.entries)
+    assert unknown_attributes == {"blocking": "FutureBlock", "replyOption": "future-option"}
+    assert [diagnostic.code for diagnostic in result.diagnostics].count("INVALID_FIELD") == 3
+
+
 @pytest.mark.parametrize(
     "fixture", ["e172-dangling-event-variable.xml", "e172-dangling-report-link.xml"]
 )
@@ -513,7 +655,15 @@ def test_original_tracksys_mapping_matches_observed_inventory() -> None:
         "RecipeVariableParameters",
         "EquipmentCharacterization",
     }
-    assert any(s.unknown_extensions for s in model.standard_references)
+    standard = model.standard_references[0]
+    assert len(standard.requirements) == 2
+    group_sizes = []
+    for group in standard.requirements:
+        requirements = dict(group.entries)["requirements"]
+        assert isinstance(requirements, JsonArray)
+        group_sizes.append(len(requirements.items))
+    assert group_sizes == [8, 17]
+    assert standard.unknown_extensions == ()
 
 
 def test_all_versioned_e172_relationship_and_change_fixtures_map_deterministically() -> None:

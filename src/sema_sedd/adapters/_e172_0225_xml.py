@@ -151,7 +151,14 @@ class Reader:
             self.retained.extend(child.finish())
         return tuple(values)
 
-    def integer(self, name: str, *, attribute: bool = False) -> int | None:
+    def integer(
+        self,
+        name: str,
+        *,
+        attribute: bool = False,
+        minimum: int | None = None,
+        maximum: int | None = None,
+    ) -> int | None:
         value = self.attribute(name) if attribute else self.text(name)
         if value is None:
             return None
@@ -160,7 +167,9 @@ class Reader:
             re.fullmatch(r"[+-]?[0-9]+", value.strip(" \t\r\n"))
             and len(value.strip(" \t\r\n")) <= 1000
         ):
-            return int(value)
+            result = int(value)
+            if (minimum is None or result >= minimum) and (maximum is None or result <= maximum):
+                return result
         self.invalid(name, attribute=attribute)
         return None
 
@@ -170,6 +179,18 @@ class Reader:
             return None
         if value.strip(" \t\r\n") in ("true", "1", "false", "0"):
             return value.strip(" \t\r\n") in ("true", "1")
+        self.invalid(name, attribute=attribute)
+        return None
+
+    def enumeration(
+        self, name: str, values: frozenset[str], *, attribute: bool = False
+    ) -> str | None:
+        """Read a closed lexical field, retaining unknown values as source material."""
+        value = self.attribute(name) if attribute else self.text(name)
+        if value is None:
+            return None
+        if value in values:
+            return value
         self.invalid(name, attribute=attribute)
         return None
 
