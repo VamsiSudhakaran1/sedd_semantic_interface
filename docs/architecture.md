@@ -13,8 +13,10 @@ sequentially; the supplied attachment includes only prompts 0 and 1 in full.
 | report | Machine-readable and escaped human-readable output |
 | cli | User-facing commands over these layers |
 
-Only the CLI help/version and typed exception hierarchy exist today. Empty package
-boundaries do not imply domain support. No speculative standard mappings or entity
+The CLI currently supports help/version. The parser package now provides bounded,
+offline XML ingestion with source positions and a non-authoritative revision hint.
+No revision adapter or canonical domain support exists yet; see
+[xml_ingestion.md](xml_ingestion.md). No speculative standard mappings or entity
 relationships are included. Authoritative schema evidence will be needed for adapters.
 
 Future comparison must distinguish irrelevant XML ordering from semantically
@@ -23,4 +25,4 @@ must be defined per field, without silently destroying meaningful text.
 
 Runtime version metadata comes from the installed distribution. Development uses
 an editable installation. No runtime dependency or network access is needed for
-the current help/version CLI.
+help/version or XML ingestion.

@@ -37,6 +37,19 @@ def main() -> None:
             cwd=directory,
             check=True,
         )
+        subprocess.run(
+            [
+                str(python),
+                "-c",
+                "from sema_sedd.parser import load_sedd; "
+                "import sys; "
+                "assert load_sedd(sys.argv[1]).root.tag == "
+                "'{urn:semi-org:xsd.SEDD}DataDictionary'",
+                str(root / "tests" / "fixtures" / "minimal" / "e172-empty.xml"),
+            ],
+            cwd=directory,
+            check=True,
+        )
     print("Isolated wheel installation and CLI checks passed.")
 
 

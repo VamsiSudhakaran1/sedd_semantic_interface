@@ -13,8 +13,24 @@ class XmlSecurityError(InputError):
     """XML violates the secure loader policy."""
 
 
+class UnsafeXmlError(XmlSecurityError):
+    """The input uses forbidden XML features or exceeds structural limits."""
+
+
+class InvalidXmlError(InputError):
+    """The input is empty, incorrectly encoded, or not well-formed XML."""
+
+
+class InputTooLargeError(InputError):
+    """The input exceeds the configured byte limit."""
+
+
 class UnsupportedRevisionError(InputError):
     """No adapter supports the detected document revision."""
+
+
+class UnsupportedSeddVersionError(UnsupportedRevisionError):
+    """The root QName is not a supported SEDD document root."""
 
 
 class SemanticError(SeddError):
