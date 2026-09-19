@@ -62,7 +62,7 @@ they do not recursively acquire inappropriate WKN/name/description fields.
 | VariableFormat | Name and ordered DataStructure nodes | X09, M02 |
 | DefaultReport | Ordered variable references, preserving repetitions | X11 |
 | EventReportLink | Event reference and ordered report references | X11 |
-| StandardReference | Designation, revision, opaque requirement metadata and notes | X12 |
+| StandardReference | Designation, revision, structured requirement-group metadata and notes | X12 |
 | WellKnownName | Value, authority, scope, verification status and provenance | X12, A05 |
 | EntityReference | Target types, lexical ID/name/WKN selectors, optional scope and resolved local key | X05, S04; model policy below |
 | SourceProvenance | Source document/revision/path/path kind, lexical source identifier, line/column | Contract, X13 |
@@ -70,8 +70,9 @@ they do not recursively acquire inappropriate WKN/name/description fields.
 | UnknownExtension | Namespace/name, attributes, ordered mixed content, opaque metadata and provenance | X14; model policy below |
 
 Observation labels refer to [e172_observations.md](e172_observations.md). This table
-records structural evidence, not claims of standards conformance. No source XML
-mapping is implemented here. `DataStructure` represents primitive, list, enum,
+records structural evidence, not claims of standards conformance. The E172-0225
+mapping is documented in [e172_entity_parser.md](e172_entity_parser.md).
+`DataStructure` represents primitive, list, enum,
 bit, set, or future shapes with open `kind` labels, lexical attributes/value, and
 ordered children. Adapters must preserve distinct wrappers as nodes where needed;
 they must not flatten distinct alternatives. Complete numeric, encoding,

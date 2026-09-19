@@ -21,6 +21,7 @@ from sema_sedd.model import (
     EquipmentInterface,
     EquipmentMetadata,
     EventReportLink,
+    JsonArray,
     JsonObject,
     MessageDirection,
     RemoteCommand,
@@ -93,6 +94,9 @@ _ITEM_KINDS = {
     "OnValue": "on_value",
     "OffValue": "off_value",
 }
+_COMPLIANCE_VALUES = frozenset(("Yes", "No", "C", "NC", "WC", "Partial", "NA"))
+_BLOCKING_VALUES = frozenset(("M", "S"))
+_REPLY_OPTION_VALUES = frozenset(("required", "optional", "never"))
 
 
 class _CommonFields(TypedDict):
@@ -263,7 +267,7 @@ def _event(reader: Reader) -> CollectionEvent:
 def _alarm(reader: Reader) -> Alarm:
     return Alarm(
         **_common(reader, "ALID", "AlarmName", decorated=True),
-        code=reader.integer("ALCD"),
+        code=reader.integer("ALCD", minimum=-128, maximum=127),
         text=reader.text("ALTX"),
         set_event=_reference(reader, "SetEvent", (CanonicalType.COLLECTION_EVENT,)),
         clear_event=_reference(reader, "ClearEvent", (CanonicalType.COLLECTION_EVENT,)),
@@ -379,8 +383,8 @@ def _message(reader: Reader) -> SupportedMessage:
         direction=direction,
         mnemonic=reader.attribute("mnenomic"),
         reply_bit=reader.boolean("replyBit", attribute=True),
-        reply_option=reader.attribute("replyOption"),
-        blocking=reader.attribute("blocking"),
+        reply_option=reader.enumeration("replyOption", _REPLY_OPTION_VALUES, attribute=True),
+        blocking=reader.enumeration("blocking", _BLOCKING_VALUES, attribute=True),
         header=reader.text(f"{{{SMN}}}Header"),
         exceptions=reader.texts(f"{{{SMN}}}Exception"),
         structure=tuple(
@@ -410,9 +414,50 @@ def _link(reader: Reader) -> EventReportLink:
 
 
 def _standard(reader: Reader) -> StandardReference:
+    requirement_groups = []
+    for group_node in reader.many("RequirementGroup"):
+        group = Reader(reader.context, group_node)
+        group_name = group.text("Name")
+        requirements = []
+        for requirement_node in group.many("Requirement"):
+            requirement = Reader(reader.context, requirement_node)
+            provenance = reader.context.provenance(requirement_node)
+            requirements.append(
+                JsonObject(
+                    entries=(
+                        ("name", requirement.text("Name")),
+                        ("sections", JsonArray(items=requirement.texts("Section"))),
+                        ("requirement_id", requirement.text("RequirementID")),
+                        ("parent_requirement_id", requirement.text("ParentRequirementID")),
+                        ("implemented", requirement.boolean("Implemented")),
+                        ("compliant", requirement.enumeration("Compliant", _COMPLIANCE_VALUES)),
+                        ("notes", JsonArray(items=requirement.texts("Note"))),
+                        ("source_path", provenance.source_path),
+                        ("line", provenance.line),
+                        ("column", provenance.column),
+                    )
+                )
+            )
+            group.retained.extend(requirement.finish())
+        provenance = reader.context.provenance(group_node)
+        requirement_groups.append(
+            JsonObject(
+                entries=(
+                    ("kind", "requirement_group"),
+                    ("name", group_name),
+                    ("requirements", JsonArray(items=tuple(requirements))),
+                    ("source_path", provenance.source_path),
+                    ("line", provenance.line),
+                    ("column", provenance.column),
+                )
+            )
+        )
+        reader.retained.extend(group.finish())
     return StandardReference(
         **_common(reader, None, "SEMIStandardName", description=None),
         designation=reader.text("SEMIStandard"),
+        requirements=tuple(requirement_groups),
+        notes=reader.texts("Note"),
         unknown_extensions=reader.finish(),
     )
 

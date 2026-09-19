@@ -26,6 +26,8 @@ for the public boundaries and the model architecture challenge.
 and import-boundary tests. Comparison, graph, and report packages must never
 import concrete revision adapters. Source evidence
 and local keys must be supplied explicitly; no relationships are inferred.
+[e172_entity_parser.md](e172_entity_parser.md) records the field-level conversion
+and preservation rules for the initial E172-0225 adapter.
 
 Future comparison must distinguish irrelevant XML ordering from semantically
 meaningful sequence information such as message structures. Whitespace handling

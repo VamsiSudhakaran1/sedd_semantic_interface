@@ -5,8 +5,9 @@ interfaces represented by SEMI E172 SEDD files. The product name is temporary.
 
 ## Current scope
 
-Prompts 0–5 establish the architectural contract, Python package foundation,
-reference observations, secure XML ingestion, a canonical model, and revision adapters.
+Prompts 0–6 establish the architectural contract, Python package foundation,
+reference observations, secure XML ingestion, a canonical model, revision adapters,
+and E172-0225 entity conversion.
 The CLI supports `sedd --help` and `sedd --version` (also `python -m sema_sedd`).
 The library can ingest local SEDD XML and infer an E172-0225 revision hint from
 `xsi:schemaLocation`. The model library provides immutable typed entities, explicit
@@ -17,6 +18,8 @@ matching, graph operations, and reports remain unimplemented. See [docs/canonica
 identity boundaries, and architecture review.
 See [docs/revision_adapters.md](docs/revision_adapters.md) for `load_interface()`,
 revision selection, extension preservation, and registering other adapters.
+See [docs/e172_entity_parser.md](docs/e172_entity_parser.md) for the complete
+entity mapping and its explicit non-resolution boundary.
 Unsupported commands exit with an argument error; they never claim successful processing.
 
 ## Development
