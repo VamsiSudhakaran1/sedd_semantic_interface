@@ -5,15 +5,18 @@ interfaces represented by SEMI E172 SEDD files. The product name is temporary.
 
 ## Current scope
 
-Prompts 0–4 establish the architectural contract, Python package foundation,
-reference observations, secure XML ingestion, and an XML-independent canonical model.
+Prompts 0–5 establish the architectural contract, Python package foundation,
+reference observations, secure XML ingestion, a canonical model, and revision adapters.
 The CLI supports `sedd --help` and `sedd --version` (also `python -m sema_sedd`).
 The library can ingest local SEDD XML and infer an E172-0225 revision hint from
 `xsi:schemaLocation`. The model library provides immutable typed entities, explicit
-reference/unknown states, and deterministic canonical JSON. Revision adapters,
-runtime XSD validation, semantic matching, graph operations, and reports remain
-unimplemented. See [docs/canonical_model.md](docs/canonical_model.md) for the API,
+reference/unknown states, and deterministic canonical JSON. An explicit adapter
+registry now maps E172-0225 structures into that model and preserves unsupported
+content with diagnostics. Runtime XSD validation, reference resolution, semantic
+matching, graph operations, and reports remain unimplemented. See [docs/canonical_model.md](docs/canonical_model.md) for the API,
 identity boundaries, and architecture review.
+See [docs/revision_adapters.md](docs/revision_adapters.md) for `load_interface()`,
+revision selection, extension preservation, and registering other adapters.
 Unsupported commands exit with an argument error; they never claim successful processing.
 
 ## Development
@@ -63,7 +66,8 @@ passes offline XSD validation. All 26 synthetic XSD outcomes match expectations
 (22 valid and 4 intentionally invalid). The sample also demonstrates unresolved
 identifiers and repeated message identities despite schema validity. Remaining
 semantic design questions are explicitly pending. The canonical model is now
-available; converting XML into that model still requires a revision adapter.
+available, and E172-0225 XML can now be mapped into it through the registry.
+Reference resolution and complete compound-format interpretation remain pending.
 
 To reproduce the reference checks, place the original supplied XSDs and sample in
 `work/references/`, then run:

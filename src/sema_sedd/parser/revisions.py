@@ -26,6 +26,9 @@ def revision_from_schema_location(value: str | None) -> tuple[str | None, str | 
     ]
     if len(locations) != 1:
         return None, "AMBIGUOUS_SCHEMA_HINT" if locations else "MISSING_SCHEMA_HINT"
-    filename = urlsplit(locations[0]).path.rsplit("/", 1)[-1].rsplit("\\", 1)[-1]
+    try:
+        filename = urlsplit(locations[0]).path.rsplit("/", 1)[-1].rsplit("\\", 1)[-1]
+    except ValueError:
+        return None, "MALFORMED_SCHEMA_HINT"
     revision = _SCHEMA_FILENAMES.get(filename)
     return (revision, None) if revision else (None, "UNRECOGNIZED_SCHEMA_HINT")

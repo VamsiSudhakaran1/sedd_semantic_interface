@@ -18,9 +18,13 @@ offline XML ingestion with source positions and a non-authoritative revision hin
 The model package provides immutable canonical objects, provenance, explicit
 references and unknowns, and versioned deterministic JSON. It imports no XML or
 parser types. `CanonicalEquipmentInterface` aliases `EquipmentInterface`.
-Revision adapters and identity/reference resolution remain unimplemented. See
+An explicit registry now selects E172-0225 or caller-supplied adapters.
+Identity matching and reference resolution remain unimplemented. See
 [xml_ingestion.md](xml_ingestion.md) and [canonical_model.md](canonical_model.md)
-for the public boundaries and the model architecture challenge. Source evidence
+for the public boundaries and the model architecture challenge.
+[revision_adapters.md](revision_adapters.md) describes routing, structural mapping,
+and import-boundary tests. Comparison, graph, and report packages must never
+import concrete revision adapters. Source evidence
 and local keys must be supplied explicitly; no relationships are inferred.
 
 Future comparison must distinguish irrelevant XML ordering from semantically
@@ -29,4 +33,4 @@ must be defined per field, without silently destroying meaningful text.
 
 Runtime version metadata comes from the installed distribution. Development uses
 an editable installation. No runtime dependency or network access is needed for
-help/version, XML ingestion, or canonical model construction/serialization.
+help/version, XML ingestion, revision mapping, or canonical model construction/serialization.
