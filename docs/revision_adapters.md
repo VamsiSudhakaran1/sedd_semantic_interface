@@ -116,6 +116,8 @@ and the result includes `REFERENCE_RESOLUTION_PENDING`. There is no automatic
 resolution, repair, first-match behavior, WKN-authority assertion, or numeric
 proximity matching. Event VID target-kind restrictions remain pending (A02).
 Command-parameter containment is explicit source structure and maps directly.
+The revision-neutral resolver is documented in
+[reference_resolution.md](reference_resolution.md); adapters do not import it.
 
 Data-item primitive/list/enum/bit/set vocabulary is represented by stable syntactic
 kind labels. Each SECSData or ValueFormat wrapper becomes a `sequence` node; list

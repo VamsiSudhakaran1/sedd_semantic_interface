@@ -55,6 +55,7 @@ class MessageDirection(StrEnum):
 
 class UnresolvedReason(StrEnum):
     NOT_FOUND = "not_found"
+    WRONG_TYPE = "wrong_type"
     AMBIGUOUS = "ambiguous"
     MISSING_SELECTOR = "missing_selector"
     UNSUPPORTED = "unsupported"

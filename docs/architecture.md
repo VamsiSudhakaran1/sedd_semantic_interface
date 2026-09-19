@@ -8,7 +8,7 @@ sequentially; the supplied attachment includes only prompts 0 and 1 in full.
 | parser | Bounded secure XML loading and revision detection, without network access |
 | adapters | Evidence-backed revision-specific extraction, initially E172-0225 |
 | model | CanonicalEquipmentInterface, provenance, unknowns and unresolved references |
-| graph | Traverse only relationships supported by canonical evidence |
+| graph | Build exact indexes, resolve references conservatively, and expose relationship outcomes |
 | compare | Deterministic matching with recorded reasons and semantic changes |
 | report | Machine-readable and escaped human-readable output |
 | cli | User-facing commands over these layers |
@@ -19,7 +19,8 @@ The model package provides immutable canonical objects, provenance, explicit
 references and unknowns, and versioned deterministic JSON. It imports no XML or
 parser types. `CanonicalEquipmentInterface` aliases `EquipmentInterface`.
 An explicit registry now selects E172-0225 or caller-supplied adapters.
-Identity matching and reference resolution remain unimplemented. See
+Reference resolution is implemented as a revision-neutral graph phase; cross-version
+identity matching remains unimplemented. See
 [xml_ingestion.md](xml_ingestion.md) and [canonical_model.md](canonical_model.md)
 for the public boundaries and the model architecture challenge.
 [revision_adapters.md](revision_adapters.md) describes routing, structural mapping,
@@ -28,6 +29,8 @@ import concrete revision adapters. Source evidence
 and local keys must be supplied explicitly; no relationships are inferred.
 [e172_entity_parser.md](e172_entity_parser.md) records the field-level conversion
 and preservation rules for the initial E172-0225 adapter.
+[reference_resolution.md](reference_resolution.md) records exact index identities,
+the three-state relationship model, and the audited ambiguity rules.
 
 Future comparison must distinguish irrelevant XML ordering from semantically
 meaningful sequence information such as message structures. Whitespace handling
