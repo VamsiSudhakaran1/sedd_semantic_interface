@@ -5,10 +5,12 @@ interfaces represented by SEMI E172 SEDD files. The product name is temporary.
 
 ## Current scope
 
-Prompts 0 and 1 establish the architectural contract and Python package foundation.
+Prompts 0–3 establish the architectural contract, Python package foundation,
+reference observations, and secure XML ingestion.
 The CLI supports `sedd --help` and `sedd --version` (also `python -m sema_sedd`).
-No XML parsing, revision support, semantic matching, graph operations, or reports
-are implemented yet. The initial planned adapter target is E172-0225.
+The library can ingest local SEDD XML and infer an E172-0225 revision hint from
+`xsi:schemaLocation`. XSD validation, revision adapters, canonical entities,
+semantic matching, graph operations, and reports are not implemented yet.
 Unsupported commands exit with an argument error; they never claim successful processing.
 
 ## Development
@@ -39,9 +41,11 @@ The processing boundary is secure loader → revision detection → revision ada
 `CanonicalEquipmentInterface` → graph / comparison / reporting. Revision-specific
 XML assumptions belong in adapters. Unknown information must remain explicit.
 
-The application will operate offline and read-only on inputs. Future parsing must
-reject unsafe XML and perform no network requests. No E172 compatibility or XML
-security guarantees are claimed by this foundation, which does not parse XML.
+The application operates offline and read-only on inputs. The library XML loader
+rejects DTDs and entity declarations, enforces byte and structural limits, and
+never resolves external resources. Its revision hint is not proof of schema
+validity or E172 conformance. See [docs/xml_ingestion.md](docs/xml_ingestion.md)
+for its API and limits.
 
 See [docs/architecture.md](docs/architecture.md) for module responsibilities and
 [docs/build-prompts.md](docs/build-prompts.md) for the supplied sequential roadmap.
