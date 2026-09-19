@@ -43,3 +43,11 @@ class ReportError(SeddError):
 
 class ModelValidationError(SemanticError):
     """A canonical object violates a model invariant or field type."""
+
+
+class AdapterRegistrationError(SeddError):
+    """An adapter registry or adapter result violates its contract."""
+
+
+class AmbiguousSeddVersionError(UnsupportedSeddVersionError):
+    """Multiple registered adapters claim the same document."""

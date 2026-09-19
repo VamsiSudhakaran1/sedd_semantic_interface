@@ -18,7 +18,8 @@ The loader accepts UTF-8 XML, including non-ASCII text. It requires the
 `xsi:schemaLocation` filename can produce an `E172-0225` *hint*; the URL is never
 opened. Missing, malformed, ambiguous, and unrecognized hints produce stable
 diagnostic codes and leave `revision_hint` unset. The hint does not validate the
-document against an XSD or authorize a revision-specific parser. The generic XML
+document against an XSD. The adapter registry now uses it for provisional routing
+with an explicit diagnostic; see [revision_adapters.md](revision_adapters.md). The generic XML
 tree contains no canonical entities.
 
 The parser uses Python's Expat engine with external parameter parsing disabled.

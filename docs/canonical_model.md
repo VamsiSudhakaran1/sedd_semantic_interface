@@ -189,7 +189,8 @@ needed by that work.
 
 Deferred decisions are explicit: authoritative WKN verification, native-ID
 normalization and cross-version matching, complete compound-format semantics,
-revision-adapter selection, stable adapter key allocation, and reference-resolution
-policy. No Prompt 2 assumption has silently become XML parser behavior. Future
-adapters consume the existing secure loader and construct these objects through
-this API; graph/comparison/report layers consume the model directly.
+reference-resolution policy. Prompt 5 adds a deliberate registry selection policy
+and occurrence-based adapter key allocation; see
+[revision_adapters.md](revision_adapters.md). No Prompt 2 assumption has silently
+become XML parser behavior. The E172-0225 adapter consumes the secure loader and constructs these
+objects through this API; graph/comparison/report layers consume the model directly.

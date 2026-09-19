@@ -1,5 +1,6 @@
 """Install the wheel into a fresh venv and test from outside the source tree."""
 
+import argparse
 import os
 import subprocess
 import tempfile
@@ -9,7 +10,10 @@ from pathlib import Path
 
 def main() -> None:
     root = Path(__file__).resolve().parents[1]
-    wheels = list((root / "dist").glob("*.whl"))
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--dist-dir", type=Path, default=root / "dist")
+    args = parser.parse_args()
+    wheels = list(args.dist_dir.resolve().glob("*.whl"))
     assert len(wheels) == 1, "Expected exactly one built wheel"
     with tempfile.TemporaryDirectory() as directory:
         env = Path(directory) / "env"
@@ -63,7 +67,21 @@ def main() -> None:
             cwd=directory,
             check=True,
         )
-    print("Isolated wheel installation, CLI, parser, and model checks passed.")
+        subprocess.run(
+            [
+                str(python),
+                "-c",
+                "from sema_sedd.adapters import load_interface; "
+                "from sema_sedd.model import to_canonical_json; import sys; "
+                "result = load_interface(sys.argv[1], revision='E172-0225'); "
+                "assert result.interface.equipment.model == 'Lantern17'; "
+                "assert to_canonical_json(result.interface)",
+                str(root / "tests" / "fixtures" / "minimal" / "e172-empty.xml"),
+            ],
+            cwd=directory,
+            check=True,
+        )
+    print("Isolated installation, CLI, loader, model, and adapter checks passed.")
 
 
 if __name__ == "__main__":
