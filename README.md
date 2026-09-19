@@ -5,12 +5,15 @@ interfaces represented by SEMI E172 SEDD files. The product name is temporary.
 
 ## Current scope
 
-Prompts 0–3 establish the architectural contract, Python package foundation,
-reference observations, and secure XML ingestion.
+Prompts 0–4 establish the architectural contract, Python package foundation,
+reference observations, secure XML ingestion, and an XML-independent canonical model.
 The CLI supports `sedd --help` and `sedd --version` (also `python -m sema_sedd`).
 The library can ingest local SEDD XML and infer an E172-0225 revision hint from
-`xsi:schemaLocation`. XSD validation, revision adapters, canonical entities,
-semantic matching, graph operations, and reports are not implemented yet.
+`xsi:schemaLocation`. The model library provides immutable typed entities, explicit
+reference/unknown states, and deterministic canonical JSON. Revision adapters,
+runtime XSD validation, semantic matching, graph operations, and reports remain
+unimplemented. See [docs/canonical_model.md](docs/canonical_model.md) for the API,
+identity boundaries, and architecture review.
 Unsupported commands exit with an argument error; they never claim successful processing.
 
 ## Development
@@ -59,8 +62,8 @@ E172/E173 schemas and the complete original TrackSys sample. The unmodified samp
 passes offline XSD validation. All 26 synthetic XSD outcomes match expectations
 (22 valid and 4 intentionally invalid). The sample also demonstrates unresolved
 identifiers and repeated message identities despite schema validity. Remaining
-semantic design questions are explicitly pending; runtime canonical processing
-remains unimplemented.
+semantic design questions are explicitly pending. The canonical model is now
+available; converting XML into that model still requires a revision adapter.
 
 To reproduce the reference checks, place the original supplied XSDs and sample in
 `work/references/`, then run:
