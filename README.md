@@ -5,21 +5,24 @@ interfaces represented by SEMI E172 SEDD files. The product name is temporary.
 
 ## Current scope
 
-Prompts 0–6 establish the architectural contract, Python package foundation,
+Prompts 0–7 establish the architectural contract, Python package foundation,
 reference observations, secure XML ingestion, a canonical model, revision adapters,
-and E172-0225 entity conversion.
+E172-0225 entity conversion, and conservative reference resolution.
 The CLI supports `sedd --help` and `sedd --version` (also `python -m sema_sedd`).
 The library can ingest local SEDD XML and infer an E172-0225 revision hint from
 `xsi:schemaLocation`. The model library provides immutable typed entities, explicit
 reference/unknown states, and deterministic canonical JSON. An explicit adapter
 registry now maps E172-0225 structures into that model and preserves unsupported
-content with diagnostics. Runtime XSD validation, reference resolution, semantic
-matching, graph operations, and reports remain unimplemented. See [docs/canonical_model.md](docs/canonical_model.md) for the API,
+content with diagnostics. The graph package now indexes exact identities and produces
+an exhaustive three-state relationship model. Runtime XSD validation, cross-version
+semantic matching, graph traversal, and reports remain unimplemented. See [docs/canonical_model.md](docs/canonical_model.md) for the API,
 identity boundaries, and architecture review.
 See [docs/revision_adapters.md](docs/revision_adapters.md) for `load_interface()`,
 revision selection, extension preservation, and registering other adapters.
 See [docs/e172_entity_parser.md](docs/e172_entity_parser.md) for the complete
 entity mapping and its explicit non-resolution boundary.
+See [docs/reference_resolution.md](docs/reference_resolution.md) for index keys,
+resolution states, and the audited no-assumption rules.
 Unsupported commands exit with an argument error; they never claim successful processing.
 
 ## Development
@@ -70,7 +73,7 @@ passes offline XSD validation. All 26 synthetic XSD outcomes match expectations
 identifiers and repeated message identities despite schema validity. Remaining
 semantic design questions are explicitly pending. The canonical model is now
 available, and E172-0225 XML can now be mapped into it through the registry.
-Reference resolution and complete compound-format interpretation remain pending.
+Complete compound-format interpretation and cross-version matching remain pending.
 
 To reproduce the reference checks, place the original supplied XSDs and sample in
 `work/references/`, then run:

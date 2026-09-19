@@ -81,7 +81,23 @@ def main() -> None:
             cwd=directory,
             check=True,
         )
-    print("Isolated installation, CLI, loader, model, and adapter checks passed.")
+        subprocess.run(
+            [
+                str(python),
+                "-c",
+                "from sema_sedd.adapters import load_interface; "
+                "from sema_sedd.graph import ResolutionState, resolve_references; "
+                "import sys; "
+                "parsed = load_interface(sys.argv[1], revision='E172-0225').interface; "
+                "result = resolve_references(parsed); "
+                "assert sum(r.state is ResolutionState.RESOLVED "
+                "for r in result.relationships) == 4",
+                str(root / "tests" / "fixtures" / "relationships" / "e172-event-alarm-report.xml"),
+            ],
+            cwd=directory,
+            check=True,
+        )
+    print("Isolated installation, CLI, loader, model, adapter, and graph checks passed.")
 
 
 if __name__ == "__main__":

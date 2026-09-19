@@ -101,10 +101,12 @@ a verified WKN may collide. No identity match or automatic merge follows from it
 
 An `EntityReference` stores observed selectors independently of `target_key`.
 A null target means no resolved target is recorded. It does not prove a missing
-entity. A future resolver must record `NOT_FOUND`, `AMBIGUOUS`, `MISSING_SELECTOR`,
-`UNSUPPORTED`, or `NOT_ATTEMPTED` in `UnresolvedReference`. An empty unresolved
-ledger is not a claim that resolution ran successfully. No name similarity,
-numeric proximity, or first-match selection occurs during model construction.
+entity. Adapter output records `NOT_ATTEMPTED` or `MISSING_SELECTOR`; an empty
+adapter ledger is not a claim that resolution ran successfully. The separate graph
+resolver records `NOT_FOUND`, `WRONG_TYPE`, `AMBIGUOUS`, `MISSING_SELECTOR`, or
+`UNSUPPORTED`, embeds unique targets, and produces an exhaustive relationship
+model. No name similarity, numeric proximity, or first-match selection occurs.
+See [reference_resolution.md](reference_resolution.md).
 
 The aggregate checks key uniqueness, membership of resolved targets, declared
 target types, and command scope for parameter targets. Known relationship roles
@@ -189,8 +191,8 @@ needed by that work.
 | Message metadata | A blocking label is not a boolean; lexical labels and header/exception text remain representable | Message metadata regression test |
 
 Deferred decisions are explicit: authoritative WKN verification, native-ID
-normalization and cross-version matching, complete compound-format semantics,
-reference-resolution policy. Prompt 5 adds a deliberate registry selection policy
+normalization and cross-version matching, and complete compound-format semantics.
+Prompt 5 adds a deliberate registry selection policy
 and occurrence-based adapter key allocation; see
 [revision_adapters.md](revision_adapters.md). No Prompt 2 assumption has silently
 become XML parser behavior. The E172-0225 adapter consumes the secure loader and constructs these

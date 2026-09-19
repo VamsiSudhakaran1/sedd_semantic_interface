@@ -77,6 +77,10 @@ ledger records `NOT_ATTEMPTED`, or `MISSING_SELECTOR` when no selector exists.
 No lookup, first-match selection, numeric-proximity repair, WKN match, or inferred
 relationship occurs in this parser.
 
+Reference resolution is an explicit downstream graph phase documented in
+[reference_resolution.md](reference_resolution.md). It does not alter this parser's
+evidence-only boundary.
+
 Unknown elements, attributes, nil content, repeated singleton fields, unsupported
 structured scalars, invalid closed values, and unsupported declared sections are
 retained as `UnknownExtension` where practical. Diagnostics use controlled codes
