@@ -39,3 +39,7 @@ class SemanticError(SeddError):
 
 class ReportError(SeddError):
     """A report cannot be generated or written."""
+
+
+class ModelValidationError(SemanticError):
+    """A canonical object violates a model invariant or field type."""

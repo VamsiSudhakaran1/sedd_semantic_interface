@@ -50,7 +50,20 @@ def main() -> None:
             cwd=directory,
             check=True,
         )
-    print("Isolated wheel installation and CLI checks passed.")
+        subprocess.run(
+            [
+                str(python),
+                "-c",
+                "from sema_sedd.model import EquipmentInterface, StatusVariable, "
+                "to_canonical_json; import json; "
+                "data = json.loads(to_canonical_json(EquipmentInterface("
+                "status_variables=(StatusVariable(key='sv', implementation_id='007'),)))); "
+                "assert data['interface']['status_variables'][0]['implementation_id'] == '007'",
+            ],
+            cwd=directory,
+            check=True,
+        )
+    print("Isolated wheel installation, CLI, parser, and model checks passed.")
 
 
 if __name__ == "__main__":

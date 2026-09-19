@@ -15,9 +15,13 @@ sequentially; the supplied attachment includes only prompts 0 and 1 in full.
 
 The CLI currently supports help/version. The parser package now provides bounded,
 offline XML ingestion with source positions and a non-authoritative revision hint.
-No revision adapter or canonical domain support exists yet; see
-[xml_ingestion.md](xml_ingestion.md). No speculative standard mappings or entity
-relationships are included. Authoritative schema evidence will be needed for adapters.
+The model package provides immutable canonical objects, provenance, explicit
+references and unknowns, and versioned deterministic JSON. It imports no XML or
+parser types. `CanonicalEquipmentInterface` aliases `EquipmentInterface`.
+Revision adapters and identity/reference resolution remain unimplemented. See
+[xml_ingestion.md](xml_ingestion.md) and [canonical_model.md](canonical_model.md)
+for the public boundaries and the model architecture challenge. Source evidence
+and local keys must be supplied explicitly; no relationships are inferred.
 
 Future comparison must distinguish irrelevant XML ordering from semantically
 meaningful sequence information such as message structures. Whitespace handling
@@ -25,4 +29,4 @@ must be defined per field, without silently destroying meaningful text.
 
 Runtime version metadata comes from the installed distribution. Development uses
 an editable installation. No runtime dependency or network access is needed for
-help/version or XML ingestion.
+help/version, XML ingestion, or canonical model construction/serialization.
