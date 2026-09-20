@@ -34,9 +34,10 @@ def test_module_cli(args: list[str]) -> None:
         assert "--help" in result.stdout
         assert "--version" in result.stdout
         assert "inspect" in result.stdout
+        assert "explore" in result.stdout
 
 
-@pytest.mark.parametrize("arg", ["compare", "explore", "report", "--bogus", "--ver"])
+@pytest.mark.parametrize("arg", ["compare", "report", "--bogus", "--ver"])
 def test_unsupported_arguments(arg: str, capsys: pytest.CaptureFixture[str]) -> None:
     with pytest.raises(SystemExit) as error:
         main([arg])
@@ -179,6 +180,160 @@ def test_inspect_errors_are_controlled(tmp_path: Path, capsys: pytest.CaptureFix
         main(["inspect", str(path), "--type", "StatusVariable"])
     assert invalid_type.value.code == 2
     assert "invalid choice" in capsys.readouterr().err
+
+
+def test_explore_text_displays_entity_properties_and_both_directions(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    path = hinted_fixture(tmp_path, "e172-event-alarm-report.xml")
+    assert main(["explore", str(path), "event:801"]) == 0
+    output = capsys.readouterr().out
+    assert "SEDD revision: E172-0225" in output
+    assert "Entity (depth 0): collection_event" in output
+    assert "Properties:" in output
+    assert "Incoming relationships: 2" in output
+    assert "Outgoing relationships:" in output
+    assert "Entity (depth 1): alarm" in output
+    assert "Entity (depth 1): event_report_link" in output
+
+
+def test_explore_json_is_deterministic_and_depth_bounded(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    path = hinted_fixture(tmp_path, "e172-event-alarm-report.xml")
+    args = ["explore", str(path), "alarm:1001", "--depth", "2", "--json"]
+    assert main(args) == 0
+    first = capsys.readouterr().out
+    assert main(args) == 0
+    second = capsys.readouterr().out
+    assert first == second
+    assert first == first.strip() + "\n"
+
+    data = json.loads(first)
+    assert data["exploration_schema_version"] == "1.0"
+    assert data["selector"] == {"kind": "alarm", "value": "1001"}
+    assert data["max_depth"] == 2
+    assert [(item["entity"]["canonical_type"], item["depth"]) for item in data["entities"]] == [
+        ("alarm", 0),
+        ("collection_event", 1),
+        ("collection_event", 1),
+        ("event_report_link", 2),
+    ]
+    assert max(item["depth"] for item in data["entities"]) == 2
+
+
+def test_explore_depth_zero_shows_relationships_without_traversal(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    path = hinted_fixture(tmp_path, "e172-event-alarm-report.xml")
+    assert main(["explore", str(path), "alarm:1001", "--depth", "0", "--json"]) == 0
+    data = json.loads(capsys.readouterr().out)
+    assert len(data["entities"]) == 1
+    root = data["entities"][0]
+    assert root["depth"] == 0
+    assert {item["role"] for item in root["outgoing_relationships"]} == {
+        "clear_event",
+        "set_event",
+    }
+
+
+def test_explore_status_variable_and_wkn_select_the_same_entity(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    path = hinted_fixture(tmp_path, "e172-complete.xml")
+    selectors = ["status-variable:702", "wkn:urn:sema-sedd:fictional:702"]
+    root_keys = []
+    for selector in selectors:
+        assert main(["explore", str(path), selector, "--depth", "0", "--json"]) == 0
+        data = json.loads(capsys.readouterr().out)
+        root_keys.append(data["root_key"])
+        assert data["entities"][0]["entity"]["canonical_type"] == "status_variable"
+    assert root_keys[0] == root_keys[1]
+
+
+def test_explore_shows_unresolved_relationship_but_does_not_traverse_it(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    path = hinted_fixture(tmp_path, "e172-event-alarm-report.xml")
+    assert main(["explore", str(path), "event:801", "--depth", "8", "--json"]) == 0
+    data = json.loads(capsys.readouterr().out)
+    report = next(
+        item for item in data["entities"] if item["entity"]["canonical_type"] == "default_report"
+    )
+    unresolved = report["outgoing_relationships"]
+    assert len(unresolved) == 1
+    assert unresolved[0]["state"] == "unresolved"
+    assert unresolved[0]["target_key"] is None
+    assert unresolved[0]["reason"] == "not_found"
+    assert len(data["entities"]) == 5
+
+
+def test_explore_shows_ambiguous_relationship_but_does_not_traverse_candidates(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    path = hinted_fixture(tmp_path, "e172-event-alarm-report.xml")
+    text = path.read_text(encoding="utf-8")
+    duplicates = (
+        "<DataVariables>"
+        "<DataVariable><VID>799</VID><DVVALNAME>First</DVVALNAME></DataVariable>"
+        "<DataVariable><VID>799</VID><DVVALNAME>Second</DVVALNAME></DataVariable>"
+        "</DataVariables>"
+    )
+    path.write_text(text.replace("<DataVariables/>", duplicates), encoding="utf-8")
+
+    assert main(["explore", str(path), "event:801", "--depth", "8", "--json"]) == 0
+    data = json.loads(capsys.readouterr().out)
+    report = next(
+        item for item in data["entities"] if item["entity"]["canonical_type"] == "default_report"
+    )
+    ambiguous = report["outgoing_relationships"][0]
+    assert ambiguous["state"] == "ambiguous"
+    assert len(ambiguous["candidate_keys"]) == 2
+    assert all(item["entity"]["canonical_type"] != "data_variable" for item in data["entities"])
+
+
+@pytest.mark.parametrize(
+    "selector",
+    ["event", "command:Start", "event:", ":801", "Event:801", "event:0801"],
+)
+def test_explore_selector_errors_are_controlled(
+    tmp_path: Path, selector: str, capsys: pytest.CaptureFixture[str]
+) -> None:
+    path = hinted_fixture(tmp_path, "e172-event-alarm-report.xml")
+    with pytest.raises(SystemExit) as error:
+        main(["explore", str(path), selector])
+    assert error.value.code == 2
+    captured = capsys.readouterr()
+    assert "error:" in captured.err
+    assert "Traceback" not in captured.err
+
+
+def test_explore_rejects_ambiguous_selector(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    path = hinted_fixture(tmp_path, "e172-event-alarm-report.xml")
+    text = path.read_text(encoding="utf-8")
+    path.write_text(
+        text.replace("<CEID>802</CEID>", "<CEID>801</CEID>"),
+        encoding="utf-8",
+    )
+    with pytest.raises(SystemExit) as error:
+        main(["explore", str(path), "event:801"])
+    assert error.value.code == 2
+    captured = capsys.readouterr()
+    assert "is ambiguous; it matched 2 entities" in captured.err
+    assert "Traceback" not in captured.err
+
+
+@pytest.mark.parametrize("depth", ["-1", "9", "one", "1.5"])
+def test_explore_rejects_unbounded_or_invalid_depth(
+    tmp_path: Path, depth: str, capsys: pytest.CaptureFixture[str]
+) -> None:
+    path = hinted_fixture(tmp_path, "e172-event-alarm-report.xml")
+    with pytest.raises(SystemExit) as error:
+        main(["explore", str(path), "event:801", "--depth", depth])
+    assert error.value.code == 2
+    assert "depth must" in capsys.readouterr().err
 
 
 @pytest.mark.parametrize(
