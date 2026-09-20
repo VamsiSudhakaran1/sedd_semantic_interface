@@ -8,7 +8,9 @@ interfaces represented by SEMI E172 SEDD files. The product name is temporary.
 Prompts 0–7 establish the architectural contract, Python package foundation,
 reference observations, secure XML ingestion, a canonical model, revision adapters,
 E172-0225 entity conversion, and conservative reference resolution.
-The CLI supports `sedd --help` and `sedd --version` (also `python -m sema_sedd`).
+Prompt 9 adds `sedd inspect FILE` with deterministic text/JSON summaries and exact
+entity filters. The CLI also supports `sedd --help` and `sedd --version` (including
+through `python -m sema_sedd`).
 The library can ingest local SEDD XML and infer an E172-0225 revision hint from
 `xsi:schemaLocation`. The model library provides immutable typed entities, explicit
 reference/unknown states, and deterministic canonical JSON. An explicit adapter
@@ -23,6 +25,8 @@ See [docs/e172_entity_parser.md](docs/e172_entity_parser.md) for the complete
 entity mapping and its explicit non-resolution boundary.
 See [docs/reference_resolution.md](docs/reference_resolution.md) for index keys,
 resolution states, and the audited no-assumption rules.
+See [docs/inspect_cli.md](docs/inspect_cli.md) for inspect output, filters, and its
+versioned JSON contract.
 Unsupported commands exit with an argument error; they never claim successful processing.
 
 ## Development

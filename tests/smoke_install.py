@@ -1,6 +1,7 @@
 """Install the wheel into a fresh venv and test from outside the source tree."""
 
 import argparse
+import json
 import os
 import subprocess
 import tempfile
@@ -97,7 +98,30 @@ def main() -> None:
             cwd=directory,
             check=True,
         )
-    print("Isolated installation, CLI, loader, model, adapter, and graph checks passed.")
+        source = root / "tests" / "fixtures" / "relationships" / "e172-event-alarm-report.xml"
+        inspect_input = Path(directory) / "inspect.xml"
+        inspect_input.write_text(
+            source.read_text(encoding="utf-8").replace(
+                '<sedd:DataDictionary xmlns:sedd="urn:semi-org:xsd.SEDD">',
+                '<sedd:DataDictionary xmlns:sedd="urn:semi-org:xsd.SEDD" '
+                'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" '
+                'xsi:schemaLocation="urn:semi-org:xsd.SEDD E172-0225-SEDD-Schema.xsd">',
+                1,
+            ),
+            encoding="utf-8",
+        )
+        inspected = subprocess.run(
+            [str(command), "inspect", str(inspect_input), "--json", "--type", "alarm"],
+            cwd=directory,
+            capture_output=True,
+            text=True,
+            check=True,
+        )
+        inspection = json.loads(inspected.stdout)
+        assert inspection["sedd_revision"] == "E172-0225"
+        assert inspection["selection"]["count"] == 1
+        assert not inspected.stderr
+    print("Isolated installation, inspect CLI, loader, model, adapter, and graph checks passed.")
 
 
 if __name__ == "__main__":

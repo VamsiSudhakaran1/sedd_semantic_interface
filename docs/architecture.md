@@ -11,9 +11,9 @@ sequentially; the supplied attachment includes only prompts 0 and 1 in full.
 | graph | Build exact indexes, resolve references conservatively, and expose relationship outcomes |
 | compare | Deterministic matching with recorded reasons and semantic changes |
 | report | Machine-readable and escaped human-readable output |
-| cli | User-facing commands over these layers |
+| cli | Deterministic inspect output and future user-facing commands over these layers |
 
-The CLI currently supports help/version. The parser package now provides bounded,
+The CLI supports help/version and read-only inspection in text or JSON. The parser package provides bounded,
 offline XML ingestion with source positions and a non-authoritative revision hint.
 The model package provides immutable canonical objects, provenance, explicit
 references and unknowns, and versioned deterministic JSON. It imports no XML or
@@ -31,6 +31,8 @@ and local keys must be supplied explicitly; no relationships are inferred.
 and preservation rules for the initial E172-0225 adapter.
 [reference_resolution.md](reference_resolution.md) records exact index identities,
 the three-state relationship model, and the audited ambiguity rules.
+[inspect_cli.md](inspect_cli.md) records summary fields, exact filters, immediate
+relationship output, and the deterministic inspection JSON contract.
 
 Future comparison must distinguish irrelevant XML ordering from semantically
 meaningful sequence information such as message structures. Whitespace handling
