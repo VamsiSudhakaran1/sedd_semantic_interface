@@ -172,10 +172,11 @@ JSON-array order is preserved. Sorting does not mutate the model.
 The same represented model yields identical JSON across construction order of
 inventories/maps and across process hash seeds. **This JSON is not a semantic
 fingerprint.** It includes provenance and local keys, so changed source locations
-can change it even when the interface meaning is unchanged. Cross-version matching,
-XML whitespace treatment, normalization, semantic comparisons, and change reasons
-remain separate future work. Deterministic serialization must not erase evidence
-needed by that work.
+can change it even when the interface meaning is unchanged. XML whitespace treatment,
+normalization, full semantic comparisons, and general change reasons remain
+separate work. Cross-version identity matching is now
+implemented in [entity_matching.md](entity_matching.md), outside the model layer.
+Deterministic serialization must not erase evidence needed by that work.
 
 ## Critical architecture challenge
 
@@ -191,7 +192,9 @@ needed by that work.
 | Message metadata | A blocking label is not a boolean; lexical labels and header/exception text remain representable | Message metadata regression test |
 
 Deferred decisions are explicit: authoritative WKN verification, native-ID
-normalization and cross-version matching, and complete compound-format semantics.
+normalization, and complete compound-format semantics. Prompt 11 implements
+cross-version matching with exact lexical identities and explicit ambiguity;
+it does not authenticate WKNs or change this model's identity invariants.
 Prompt 5 adds a deliberate registry selection policy
 and occurrence-based adapter key allocation; see
 [revision_adapters.md](revision_adapters.md). No Prompt 2 assumption has silently

@@ -9,7 +9,7 @@ sequentially; the supplied attachment includes only prompts 0 and 1 in full.
 | adapters | Evidence-backed revision-specific extraction, initially E172-0225 |
 | model | CanonicalEquipmentInterface, provenance, unknowns and unresolved references |
 | graph | Build exact indexes, resolve references conservatively, and expose relationship outcomes |
-| compare | Deterministic matching with recorded reasons and semantic changes |
+| compare | Deterministic identity matching with recorded evidence and ambiguity; full semantic diffs remain planned |
 | report | Machine-readable and escaped human-readable output |
 | cli | Deterministic inspect and bounded explore output, plus future user-facing commands over these layers |
 
@@ -20,8 +20,8 @@ The model package provides immutable canonical objects, provenance, explicit
 references and unknowns, and versioned deterministic JSON. It imports no XML or
 parser types. `CanonicalEquipmentInterface` aliases `EquipmentInterface`.
 An explicit registry now selects E172-0225 or caller-supplied adapters.
-Reference resolution is implemented as a revision-neutral graph phase; cross-version
-identity matching remains unimplemented. See
+Reference resolution is implemented as a revision-neutral graph phase. Cross-version
+identity matching consumes only canonical models and records conflicts explicitly. See
 [xml_ingestion.md](xml_ingestion.md) and [canonical_model.md](canonical_model.md)
 for the public boundaries and the model architecture challenge.
 [revision_adapters.md](revision_adapters.md) describes routing, structural mapping,
@@ -37,6 +37,8 @@ relationship output, and the deterministic inspection JSON contract.
 [explore_cli.md](explore_cli.md) records exact selectors, bidirectional traversal
 over resolved canonical relationships, the hard depth bound, and the deterministic
 exploration JSON contract.
+[entity_matching.md](entity_matching.md) records the canonical matcher, evidence
+policy, confidence categories, dependent scopes and conflict-preserving algorithm.
 
 Future comparison must distinguish irrelevant XML ordering from semantically
 meaningful sequence information such as message structures. Whitespace handling

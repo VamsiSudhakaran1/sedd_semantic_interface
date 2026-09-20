@@ -141,9 +141,32 @@ def main() -> None:
         assert exploration["selector"] == {"kind": "alarm", "value": "1001"}
         assert [item["depth"] for item in exploration["entities"]] == [0, 1, 1]
         assert not explored.stderr
+        subprocess.run(
+            [
+                str(python),
+                "-c",
+                "from sema_sedd.compare import match_interfaces, IdentityChangeKind; "
+                "from sema_sedd.model import EquipmentInterface, StatusVariable, "
+                "WellKnownName, WknAuthority, SourceProvenance; "
+                "wkn = WellKnownName(value='synthetic.value', authority='fictional-registry', "
+                "scope='fixture', authority_status=WknAuthority.VERIFIED, "
+                "provenance=(SourceProvenance(source_document='synthetic.json'),)); "
+                "old = EquipmentInterface(status_variables=("
+                "StatusVariable(key='old', implementation_id='44', wkn=wkn),)); "
+                "new = EquipmentInterface(status_variables=("
+                "StatusVariable(key='new', implementation_id='8044', wkn=wkn),)); "
+                "result = match_interfaces(old, new); "
+                "assert len(result.matches) == 1; "
+                "assert result.matches[0].changes[0].kind is "
+                "IdentityChangeKind.IMPLEMENTATION_ID_CHANGED; "
+                "assert not result.unmatched_old and not result.unmatched_new",
+            ],
+            cwd=directory,
+            check=True,
+        )
     print(
         "Isolated installation, inspect/explore CLI, loader, model, adapter, "
-        "and graph checks passed."
+        "graph, and cross-version matching checks passed."
     )
 
 
