@@ -9,15 +9,17 @@ Prompts 0–7 establish the architectural contract, Python package foundation,
 reference observations, secure XML ingestion, a canonical model, revision adapters,
 E172-0225 entity conversion, and conservative reference resolution.
 Prompt 9 adds `sedd inspect FILE` with deterministic text/JSON summaries and exact
-entity filters. The CLI also supports `sedd --help` and `sedd --version` (including
-through `python -m sema_sedd`).
+entity filters. Prompt 10 adds `sedd explore FILE ENTITY` with exact selectors,
+incoming and outgoing relationships, deterministic JSON, and traversal bounded to
+depth 0–8. The CLI also supports `sedd --help` and `sedd --version` (including through
+`python -m sema_sedd`).
 The library can ingest local SEDD XML and infer an E172-0225 revision hint from
 `xsi:schemaLocation`. The model library provides immutable typed entities, explicit
 reference/unknown states, and deterministic canonical JSON. An explicit adapter
 registry now maps E172-0225 structures into that model and preserves unsupported
 content with diagnostics. The graph package now indexes exact identities and produces
 an exhaustive three-state relationship model. Runtime XSD validation, cross-version
-semantic matching, graph traversal, and reports remain unimplemented. See [docs/canonical_model.md](docs/canonical_model.md) for the API,
+semantic matching, general graph APIs, and reports remain unimplemented. See [docs/canonical_model.md](docs/canonical_model.md) for the API,
 identity boundaries, and architecture review.
 See [docs/revision_adapters.md](docs/revision_adapters.md) for `load_interface()`,
 revision selection, extension preservation, and registering other adapters.
@@ -27,6 +29,8 @@ See [docs/reference_resolution.md](docs/reference_resolution.md) for index keys,
 resolution states, and the audited no-assumption rules.
 See [docs/inspect_cli.md](docs/inspect_cli.md) for inspect output, filters, and its
 versioned JSON contract.
+See [docs/explore_cli.md](docs/explore_cli.md) for selectors, bounded traversal,
+relationship visibility, and its versioned JSON contract.
 Unsupported commands exit with an argument error; they never claim successful processing.
 
 ## Development

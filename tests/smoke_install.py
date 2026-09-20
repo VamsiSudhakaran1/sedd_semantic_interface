@@ -121,7 +121,30 @@ def main() -> None:
         assert inspection["sedd_revision"] == "E172-0225"
         assert inspection["selection"]["count"] == 1
         assert not inspected.stderr
-    print("Isolated installation, inspect CLI, loader, model, adapter, and graph checks passed.")
+        explored = subprocess.run(
+            [
+                str(command),
+                "explore",
+                str(inspect_input),
+                "alarm:1001",
+                "--depth",
+                "1",
+                "--json",
+            ],
+            cwd=directory,
+            capture_output=True,
+            text=True,
+            check=True,
+        )
+        exploration = json.loads(explored.stdout)
+        assert exploration["sedd_revision"] == "E172-0225"
+        assert exploration["selector"] == {"kind": "alarm", "value": "1001"}
+        assert [item["depth"] for item in exploration["entities"]] == [0, 1, 1]
+        assert not explored.stderr
+    print(
+        "Isolated installation, inspect/explore CLI, loader, model, adapter, "
+        "and graph checks passed."
+    )
 
 
 if __name__ == "__main__":

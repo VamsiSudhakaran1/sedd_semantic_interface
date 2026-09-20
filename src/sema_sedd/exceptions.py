@@ -45,6 +45,10 @@ class ModelValidationError(SemanticError):
     """A canonical object violates a model invariant or field type."""
 
 
+class EntitySelectionError(SemanticError):
+    """An explicit entity selector is invalid, missing, or ambiguous."""
+
+
 class AdapterRegistrationError(SeddError):
     """An adapter registry or adapter result violates its contract."""
 
