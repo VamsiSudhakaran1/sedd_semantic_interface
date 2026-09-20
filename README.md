@@ -13,13 +13,17 @@ entity filters. Prompt 10 adds `sedd explore FILE ENTITY` with exact selectors,
 incoming and outgoing relationships, deterministic JSON, and traversal bounded to
 depth 0–8. The CLI also supports `sedd --help` and `sedd --version` (including through
 `python -m sema_sedd`).
+Prompt 11 adds the canonical `match_interfaces(old, new)` API with recorded identity
+evidence, categorical confidence, explicit collisions/conflicts, and implementation
+ID changes established by verified WKN continuity.
 The library can ingest local SEDD XML and infer an E172-0225 revision hint from
 `xsi:schemaLocation`. The model library provides immutable typed entities, explicit
 reference/unknown states, and deterministic canonical JSON. An explicit adapter
 registry now maps E172-0225 structures into that model and preserves unsupported
 content with diagnostics. The graph package now indexes exact identities and produces
-an exhaustive three-state relationship model. Runtime XSD validation, cross-version
-semantic matching, general graph APIs, and reports remain unimplemented. See [docs/canonical_model.md](docs/canonical_model.md) for the API,
+an exhaustive three-state relationship model. Runtime XSD validation, full semantic
+diffs, the compare CLI, general graph APIs, and reports remain unimplemented.
+See [docs/canonical_model.md](docs/canonical_model.md) for the API,
 identity boundaries, and architecture review.
 See [docs/revision_adapters.md](docs/revision_adapters.md) for `load_interface()`,
 revision selection, extension preservation, and registering other adapters.
@@ -31,6 +35,8 @@ See [docs/inspect_cli.md](docs/inspect_cli.md) for inspect output, filters, and 
 versioned JSON contract.
 See [docs/explore_cli.md](docs/explore_cli.md) for selectors, bounded traversal,
 relationship visibility, and its versioned JSON contract.
+See [docs/entity_matching.md](docs/entity_matching.md) for cross-version identity
+policy, evidence precedence, WKN trust boundaries, and ambiguity handling.
 Unsupported commands exit with an argument error; they never claim successful processing.
 
 ## Development
@@ -81,7 +87,9 @@ passes offline XSD validation. All 26 synthetic XSD outcomes match expectations
 identifiers and repeated message identities despite schema validity. Remaining
 semantic design questions are explicitly pending. The canonical model is now
 available, and E172-0225 XML can now be mapped into it through the registry.
-Complete compound-format interpretation and cross-version matching remain pending.
+Complete compound-format interpretation and authoritative WKN vocabulary
+verification remain pending. Cross-version identity matching is implemented with
+the explicit evidence policy documented above.
 
 To reproduce the reference checks, place the original supplied XSDs and sample in
 `work/references/`, then run:
