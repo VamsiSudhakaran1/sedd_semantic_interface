@@ -16,13 +16,16 @@ depth 0–8. The CLI also supports `sedd --help` and `sedd --version` (including
 Prompt 11 adds the canonical `match_interfaces(old, new)` API with recorded identity
 evidence, categorical confidence, explicit collisions/conflicts, and implementation
 ID changes established by verified WKN continuity.
+Prompt 12 adds `compare_interfaces(old, new)` with typed semantic changes,
+documentation/interface classification, matching-aware relationship deltas,
+explicit uncertainty, and deterministic change JSON.
 The library can ingest local SEDD XML and infer an E172-0225 revision hint from
 `xsi:schemaLocation`. The model library provides immutable typed entities, explicit
 reference/unknown states, and deterministic canonical JSON. An explicit adapter
 registry now maps E172-0225 structures into that model and preserves unsupported
 content with diagnostics. The graph package now indexes exact identities and produces
-an exhaustive three-state relationship model. Runtime XSD validation, full semantic
-diffs, the compare CLI, general graph APIs, and reports remain unimplemented.
+an exhaustive three-state relationship model. Runtime XSD validation, the compare
+CLI, general graph APIs, and reports remain unimplemented.
 See [docs/canonical_model.md](docs/canonical_model.md) for the API,
 identity boundaries, and architecture review.
 See [docs/revision_adapters.md](docs/revision_adapters.md) for `load_interface()`,
@@ -37,6 +40,8 @@ See [docs/explore_cli.md](docs/explore_cli.md) for selectors, bounded traversal,
 relationship visibility, and its versioned JSON contract.
 See [docs/entity_matching.md](docs/entity_matching.md) for cross-version identity
 policy, evidence precedence, WKN trust boundaries, and ambiguity handling.
+See [docs/semantic_changes.md](docs/semantic_changes.md) for the semantic change
+API, coverage, ordering rules, and a reproducible comparison with XML diff output.
 Unsupported commands exit with an argument error; they never claim successful processing.
 
 ## Development

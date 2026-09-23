@@ -6,7 +6,7 @@
     "before_value": "SyntheticState",
     "after_value": "SyntheticRenamed",
     "expected_change": "NAME_CHANGED",
-    "status": "PENDING_COMPARATOR"
+    "status": "TESTED_COMPARATOR"
   },
   {
     "before": "relationships/e172-complete.xml",
@@ -15,7 +15,7 @@
     "before_value": "Original synthetic variable.",
     "after_value": "Changed synthetic description.",
     "expected_change": "DESCRIPTION_CHANGED",
-    "status": "PENDING_COMPARATOR"
+    "status": "TESTED_COMPARATOR"
   },
   {
     "before": "relationships/e172-complete.xml",
@@ -24,7 +24,7 @@
     "before_value": "count",
     "after_value": "items",
     "expected_change": "UNIT_CHANGED",
-    "status": "PENDING_COMPARATOR"
+    "status": "TESTED_COMPARATOR"
   },
   {
     "before": "relationships/e172-complete.xml",
@@ -33,7 +33,7 @@
     "before_value": "100",
     "after_value": "200",
     "expected_change": "RANGE_CHANGED",
-    "status": "PENDING_COMPARATOR"
+    "status": "TESTED_COMPARATOR"
   },
   {
     "before": "relationships/e172-complete.xml",
@@ -42,7 +42,7 @@
     "before_value": "20",
     "after_value": "21",
     "expected_change": "DEFAULT_CHANGED",
-    "status": "PENDING_COMPARATOR"
+    "status": "TESTED_COMPARATOR"
   },
   {
     "before": "relationships/e172-complete.xml",
@@ -51,7 +51,7 @@
     "before_value": "urn:sema-sedd:fictional:702",
     "after_value": "urn:sema-sedd:fictional:renamed",
     "expected_change": "WELL_KNOWN_NAME_CHANGED",
-    "status": "PENDING_COMPARATOR"
+    "status": "TESTED_COMPARATOR"
   },
   {
     "before": "relationships/e172-complete.xml",
@@ -60,7 +60,7 @@
     "before_value": "701",
     "after_value": "703",
     "expected_change": "REPORT_CONTENT_CHANGED",
-    "status": "PENDING_COMPARATOR"
+    "status": "TESTED_COMPARATOR"
   },
   {
     "before": "relationships/e172-complete.xml",
@@ -69,7 +69,7 @@
     "before_value": "801",
     "after_value": "802",
     "expected_change": "EVENT_REPORT_LINK_CHANGED",
-    "status": "PENDING_COMPARATOR"
+    "status": "TESTED_COMPARATOR"
   },
   {
     "before": "relationships/e172-complete.xml",
@@ -78,7 +78,7 @@
     "before_value": "802",
     "after_value": "801",
     "expected_change": "ALARM_EVENT_LINK_CHANGED",
-    "status": "PENDING_COMPARATOR"
+    "status": "TESTED_COMPARATOR"
   },
   {
     "before": "relationships/e172-complete.xml",
@@ -87,7 +87,7 @@
     "before_value": "MODE",
     "after_value": "PROFILE",
     "expected_change": "COMMAND_PARAMETER_CHANGED",
-    "status": "PENDING_COMPARATOR"
+    "status": "TESTED_COMPARATOR"
   },
   {
     "before": "relationships/e172-complete.xml",
@@ -96,6 +96,6 @@
     "before_value": "Synthetic-Only",
     "after_value": "Synthetic-Only-v2",
     "expected_change": "STANDARD_METADATA_CHANGED",
-    "status": "PENDING_COMPARATOR"
+    "status": "TESTED_COMPARATOR"
   }
 ]

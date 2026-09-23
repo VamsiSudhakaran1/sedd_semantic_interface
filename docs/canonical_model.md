@@ -172,10 +172,10 @@ JSON-array order is preserved. Sorting does not mutate the model.
 The same represented model yields identical JSON across construction order of
 inventories/maps and across process hash seeds. **This JSON is not a semantic
 fingerprint.** It includes provenance and local keys, so changed source locations
-can change it even when the interface meaning is unchanged. XML whitespace treatment,
-normalization, full semantic comparisons, and general change reasons remain
-separate work. Cross-version identity matching is now
-implemented in [entity_matching.md](entity_matching.md), outside the model layer.
+can change it even when the interface meaning is unchanged. XML whitespace treatment
+belongs to adapters. Cross-version identity matching and semantic comparisons are
+implemented outside the model layer in [entity_matching.md](entity_matching.md)
+and [semantic_changes.md](semantic_changes.md), with explicit ordering and text rules.
 Deterministic serialization must not erase evidence needed by that work.
 
 ## Critical architecture challenge

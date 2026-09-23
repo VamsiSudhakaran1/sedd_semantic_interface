@@ -1,0 +1,482 @@
+{
+  "baseline": "Namespace-aware positional XML tree comparison; attribute order and parent indentation ignored. Not an identity-aware XML edit-distance algorithm.",
+  "registry_note": "The continuity example supplies fictional verification evidence to canonical models. XML WKN text alone is unverified.",
+  "cases": [
+    {
+      "case": "inventory_and_serialization_noise",
+      "fictional_registry_claim_supplied": false,
+      "raw_text_changed_lines": 217,
+      "positional_xml_deltas": [
+        {
+          "path": "/1/0/0/text",
+          "old": "801",
+          "new": "802"
+        },
+        {
+          "path": "/1/0/1/text",
+          "old": "SyntheticStart",
+          "new": "SyntheticStop"
+        },
+        {
+          "path": "/1/0/2/0/attributes",
+          "old": {
+            "name": "SyntheticCount"
+          },
+          "new": null
+        },
+        {
+          "path": "/1/0/2/0/tag",
+          "old": "VID",
+          "new": null
+        },
+        {
+          "path": "/1/0/2/0/text",
+          "old": "701",
+          "new": null
+        },
+        {
+          "path": "/1/0/2/tag",
+          "old": "VALIDDVS",
+          "new": "Description"
+        },
+        {
+          "path": "/1/0/2/text",
+          "old": null,
+          "new": "Original event for relationship testing."
+        },
+        {
+          "path": "/1/0/3/0/attributes",
+          "old": {
+            "name": "SyntheticState"
+          },
+          "new": null
+        },
+        {
+          "path": "/1/0/3/0/tag",
+          "old": "VID",
+          "new": null
+        },
+        {
+          "path": "/1/0/3/0/text",
+          "old": "702",
+          "new": null
+        },
+        {
+          "path": "/1/0/3/attributes",
+          "old": {},
+          "new": null
+        },
+        {
+          "path": "/1/0/3/tag",
+          "old": "RelevantVariables",
+          "new": null
+        },
+        {
+          "path": "/1/0/4/0/attributes",
+          "old": {},
+          "new": null
+        },
+        {
+          "path": "/1/0/4/0/tag",
+          "old": "StateModel",
+          "new": null
+        },
+        {
+          "path": "/1/0/4/0/text",
+          "old": "SyntheticCycle",
+          "new": null
+        },
+        {
+          "path": "/1/0/4/1/attributes",
+          "old": {},
+          "new": null
+        },
+        {
+          "path": "/1/0/4/1/tag",
+          "old": "TransitionID",
+          "new": null
+        },
+        {
+          "path": "/1/0/4/1/text",
+          "old": "T1",
+          "new": null
+        },
+        {
+          "path": "/1/0/4/2/attributes",
+          "old": {},
+          "new": null
+        },
+        {
+          "path": "/1/0/4/2/tag",
+          "old": "PreviousState",
+          "new": null
+        },
+        {
+          "path": "/1/0/4/2/text",
+          "old": "Idle",
+          "new": null
+        },
+        {
+          "path": "/1/0/4/3/attributes",
+          "old": {},
+          "new": null
+        },
+        {
+          "path": "/1/0/4/3/tag",
+          "old": "NewState",
+          "new": null
+        },
+        {
+          "path": "/1/0/4/3/text",
+          "old": "Active",
+          "new": null
+        },
+        {
+          "path": "/1/0/4/attributes",
+          "old": {},
+          "new": null
+        },
+        {
+          "path": "/1/0/4/tag",
+          "old": "StateTransition",
+          "new": null
+        },
+        {
+          "path": "/1/0/5/attributes",
+          "old": {},
+          "new": null
+        },
+        {
+          "path": "/1/0/5/tag",
+          "old": "Description",
+          "new": null
+        },
+        {
+          "path": "/1/0/5/text",
+          "old": "Original event for relationship testing.",
+          "new": null
+        },
+        {
+          "path": "/1/1/0/text",
+          "old": "802",
+          "new": "801"
+        },
+        {
+          "path": "/1/1/1/text",
+          "old": "SyntheticStop",
+          "new": "SyntheticStart"
+        },
+        {
+          "path": "/1/1/2/0/attributes",
+          "old": null,
+          "new": {
+            "name": "SyntheticCount"
+          }
+        },
+        {
+          "path": "/1/1/2/0/tag",
+          "old": null,
+          "new": "VID"
+        },
+        {
+          "path": "/1/1/2/0/text",
+          "old": null,
+          "new": "701"
+        },
+        {
+          "path": "/1/1/2/tag",
+          "old": "Description",
+          "new": "VALIDDVS"
+        },
+        {
+          "path": "/1/1/2/text",
+          "old": "Original event for relationship testing.",
+          "new": null
+        },
+        {
+          "path": "/1/1/3/0/attributes",
+          "old": null,
+          "new": {
+            "name": "SyntheticState"
+          }
+        },
+        {
+          "path": "/1/1/3/0/tag",
+          "old": null,
+          "new": "VID"
+        },
+        {
+          "path": "/1/1/3/0/text",
+          "old": null,
+          "new": "702"
+        },
+        {
+          "path": "/1/1/3/attributes",
+          "old": null,
+          "new": {}
+        },
+        {
+          "path": "/1/1/3/tag",
+          "old": null,
+          "new": "RelevantVariables"
+        },
+        {
+          "path": "/1/1/4/0/attributes",
+          "old": null,
+          "new": {}
+        },
+        {
+          "path": "/1/1/4/0/tag",
+          "old": null,
+          "new": "StateModel"
+        },
+        {
+          "path": "/1/1/4/0/text",
+          "old": null,
+          "new": "SyntheticCycle"
+        },
+        {
+          "path": "/1/1/4/1/attributes",
+          "old": null,
+          "new": {}
+        },
+        {
+          "path": "/1/1/4/1/tag",
+          "old": null,
+          "new": "TransitionID"
+        },
+        {
+          "path": "/1/1/4/1/text",
+          "old": null,
+          "new": "T1"
+        },
+        {
+          "path": "/1/1/4/2/attributes",
+          "old": null,
+          "new": {}
+        },
+        {
+          "path": "/1/1/4/2/tag",
+          "old": null,
+          "new": "PreviousState"
+        },
+        {
+          "path": "/1/1/4/2/text",
+          "old": null,
+          "new": "Idle"
+        },
+        {
+          "path": "/1/1/4/3/attributes",
+          "old": null,
+          "new": {}
+        },
+        {
+          "path": "/1/1/4/3/tag",
+          "old": null,
+          "new": "NewState"
+        },
+        {
+          "path": "/1/1/4/3/text",
+          "old": null,
+          "new": "Active"
+        },
+        {
+          "path": "/1/1/4/attributes",
+          "old": null,
+          "new": {}
+        },
+        {
+          "path": "/1/1/4/tag",
+          "old": null,
+          "new": "StateTransition"
+        },
+        {
+          "path": "/1/1/5/attributes",
+          "old": null,
+          "new": {}
+        },
+        {
+          "path": "/1/1/5/tag",
+          "old": null,
+          "new": "Description"
+        },
+        {
+          "path": "/1/1/5/text",
+          "old": null,
+          "new": "Original event for relationship testing."
+        }
+      ],
+      "semantic_changes": [],
+      "is_complete": false,
+      "issue_kinds": [
+        "UNKNOWN_CONTENT",
+        "UNRESOLVED_REFERENCE"
+      ]
+    },
+    {
+      "case": "description_only",
+      "fictional_registry_claim_supplied": false,
+      "raw_text_changed_lines": 2,
+      "positional_xml_deltas": [
+        {
+          "path": "/3/0/6/text",
+          "old": "Original synthetic variable.",
+          "new": "Changed synthetic description."
+        }
+      ],
+      "semantic_changes": [
+        {
+          "entity_type": "status_variable",
+          "old_id": "702",
+          "new_id": "702",
+          "kinds": [
+            "DESCRIPTION_CHANGED",
+            "ENTITY_MODIFIED"
+          ],
+          "categories": [
+            "DOCUMENTATION_CHANGE"
+          ],
+          "matching_strategy": "NATIVE_ID",
+          "properties": [
+            "description"
+          ],
+          "relationships": []
+        }
+      ],
+      "is_complete": false,
+      "issue_kinds": [
+        "UNKNOWN_CONTENT",
+        "UNRESOLVED_REFERENCE"
+      ]
+    },
+    {
+      "case": "alarm_clear_target",
+      "fictional_registry_claim_supplied": false,
+      "raw_text_changed_lines": 2,
+      "positional_xml_deltas": [
+        {
+          "path": "/5/0/5/text",
+          "old": "802",
+          "new": "801"
+        }
+      ],
+      "semantic_changes": [
+        {
+          "entity_type": "alarm",
+          "old_id": "1001",
+          "new_id": "1001",
+          "kinds": [
+            "ALARM_EVENT_LINK_CHANGED",
+            "ENTITY_MODIFIED",
+            "RELATIONSHIP_ADDED",
+            "RELATIONSHIP_REMOVED"
+          ],
+          "categories": [
+            "INTERFACE_CHANGE"
+          ],
+          "matching_strategy": "NATIVE_ID",
+          "properties": [],
+          "relationships": [
+            {
+              "field": "clear_event",
+              "kind": "ALARM_EVENT_LINK_CHANGED",
+              "added": 1,
+              "removed": 1,
+              "order_changed": false
+            }
+          ]
+        }
+      ],
+      "is_complete": false,
+      "issue_kinds": [
+        "UNKNOWN_CONTENT",
+        "UNRESOLVED_REFERENCE"
+      ]
+    },
+    {
+      "case": "report_variable_target",
+      "fictional_registry_claim_supplied": false,
+      "raw_text_changed_lines": 2,
+      "positional_xml_deltas": [
+        {
+          "path": "/11/0/2/0/text",
+          "old": "701",
+          "new": "703"
+        }
+      ],
+      "semantic_changes": [
+        {
+          "entity_type": "default_report",
+          "old_id": "901",
+          "new_id": "901",
+          "kinds": [
+            "ENTITY_MODIFIED",
+            "RELATIONSHIP_ADDED",
+            "RELATIONSHIP_REMOVED",
+            "REPORT_CONTENT_CHANGED"
+          ],
+          "categories": [
+            "INTERFACE_CHANGE"
+          ],
+          "matching_strategy": "NATIVE_ID",
+          "properties": [],
+          "relationships": [
+            {
+              "field": "variables",
+              "kind": "REPORT_CONTENT_CHANGED",
+              "added": 1,
+              "removed": 1,
+              "order_changed": false
+            }
+          ]
+        }
+      ],
+      "is_complete": false,
+      "issue_kinds": [
+        "UNKNOWN_CONTENT",
+        "UNRESOLVED_REFERENCE"
+      ]
+    },
+    {
+      "case": "verified_wkn_id_continuity",
+      "fictional_registry_claim_supplied": true,
+      "raw_text_changed_lines": 4,
+      "positional_xml_deltas": [
+        {
+          "path": "/11/0/2/1/text",
+          "old": "702",
+          "new": "1702"
+        },
+        {
+          "path": "/3/0/0/text",
+          "old": "702",
+          "new": "1702"
+        }
+      ],
+      "semantic_changes": [
+        {
+          "entity_type": "status_variable",
+          "old_id": "702",
+          "new_id": "1702",
+          "kinds": [
+            "ENTITY_MODIFIED",
+            "IMPLEMENTATION_ID_CHANGED"
+          ],
+          "categories": [
+            "INTERFACE_CHANGE"
+          ],
+          "matching_strategy": "WELL_KNOWN_NAME",
+          "properties": [
+            "implementation_id"
+          ],
+          "relationships": []
+        }
+      ],
+      "is_complete": false,
+      "issue_kinds": [
+        "UNKNOWN_CONTENT",
+        "UNRESOLVED_REFERENCE"
+      ]
+    }
+  ]
+}
