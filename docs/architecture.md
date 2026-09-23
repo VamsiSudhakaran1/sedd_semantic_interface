@@ -8,7 +8,7 @@ sequentially; the supplied attachment includes only prompts 0 and 1 in full.
 | parser | Bounded secure XML loading and revision detection, without network access |
 | adapters | Evidence-backed revision-specific extraction, initially E172-0225 |
 | model | CanonicalEquipmentInterface, provenance, unknowns and unresolved references |
-| graph | Build exact indexes, resolve references conservatively, and expose relationship outcomes |
+| graph | Build exact indexes, resolve references conservatively, and derive factual dependency context from resolved edges |
 | compare | Deterministic identity matching and typed semantic changes with evidence, relationship deltas, and explicit uncertainty |
 | report | Machine-readable and escaped human-readable output |
 | cli | Deterministic inspect and bounded explore output, plus future user-facing commands over these layers |
@@ -44,6 +44,9 @@ policy, confidence categories, dependent scopes and conflict-preserving algorith
 documentation classification, relationship endpoint reconciliation, and uncertainty.
 Comparison ignores inventory order and source coordinates while preserving protocol
 sequences and exact leaf text. XML interpretation remains inside the adapter.
+[change_dependency_context.md](change_dependency_context.md) describes the bounded
+graph joins attached to each change on its old and new sides. Context does not
+change identity matching, change classification, or assign risk/impact scores.
 
 Runtime version metadata comes from the installed distribution. Development uses
 an editable installation. No runtime dependency or network access is needed for
