@@ -9,7 +9,7 @@ sequentially; the supplied attachment includes only prompts 0 and 1 in full.
 | adapters | Evidence-backed revision-specific extraction, initially E172-0225 |
 | model | CanonicalEquipmentInterface, provenance, unknowns and unresolved references |
 | graph | Build exact indexes, resolve references conservatively, and expose relationship outcomes |
-| compare | Deterministic identity matching with recorded evidence and ambiguity; full semantic diffs remain planned |
+| compare | Deterministic identity matching and typed semantic changes with evidence, relationship deltas, and explicit uncertainty |
 | report | Machine-readable and escaped human-readable output |
 | cli | Deterministic inspect and bounded explore output, plus future user-facing commands over these layers |
 
@@ -40,9 +40,10 @@ exploration JSON contract.
 [entity_matching.md](entity_matching.md) records the canonical matcher, evidence
 policy, confidence categories, dependent scopes and conflict-preserving algorithm.
 
-Future comparison must distinguish irrelevant XML ordering from semantically
-meaningful sequence information such as message structures. Whitespace handling
-must be defined per field, without silently destroying meaningful text.
+[semantic_changes.md](semantic_changes.md) records the canonical change engine,
+documentation classification, relationship endpoint reconciliation, and uncertainty.
+Comparison ignores inventory order and source coordinates while preserving protocol
+sequences and exact leaf text. XML interpretation remains inside the adapter.
 
 Runtime version metadata comes from the installed distribution. Development uses
 an editable installation. No runtime dependency or network access is needed for

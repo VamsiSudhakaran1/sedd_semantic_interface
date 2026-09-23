@@ -133,8 +133,9 @@ Confidence categories describe evidence, not estimated correctness:
 An accepted pair whose stored implementation-ID fields differ carries an
 `IdentityChange` with kind `IMPLEMENTATION_ID_CHANGED` and exact old/new values.
 This includes a missing-to-present field transition (`None` remains explicit).
-Those entities do not appear in unmatched inventories. This increment records
-only identity changes, not a full semantic property diff.
+Those entities do not appear in unmatched inventories. This matcher records
+identity changes; the separate [semantic change engine](semantic_changes.md)
+compares properties and relationships using its accepted matches.
 
 `MatchAmbiguity` retains the whole component, all its identity evidence (including
 one-sided contradictory values), and `IDENTITY_COLLISION` and/or
@@ -144,8 +145,8 @@ Unmatched records distinguish `NO_COUNTERPART`, `NO_USABLE_IDENTITY`, and
 `NO_CONFIRMED_COMMAND_SCOPE`. A parameter whose parent was not matched retains the
 parent key as a dependency. No parameter WKN or name can bypass that scope.
 Unmatched inventories do not by themselves assert `REMOVED` or `ADDED`, especially
-when evidence or a prerequisite is missing. That classification belongs to a
-later semantic comparison increment.
+when evidence or a prerequisite is missing. That classification belongs to the
+semantic change engine, which retains these uncertainty boundaries.
 
 ## Dependent identities and bounds
 
@@ -172,7 +173,8 @@ parameters, event-link dependencies, repeated S/F, future revisions, input
 immutability, exhaustive outcomes, inventory permutations, process hash seeds,
 XML-layer import blocking, and large collision groups. A synthetic XML fixture
 also verifies adapter -> resolver -> matcher integration without external files.
-The comparison CLI and full semantic diff/report generation remain separate work.
+The semantic change API is implemented in [semantic_changes.md](semantic_changes.md).
+The comparison CLI and rendered reports remain separate work.
 
 Additional local development verification matched the original TrackSys sample
 against itself after reference resolution: 597 matches out of 605 entities per

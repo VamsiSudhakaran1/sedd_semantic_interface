@@ -145,7 +145,9 @@ def main() -> None:
             [
                 str(python),
                 "-c",
-                "from sema_sedd.compare import match_interfaces, IdentityChangeKind; "
+                "from sema_sedd.compare import match_interfaces, IdentityChangeKind, "
+                "compare_interfaces, ChangeKind, to_change_set_json; "
+                "from dataclasses import replace; import json; "
                 "from sema_sedd.model import EquipmentInterface, StatusVariable, "
                 "WellKnownName, WknAuthority, SourceProvenance; "
                 "wkn = WellKnownName(value='synthetic.value', authority='fictional-registry', "
@@ -159,14 +161,23 @@ def main() -> None:
                 "assert len(result.matches) == 1; "
                 "assert result.matches[0].changes[0].kind is "
                 "IdentityChangeKind.IMPLEMENTATION_ID_CHANGED; "
-                "assert not result.unmatched_old and not result.unmatched_new",
+                "assert not result.unmatched_old and not result.unmatched_new; "
+                "changes = compare_interfaces(old, new); "
+                "assert changes.is_complete and changes.has_interface_changes; "
+                "assert len(changes.entity_changes) == 1; "
+                "assert ChangeKind.IMPLEMENTATION_ID_CHANGED in changes.entity_changes[0].kinds; "
+                "documented = replace(old, status_variables=("
+                "replace(old.status_variables[0], description='Updated documentation'),)); "
+                "docs = compare_interfaces(old, documented); "
+                "assert docs.has_documentation_changes and not docs.has_interface_changes; "
+                "assert json.loads(to_change_set_json(docs))['change_schema_version'] == '1.0'",
             ],
             cwd=directory,
             check=True,
         )
     print(
         "Isolated installation, inspect/explore CLI, loader, model, adapter, "
-        "graph, and cross-version matching checks passed."
+        "graph, cross-version matching, and semantic comparison checks passed."
     )
 
 
