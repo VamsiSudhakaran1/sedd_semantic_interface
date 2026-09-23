@@ -176,6 +176,26 @@ def main() -> None:
             [
                 str(python),
                 "-c",
+                "from sema_sedd.report import report_json, report_schema; "
+                "from sema_sedd.reporting import report_files; "
+                "import json, sys; "
+                "schema = report_schema(); "
+                "assert schema['properties']['report_schema_version']['const'] == '1.0'; "
+                "report = report_files(sys.argv[1], sys.argv[2]); "
+                "assert set(schema['required']) == set(report); "
+                "assert any(row['change_id'] == 'AL_ALARM_CHANGED' "
+                "for row in report['changes']); "
+                "assert json.loads(report_json(report)) == report",
+                str(inspect_input),
+                str(compare_input),
+            ],
+            cwd=directory,
+            check=True,
+        )
+        subprocess.run(
+            [
+                str(python),
+                "-c",
                 "from sema_sedd.compare import match_interfaces, IdentityChangeKind, "
                 "compare_interfaces, ChangeKind, to_change_set_json; "
                 "from dataclasses import replace; import json; "
@@ -220,7 +240,7 @@ def main() -> None:
     print(
         "Isolated installation, inspect/explore CLI, loader, model, adapter, "
         "graph, cross-version matching, semantic comparison, dependency context, "
-        "and compare CLI checks passed."
+        "compare CLI, and JSON report contract checks passed."
     )
 
 
