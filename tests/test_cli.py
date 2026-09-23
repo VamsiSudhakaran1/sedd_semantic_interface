@@ -37,7 +37,7 @@ def test_module_cli(args: list[str]) -> None:
         assert "explore" in result.stdout
 
 
-@pytest.mark.parametrize("arg", ["compare", "report", "--bogus", "--ver"])
+@pytest.mark.parametrize("arg", ["report", "--bogus", "--ver"])
 def test_unsupported_arguments(arg: str, capsys: pytest.CaptureFixture[str]) -> None:
     with pytest.raises(SystemExit) as error:
         main([arg])

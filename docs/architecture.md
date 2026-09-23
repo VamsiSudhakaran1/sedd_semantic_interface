@@ -11,10 +11,10 @@ sequentially; the supplied attachment includes only prompts 0 and 1 in full.
 | graph | Build exact indexes, resolve references conservatively, and derive factual dependency context from resolved edges |
 | compare | Deterministic identity matching and typed semantic changes with evidence, relationship deltas, and explicit uncertainty |
 | report | Machine-readable and escaped human-readable output |
-| cli | Deterministic inspect and bounded explore output, plus future user-facing commands over these layers |
+| cli | Deterministic inspect, bounded explore, and semantic compare text/JSON output |
 
-The CLI supports help/version, read-only inspection, and bounded relationship
-exploration in text or JSON. The parser package provides bounded, offline XML
+The CLI supports help/version, read-only inspection, bounded relationship
+exploration, and semantic comparison in text or JSON. The parser package provides bounded, offline XML
 ingestion with source positions and a non-authoritative revision hint.
 The model package provides immutable canonical objects, provenance, explicit
 references and unknowns, and versioned deterministic JSON. It imports no XML or
@@ -47,6 +47,8 @@ sequences and exact leaf text. XML interpretation remains inside the adapter.
 [change_dependency_context.md](change_dependency_context.md) describes the bounded
 graph joins attached to each change on its old and new sides. Context does not
 change identity matching, change classification, or assign risk/impact scores.
+[compare_cli.md](compare_cli.md) describes the user-facing comparison selection,
+sections, diagnostics, deterministic JSON, and execution-only exit status.
 
 Runtime version metadata comes from the installed distribution. Development uses
 an editable installation. No runtime dependency or network access is needed for

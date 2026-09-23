@@ -1,11 +1,18 @@
 """Command-line entry point."""
 
 import argparse
+import os
 import sys
 from collections.abc import Sequence
 from pathlib import Path
 
 from sema_sedd import __version__
+from sema_sedd.cli.compare import (
+    COMPARISON_TYPE_NAMES,
+    build_comparison,
+)
+from sema_sedd.cli.compare import render_json as render_comparison_json
+from sema_sedd.cli.compare import render_text as render_comparison_text
 from sema_sedd.cli.explore import (
     DEFAULT_EXPLORE_DEPTH,
     MAX_EXPLORE_DEPTH,
@@ -32,7 +39,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
         prog="sedd",
         description="Local-first semantic explorer for SEDD equipment interfaces.",
-        epilog="Compare and report are planned commands.",
+        epilog="Report is a planned command.",
         allow_abbrev=False,
     )
     parser.add_argument("--version", action="version", version=f"%(prog)s {__version__}")
@@ -64,6 +71,27 @@ def main(argv: Sequence[str] | None = None) -> int:
         help=f"traversal depth from 0 to {MAX_EXPLORE_DEPTH} (default: %(default)s)",
     )
     explore_parser.add_argument("--json", action="store_true", help="emit deterministic JSON")
+    compare_parser = commands.add_parser(
+        "compare", help="compare two SEDD documents", allow_abbrev=False
+    )
+    compare_parser.add_argument("old", type=Path, metavar="OLD")
+    compare_parser.add_argument("new", type=Path, metavar="NEW")
+    compare_parser.add_argument("--json", action="store_true", help="emit deterministic JSON")
+    compare_parser.add_argument(
+        "--type",
+        dest="entity_type",
+        choices=COMPARISON_TYPE_NAMES,
+        help="filter findings by exact canonical type",
+    )
+    compare_parser.add_argument(
+        "--only-changed", action="store_true", help="hide unchanged confirmed matches"
+    )
+    compare_parser.add_argument(
+        "--include-documentation", action="store_true", help="include documentation changes"
+    )
+    compare_parser.add_argument(
+        "--no-color", action="store_true", help="disable ANSI heading colors"
+    )
 
     args = parser.parse_args(argv)
     if args.command is None:
@@ -90,6 +118,29 @@ def main(argv: Sequence[str] | None = None) -> int:
             render_exploration_json(exploration)
             if args.json
             else render_exploration_text(exploration)
+        )
+        return 0
+    if args.command == "compare":
+        try:
+            comparison = build_comparison(
+                args.old,
+                args.new,
+                entity_type=args.entity_type,
+                only_changed=args.only_changed,
+                include_documentation=args.include_documentation,
+            )
+        except SeddError as error:
+            compare_parser.error(str(error))
+        color = (
+            not args.no_color
+            and not args.json
+            and sys.stdout.isatty()
+            and "NO_COLOR" not in os.environ
+        )
+        sys.stdout.write(
+            render_comparison_json(comparison)
+            if args.json
+            else render_comparison_text(comparison, color=color)
         )
         return 0
     parser.error("unsupported command")

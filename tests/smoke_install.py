@@ -141,6 +141,37 @@ def main() -> None:
         assert exploration["selector"] == {"kind": "alarm", "value": "1001"}
         assert [item["depth"] for item in exploration["entities"]] == [0, 1, 1]
         assert not explored.stderr
+        compare_input = Path(directory) / "compare-new.xml"
+        compare_input.write_text(
+            inspect_input.read_text(encoding="utf-8").replace(
+                "<ALTX>Synthetic warning</ALTX>",
+                "<ALTX>Synthetic warning revised</ALTX>",
+                1,
+            ),
+            encoding="utf-8",
+        )
+        compared = subprocess.run(
+            [
+                str(command),
+                "compare",
+                str(inspect_input),
+                str(compare_input),
+                "--json",
+                "--type",
+                "alarm",
+                "--only-changed",
+            ],
+            cwd=directory,
+            capture_output=True,
+            text=True,
+            check=True,
+        )
+        comparison = json.loads(compared.stdout)
+        assert comparison["summary"]["property_changes"] == 1
+        assert comparison["property_changes"][0]["change"]["kind"] == "ALARM_CHANGED"
+        assert comparison["diagnostics"]
+        assert comparison["summary"]["is_complete"] is False
+        assert not compared.stderr
         subprocess.run(
             [
                 str(python),
@@ -188,7 +219,8 @@ def main() -> None:
         )
     print(
         "Isolated installation, inspect/explore CLI, loader, model, adapter, "
-        "graph, cross-version matching, semantic comparison, and dependency context checks passed."
+        "graph, cross-version matching, semantic comparison, dependency context, "
+        "and compare CLI checks passed."
     )
 
 
