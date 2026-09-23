@@ -23,13 +23,15 @@ Prompt 13 attaches separate before/after dependency context to every entity
 change, using resolved graph evidence and factual counts without risk scoring.
 Prompt 14 adds `sedd compare OLD NEW` with text/JSON sections, canonical type
 filtering, documentation opt-in, and exit status based only on execution success.
+Prompt 15 adds a versioned machine-readable report API with public change codes,
+a bundled JSON Schema, and deterministic snapshots.
 The library can ingest local SEDD XML and infer an E172-0225 revision hint from
 `xsi:schemaLocation`. The model library provides immutable typed entities, explicit
 reference/unknown states, and deterministic canonical JSON. An explicit adapter
 registry now maps E172-0225 structures into that model and preserves unsupported
 content with diagnostics. The graph package now indexes exact identities and produces
-an exhaustive three-state relationship model. Runtime XSD validation, general
-graph APIs, and reports remain unimplemented.
+an exhaustive three-state relationship model. Runtime XSD validation and general
+graph APIs remain unimplemented.
 See [docs/canonical_model.md](docs/canonical_model.md) for the API,
 identity boundaries, and architecture review.
 See [docs/revision_adapters.md](docs/revision_adapters.md) for `load_interface()`,
@@ -50,6 +52,8 @@ See [docs/change_dependency_context.md](docs/change_dependency_context.md) for
 dependency paths, evidence, counts, exclusions, and before/after context.
 See [docs/compare_cli.md](docs/compare_cli.md) for compare sections, flags,
 the JSON contract, and exit-status behavior.
+See [docs/json_report_contract.md](docs/json_report_contract.md) for the standalone
+machine-readable report API, public change IDs, and bundled JSON Schema.
 Unsupported commands exit with an argument error; they never claim successful processing.
 
 ## Development
