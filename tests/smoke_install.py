@@ -164,20 +164,31 @@ def main() -> None:
                 "assert not result.unmatched_old and not result.unmatched_new; "
                 "changes = compare_interfaces(old, new); "
                 "assert changes.is_complete and changes.has_interface_changes; "
+                "assert changes.entity_changes[0].old_context.subject_key == 'old'; "
+                "assert changes.entity_changes[0].new_context.subject_key == 'new'; "
                 "assert len(changes.entity_changes) == 1; "
                 "assert ChangeKind.IMPLEMENTATION_ID_CHANGED in changes.entity_changes[0].kinds; "
                 "documented = replace(old, status_variables=("
                 "replace(old.status_variables[0], description='Updated documentation'),)); "
                 "docs = compare_interfaces(old, documented); "
                 "assert docs.has_documentation_changes and not docs.has_interface_changes; "
-                "assert json.loads(to_change_set_json(docs))['change_schema_version'] == '1.0'",
+                "assert json.loads(to_change_set_json(docs))['change_schema_version'] == '1.0'; "
+                "from sema_sedd.graph import build_dependency_index, resolve_references, "
+                "DependencyKind; "
+                "from sema_sedd.model import DefaultReport, EntityReference, CanonicalType; "
+                "linked = replace(old, default_reports=(DefaultReport(key='report', "
+                "implementation_id='1', variables=(EntityReference("
+                "target_types=(CanonicalType.STATUS_VARIABLE,), implementation_id='44'),)),)); "
+                "context = build_dependency_index(resolve_references(linked)).context_for('old'); "
+                "assert context.statements == ('Referenced by 1 default report.',); "
+                "assert context.dependencies[0].kind is DependencyKind.REFERENCED_BY",
             ],
             cwd=directory,
             check=True,
         )
     print(
         "Isolated installation, inspect/explore CLI, loader, model, adapter, "
-        "graph, cross-version matching, and semantic comparison checks passed."
+        "graph, cross-version matching, semantic comparison, and dependency context checks passed."
     )
 
 

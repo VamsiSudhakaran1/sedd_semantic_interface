@@ -34,6 +34,9 @@ Equipment metadata and interface-level fields occupy singleton slots rather than
 inventories; their changes have no fabricated entity match. Match snapshots retain
 strategy, deterministic confidence category, evidence, and source provenance.
 `to_change_set_dict()` and `to_change_set_json()` use change schema version `1.0`.
+Prompt 13 adds `old_context` and `new_context` to each `EntityChange`, including
+dependency evidence and factual summary statements in JSON. These are additive
+fields in schema `1.0`; see [change_dependency_context.md](change_dependency_context.md).
 
 ## Classification and coverage
 

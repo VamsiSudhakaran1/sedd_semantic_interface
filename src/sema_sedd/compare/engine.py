@@ -1,7 +1,7 @@
 """Canonical semantic comparison with matching-aware relationship endpoints."""
 
 from collections import Counter
-from dataclasses import fields
+from dataclasses import fields, replace
 
 from sema_sedd.compare._values import (
     JsonData,
@@ -33,6 +33,7 @@ from sema_sedd.compare.matching import (
 )
 from sema_sedd.exceptions import ModelValidationError
 from sema_sedd.graph import RelationshipModel, ResolutionState, resolve_references
+from sema_sedd.graph.context import DependencyContext, DependencyIndex, build_dependency_index
 from sema_sedd.model import (
     CanonicalType,
     EntityReference,
@@ -612,6 +613,29 @@ def compare_interfaces(old: EquipmentInterface, new: EquipmentInterface) -> Chan
                     relationship.role,
                     "Reference endpoint is not uniquely resolved",
                 )
+    old_context_index = build_dependency_index(old_model)
+    new_context_index = build_dependency_index(new_model)
+
+    def context(index: DependencyIndex, subject: ChangeSubject | None) -> DependencyContext | None:
+        if subject is None:
+            return None
+        key = _key(subject)
+        if key is not None:
+            return index.context_for(key)
+        return DependencyContext(
+            subject_key=None,
+            subject_type=subject.canonical_type,
+            excluded_unresolved_graph_relationships=index.excluded_unresolved_graph_relationships,
+        )
+
+    changes = [
+        replace(
+            change,
+            old_context=context(old_context_index, change.old_entity),
+            new_context=context(new_context_index, change.new_entity),
+        )
+        for change in changes
+    ]
     return ChangeSet(
         matching=matching,
         entity_changes=tuple(
@@ -653,6 +677,11 @@ def to_change_set_dict(changes: ChangeSet) -> dict[str, JsonData]:
         assert isinstance(item, dict)
         item["change_kinds"] = encode(change.kinds)
         item["categories"] = encode(change.categories)
+        for side in ("old_context", "new_context"):
+            context_value = getattr(change, side)
+            encoded_context = item[side]
+            if context_value is not None and isinstance(encoded_context, dict):
+                encoded_context["statements"] = encode(context_value.statements)
     return {
         "change_schema_version": "1.0",
         "is_complete": changes.is_complete,

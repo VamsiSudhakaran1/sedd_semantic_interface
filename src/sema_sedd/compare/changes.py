@@ -6,6 +6,7 @@ from enum import StrEnum
 from sema_sedd.compare._values import token
 from sema_sedd.compare.matching import EntityMatch, MatchingResult
 from sema_sedd.exceptions import ModelValidationError
+from sema_sedd.graph.context import DependencyContext
 from sema_sedd.model import CanonicalType, EquipmentInterface, EquipmentMetadata
 from sema_sedd.model._base import Record
 from sema_sedd.model.domain import InterfaceEntity
@@ -122,6 +123,8 @@ class EntityChange(Record):
     match: EntityMatch | None = None
     properties: tuple[PropertyChange, ...] = ()
     relationships: tuple[RelationshipChange, ...] = ()
+    old_context: DependencyContext | None = None
+    new_context: DependencyContext | None = None
 
     def __post_init__(self) -> None:
         Record.__post_init__(self)
@@ -140,6 +143,16 @@ class EntityChange(Record):
             valid = False
         if not valid:
             raise ModelValidationError("Entity change has inconsistent presence or kind")
+        for entity, context in (
+            (self.old_entity, self.old_context),
+            (self.new_entity, self.new_context),
+        ):
+            if context is not None and (
+                entity is None
+                or context.subject_key != getattr(entity, "key", None)
+                or context.subject_type is not entity.canonical_type
+            ):
+                raise ModelValidationError("Dependency context belongs to a different subject")
         if self.match is not None and (
             self.match.old_entity != self.old_entity or self.match.new_entity != self.new_entity
         ):
