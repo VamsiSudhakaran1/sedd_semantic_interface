@@ -21,6 +21,7 @@ from sema_sedd.cli.explore import (
 from sema_sedd.cli.explore import render_json as render_exploration_json
 from sema_sedd.cli.explore import render_text as render_exploration_text
 from sema_sedd.cli.inspect import ENTITY_TYPE_NAMES, build_inspection, render_json, render_text
+from sema_sedd.cli.report import write_html_report
 from sema_sedd.exceptions import SeddError
 
 
@@ -39,7 +40,6 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
         prog="sedd",
         description="Local-first semantic explorer for SEDD equipment interfaces.",
-        epilog="Report is a planned command.",
         allow_abbrev=False,
     )
     parser.add_argument("--version", action="version", version=f"%(prog)s {__version__}")
@@ -92,6 +92,12 @@ def main(argv: Sequence[str] | None = None) -> int:
     compare_parser.add_argument(
         "--no-color", action="store_true", help="disable ANSI heading colors"
     )
+    report_parser = commands.add_parser(
+        "report", help="write a self-contained local HTML comparison", allow_abbrev=False
+    )
+    report_parser.add_argument("old", type=Path, metavar="OLD")
+    report_parser.add_argument("new", type=Path, metavar="NEW")
+    report_parser.add_argument("--html", type=Path, required=True, metavar="FILE")
 
     args = parser.parse_args(argv)
     if args.command is None:
@@ -142,5 +148,12 @@ def main(argv: Sequence[str] | None = None) -> int:
             if args.json
             else render_comparison_text(comparison, color=color)
         )
+        return 0
+    if args.command == "report":
+        try:
+            destination = write_html_report(args.old, args.new, args.html)
+        except SeddError as error:
+            report_parser.error(str(error))
+        sys.stdout.write(f"Wrote HTML report to {destination}\n")
         return 0
     parser.error("unsupported command")
