@@ -21,7 +21,7 @@ from sema_sedd.cli.explore import (
 from sema_sedd.cli.explore import render_json as render_exploration_json
 from sema_sedd.cli.explore import render_text as render_exploration_text
 from sema_sedd.cli.inspect import ENTITY_TYPE_NAMES, build_inspection, render_json, render_text
-from sema_sedd.cli.report import write_html_report
+from sema_sedd.cli.report import write_html_report, write_interface_html_report
 from sema_sedd.exceptions import SeddError
 
 
@@ -93,10 +93,12 @@ def main(argv: Sequence[str] | None = None) -> int:
         "--no-color", action="store_true", help="disable ANSI heading colors"
     )
     report_parser = commands.add_parser(
-        "report", help="write a self-contained local HTML comparison", allow_abbrev=False
+        "report",
+        help="write a self-contained local HTML explorer or comparison",
+        allow_abbrev=False,
     )
-    report_parser.add_argument("old", type=Path, metavar="OLD")
-    report_parser.add_argument("new", type=Path, metavar="NEW")
+    report_parser.add_argument("old", type=Path, metavar="FILE_OR_OLD")
+    report_parser.add_argument("new", type=Path, nargs="?", metavar="NEW")
     report_parser.add_argument("--html", type=Path, required=True, metavar="FILE")
 
     args = parser.parse_args(argv)
@@ -151,7 +153,11 @@ def main(argv: Sequence[str] | None = None) -> int:
         return 0
     if args.command == "report":
         try:
-            destination = write_html_report(args.old, args.new, args.html)
+            destination = (
+                write_interface_html_report(args.old, args.html)
+                if args.new is None
+                else write_html_report(args.old, args.new, args.html)
+            )
         except SeddError as error:
             report_parser.error(str(error))
         sys.stdout.write(f"Wrote HTML report to {destination}\n")
