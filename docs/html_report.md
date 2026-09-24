@@ -1,5 +1,7 @@
 # Local HTML comparison report
 
+To explore one interface instead, see [Single-file interface explorer](interface_explorer.md).
+
 Generate a self-contained report with:
 
 ```sh

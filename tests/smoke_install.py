@@ -213,6 +213,22 @@ def main() -> None:
         assert "connect-src 'none'" in html
         assert str(html_output) in generated.stdout
         assert not generated.stderr
+        interface_output = Path(directory) / "interface.html"
+        explored_html = subprocess.run(
+            [str(command), "report", str(inspect_input), "--html", str(interface_output)],
+            cwd=directory,
+            capture_output=True,
+            text=True,
+            check=True,
+        )
+        interface_html = interface_output.read_text(encoding="utf-8")
+        assert "SEDD interface explorer" in interface_html
+        assert "Incoming relationships" in interface_html
+        assert "Outgoing relationships" in interface_html
+        assert "Standards/WKN" in interface_html
+        assert "connect-src 'none'" in interface_html
+        assert str(interface_output) in explored_html.stdout
+        assert not explored_html.stderr
         subprocess.run(
             [
                 str(python),
@@ -261,7 +277,8 @@ def main() -> None:
     print(
         "Isolated installation, inspect/explore CLI, loader, model, adapter, "
         "graph, cross-version matching, semantic comparison, dependency context, "
-        "compare CLI, JSON report contract, and HTML report checks passed."
+        "compare CLI, JSON report contract, HTML comparison, and single-file "
+        "explorer checks passed."
     )
 
 

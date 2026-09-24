@@ -27,6 +27,8 @@ Prompt 15 adds a versioned machine-readable report API with public change codes,
 a bundled JSON Schema, and deterministic snapshots.
 Prompt 16 adds `sedd report OLD NEW --html FILE`, producing a self-contained,
 offline HTML comparison with search, filters, source evidence, and diagnostics.
+Prompt 17 adds `sedd report FILE --html FILE`, producing an offline visual
+explorer for one interface with searchable entities and resolved relationships.
 The library can ingest local SEDD XML and infer an E172-0225 revision hint from
 `xsi:schemaLocation`. The model library provides immutable typed entities, explicit
 reference/unknown states, and deterministic canonical JSON. An explicit adapter
@@ -58,6 +60,8 @@ See [docs/json_report_contract.md](docs/json_report_contract.md) for the standal
 machine-readable report API, public change IDs, and bundled JSON Schema.
 See [docs/html_report.md](docs/html_report.md) for HTML report generation and its
 offline review controls.
+See [docs/interface_explorer.md](docs/interface_explorer.md) for the single-file
+explorer, its sections, search, relationship evidence, and diagnostics.
 Unsupported commands exit with an argument error; they never claim successful processing.
 
 ## Development
