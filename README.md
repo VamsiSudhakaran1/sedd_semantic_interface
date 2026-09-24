@@ -25,6 +25,8 @@ Prompt 14 adds `sedd compare OLD NEW` with text/JSON sections, canonical type
 filtering, documentation opt-in, and exit status based only on execution success.
 Prompt 15 adds a versioned machine-readable report API with public change codes,
 a bundled JSON Schema, and deterministic snapshots.
+Prompt 16 adds `sedd report OLD NEW --html FILE`, producing a self-contained,
+offline HTML comparison with search, filters, source evidence, and diagnostics.
 The library can ingest local SEDD XML and infer an E172-0225 revision hint from
 `xsi:schemaLocation`. The model library provides immutable typed entities, explicit
 reference/unknown states, and deterministic canonical JSON. An explicit adapter
@@ -54,6 +56,8 @@ See [docs/compare_cli.md](docs/compare_cli.md) for compare sections, flags,
 the JSON contract, and exit-status behavior.
 See [docs/json_report_contract.md](docs/json_report_contract.md) for the standalone
 machine-readable report API, public change IDs, and bundled JSON Schema.
+See [docs/html_report.md](docs/html_report.md) for HTML report generation and its
+offline review controls.
 Unsupported commands exit with an argument error; they never claim successful processing.
 
 ## Development

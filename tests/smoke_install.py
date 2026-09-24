@@ -192,6 +192,27 @@ def main() -> None:
             cwd=directory,
             check=True,
         )
+        html_output = Path(directory) / "comparison.html"
+        generated = subprocess.run(
+            [
+                str(command),
+                "report",
+                str(inspect_input),
+                str(compare_input),
+                "--html",
+                str(html_output),
+            ],
+            cwd=directory,
+            capture_output=True,
+            text=True,
+            check=True,
+        )
+        html = html_output.read_text(encoding="utf-8")
+        assert "AL_ALARM_CHANGED" in html
+        assert "Search changed entities" in html
+        assert "connect-src 'none'" in html
+        assert str(html_output) in generated.stdout
+        assert not generated.stderr
         subprocess.run(
             [
                 str(python),
@@ -240,7 +261,7 @@ def main() -> None:
     print(
         "Isolated installation, inspect/explore CLI, loader, model, adapter, "
         "graph, cross-version matching, semantic comparison, dependency context, "
-        "compare CLI, and JSON report contract checks passed."
+        "compare CLI, JSON report contract, and HTML report checks passed."
     )
 
 
