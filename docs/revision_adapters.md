@@ -1,6 +1,6 @@
 # Revision adapter architecture
 
-The pipeline is `load_interface(path)` -> secure `load_sedd` -> `AdapterRegistry`
+The pipeline is `load_interface(path)` -> secure `load_xml` -> `AdapterRegistry`
 -> selected `SeddAdapter` -> `AdapterResult.interface` (`EquipmentInterface`).
 The registry delegates revision detection; adding an adapter does not require
 editing comparison, graph, report, model, or generic routing code.
@@ -21,7 +21,7 @@ For a document without a schema hint, deliberate selection is required:
 result = load_interface("equipment.xml", revision="E172-0225")
 ```
 
-This is a library increment. The CLI still provides help/version only.
+The inspect, explore, compare, and report commands use the same pipeline.
 
 ## Protocol and registry
 
@@ -37,7 +37,7 @@ interface, the selected revision label, and `AdapterDiagnostic` records. Each
 diagnostic has a stable code, fixed message (possibly naming a known schema
 field), INFO/WARNING severity, and domain `SourceProvenance`. Untrusted values
 are retained in the model rather than interpolated into diagnostic messages.
-The registry adds loader diagnostics to adapter diagnostics and rejects an
+The registry adds loader and schema-hint diagnostics to adapter diagnostics and rejects an
 incorrect result revision, invalid support decision, or noncanonical result.
 
 `AdapterRegistry((adapter_a, adapter_b))` is immutable, requires unique nonempty
@@ -62,12 +62,12 @@ are trusted application code implementing the no-I/O protocol.
 
 The concrete implementation is `adapters/e172_0225.py`, with local traversal
 helpers in `_e172_0225_xml.py`. It requires the supported SEDD root and namespace.
-An exact loader hint for E172-0225 produces `SUPPORTED`, with a
+An exact adapter-layer schema hint for E172-0225 produces `SUPPORTED`, with a
 `REVISION_HINT_ONLY` diagnostic in the result. A missing hint/location produces
 `INDETERMINATE`; explicit selection records `EXPLICIT_REVISION_SELECTION`.
 An unknown, conflicting, malformed, or ambiguous schema location is unsupported
 by this adapter even with an explicit request. Malformed URI text becomes a
-controlled loader diagnostic instead of leaking URL-parser exceptions.
+controlled detection diagnostic instead of leaking URL-parser exceptions.
 
 This is a deliberate routing policy, not conformance detection. A schema filename
 or URL remains untrusted input and is never fetched. The mapper checks relevant
@@ -76,11 +76,27 @@ not infer a revision from source filenames, prefix spelling, equipment software
 revision, or resemblance to the sample. Schema-invalid files may produce a partial
 model with diagnostics. An empty inventory is not proof of a valid empty section.
 
-The current loader accepts the known SEDD root QName. A future revision in a new
-namespace would require extending that loader admission policy explicitly. The
-second-adapter test uses the existing SEDD family namespace and different revision
-hints/fields; it demonstrates coexistence without changing the loader's revision
-hint table or any downstream API.
+The secure loader admits any well-formed root after enforcing the same security
+limits. Concrete adapters own root/namespace acceptance. Revision identification
+now lives in `adapters/revisions.py`, independent of the installed adapter list.
+`detect_revision(document)` recognizes exact E172 schema filename labels for the
+root namespace, including unimplemented labels, without declaring them supported.
+`registry.assess(document)` returns a read-only `RevisionAssessment`: detection
+metadata, supported adapter labels, and supported/unsupported/indeterminate/
+ambiguous status. It never constructs canonical entities.
+
+Unsupported selection raises `UnsupportedSeddVersionError` with `status`,
+`detected_revision`, and `diagnostic_code`. Its controlled message includes any
+recognized revision label, so all CLI commands identify unsupported hints rather
+than suggesting a fallback. Conflicting hints remain ambiguous; explicit selection
+cannot override the concrete adapter's rejection. Hints for imported namespaces,
+input filenames, descendant declarations, and equipment software revisions cannot
+select the current adapter. Identical duplicate locations are deduplicated; distinct
+locations remain ambiguous even if their labels agree. URI paths are inspected
+locally, with percent decoding, and are never opened.
+
+See [version_resilience.md](version_resilience.md) for the repository audit,
+unsupported-revision policy, public loader API migration, and adapter scaffold.
 
 ## Mapping and preservation
 
@@ -156,7 +172,9 @@ using a different schema hint and `Device` structure. Both flow through the same
 filesystem pipeline and canonical serializer. The loader need not recognize the
 second revision. Registry-order reversal leaves routing unchanged; conflicting
 support fails explicitly. Another process blocks all concrete E172 imports and
-still uses a custom adapter with the downstream packages and serializer.
+still uses a custom adapter with the downstream packages and serializer. The version-resilience tests also
+execute comparison/reporting with concrete adapter imports blocked, and compare
+equivalent interfaces from different namespaces and XML structures.
 
 An import-boundary test forbids adapter/parser dependencies in `model`, `compare`,
 `graph`, and `report`. Concrete adapter imports must remain at composition or

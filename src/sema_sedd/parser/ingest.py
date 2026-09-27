@@ -14,13 +14,11 @@ from sema_sedd.exceptions import (
     InputTooLargeError,
     InvalidXmlError,
     UnsafeXmlError,
-    UnsupportedSeddVersionError,
 )
-from sema_sedd.parser.revisions import (
-    SEDD_NAMESPACE,
-    SEDD_ROOT,
-    XSI_SCHEMA_LOCATION,
-    revision_from_schema_location,
+
+XSI_SCHEMA_LOCATION = "{http://www.w3.org/2001/XMLSchema-instance}schemaLocation"
+XSI_NO_NAMESPACE_SCHEMA_LOCATION = (
+    "{http://www.w3.org/2001/XMLSchema-instance}noNamespaceSchemaLocation"
 )
 
 DEFAULT_MAX_BYTES = 10 * 1024 * 1024
@@ -68,13 +66,12 @@ class XmlElement:
 
 @dataclass(frozen=True, slots=True)
 class SourcedDocument:
-    """Ingested XML with source and non-authoritative revision metadata."""
+    """Secured XML and raw schema hints; revision interpretation belongs to adapters."""
 
     source: Path
     byte_count: int
     namespace: str
     schema_location: str | None
-    revision_hint: str | None
     root: XmlElement
     diagnostics: tuple[Diagnostic, ...]
 
@@ -103,7 +100,7 @@ def _freeze(node: _MutableElement) -> XmlElement:
     )
 
 
-def load_sedd(
+def load_xml(
     path: str | os.PathLike[str],
     *,
     max_bytes: int = DEFAULT_MAX_BYTES,
@@ -113,8 +110,8 @@ def load_sedd(
 ) -> SourcedDocument:
     """Read local SEDD XML with byte and structural limits and no external access.
 
-    This checks XML syntax and the SEDD root QName, not XSD validity. The inferred
-    revision is a schemaLocation hint for later adapter selection.
+    This checks XML syntax and security limits, not document vocabulary or XSD
+    validity. Namespace admission and revision interpretation belong to adapters.
     """
     if min(max_bytes, max_depth, max_elements, max_attributes) < 1:
         raise ValueError("All XML limits must be positive")
@@ -207,29 +204,18 @@ def load_sedd(
 
     if root is None:
         raise InvalidXmlError("Empty XML input")
-    if root.tag != SEDD_ROOT:
-        raise UnsupportedSeddVersionError("Unsupported SEDD root QName")
     schema_location = next(
         (value for name, value in root.attributes if name == XSI_SCHEMA_LOCATION), None
-    )
-    revision_hint, diagnostic_code = revision_from_schema_location(schema_location)
-    diagnostics = (
-        (
-            Diagnostic(
-                diagnostic_code,
-                "SEDD revision could not be inferred from schemaLocation",
-                root.location,
-            ),
-        )
-        if diagnostic_code
-        else ()
     )
     return SourcedDocument(
         source=source.resolve(),
         byte_count=byte_count,
-        namespace=SEDD_NAMESPACE,
+        namespace=root.tag[1:].split("}", 1)[0] if root.tag.startswith("{") else "",
         schema_location=schema_location,
-        revision_hint=revision_hint,
         root=_freeze(root),
-        diagnostics=diagnostics,
+        diagnostics=(),
     )
+
+
+# Compatibility spelling: both entry points secure XML without selecting semantics.
+load_sedd = load_xml

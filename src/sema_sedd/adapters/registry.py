@@ -1,8 +1,10 @@
 """Deterministic registry: no first-match routing or implicit fallback revision."""
 
 from dataclasses import dataclass
+from enum import StrEnum
 
 from sema_sedd.adapters.base import AdapterDiagnostic, AdapterResult, SeddAdapter, SupportLevel
+from sema_sedd.adapters.revisions import RevisionDetection, detect_revision
 from sema_sedd.exceptions import (
     AdapterRegistrationError,
     AmbiguousSeddVersionError,
@@ -10,6 +12,22 @@ from sema_sedd.exceptions import (
 )
 from sema_sedd.model import EquipmentInterface, SourceProvenance
 from sema_sedd.parser import SourcedDocument
+
+
+class RevisionStatus(StrEnum):
+    SUPPORTED = "supported"
+    UNSUPPORTED = "unsupported"
+    INDETERMINATE = "indeterminate"
+    AMBIGUOUS = "ambiguous"
+
+
+@dataclass(frozen=True, slots=True)
+class RevisionAssessment:
+    """Read-only routing assessment; does not parse canonical entities."""
+
+    detection: RevisionDetection
+    status: RevisionStatus
+    supported_revisions: tuple[str, ...]
 
 
 @dataclass(frozen=True, slots=True)
@@ -31,22 +49,43 @@ class AdapterRegistry:
     def revisions(self) -> tuple[str, ...]:
         return tuple(sorted(adapter.revision for adapter in self.adapters))
 
+    def assess(self, document: SourcedDocument) -> RevisionAssessment:
+        decisions = tuple((a.revision, self._support(a, document)) for a in self.adapters)
+        supported = tuple(sorted(r for r, s in decisions if s is SupportLevel.SUPPORTED))
+        status = (
+            RevisionStatus.AMBIGUOUS
+            if len(supported) > 1
+            else RevisionStatus.SUPPORTED
+            if supported
+            else RevisionStatus.INDETERMINATE
+            if any(s is SupportLevel.INDETERMINATE for _, s in decisions)
+            else RevisionStatus.UNSUPPORTED
+        )
+        return RevisionAssessment(detect_revision(document), status, supported)
+
+    @staticmethod
+    def _unsupported(document: SourcedDocument, message: str) -> UnsupportedSeddVersionError:
+        detection = detect_revision(document)
+        label = detection.revision_hint or ", ".join(detection.candidates)
+        detail = f"; detected schema hint: {label}" if label else ""
+        return UnsupportedSeddVersionError(
+            f"Unsupported SEDD revision{detail}. {message}",
+            detected_revision=detection.revision_hint,
+            diagnostic_code=detection.diagnostic_code or "UNSUPPORTED_REVISION",
+        )
+
     def select(self, document: SourcedDocument, *, revision: str | None = None) -> SeddAdapter:
         if revision is not None:
             selected = next((a for a in self.adapters if a.revision == revision), None)
             if selected is None or self._support(selected, document) is SupportLevel.UNSUPPORTED:
-                raise UnsupportedSeddVersionError("Requested adapter is absent or incompatible")
+                raise self._unsupported(document, "Requested adapter is absent or incompatible")
             return selected
-        candidates = tuple(
-            adapter
-            for adapter in self.adapters
-            if self._support(adapter, document) is SupportLevel.SUPPORTED
-        )
-        if len(candidates) > 1:
+        assessment = self.assess(document)
+        if assessment.status is RevisionStatus.AMBIGUOUS:
             raise AmbiguousSeddVersionError("Multiple adapters report support; select a revision")
-        if not candidates:
-            raise UnsupportedSeddVersionError("No supported revision detected; select a revision")
-        return candidates[0]
+        if not assessment.supported_revisions:
+            raise self._unsupported(document, "No compatible adapter selected; no semantics parsed")
+        return next(a for a in self.adapters if a.revision == assessment.supported_revisions[0])
 
     def adapt(self, document: SourcedDocument, *, revision: str | None = None) -> AdapterResult:
         selected = self.select(document, revision=revision)
@@ -72,8 +111,26 @@ class AdapterRegistry:
             )
             for diagnostic in document.diagnostics
         )
+        detection = detect_revision(document)
+        hint_diagnostics = (
+            (
+                AdapterDiagnostic(
+                    detection.diagnostic_code,
+                    "Revision schema hint is missing, unrecognized, malformed, or ambiguous",
+                    provenance=SourceProvenance(
+                        source_document=str(document.source),
+                        line=document.root.location.line,
+                        column=document.root.location.column,
+                    ),
+                ),
+            )
+            if detection.diagnostic_code
+            else ()
+        )
         return AdapterResult(
-            result.interface, result.revision, loader_diagnostics + result.diagnostics
+            result.interface,
+            result.revision,
+            loader_diagnostics + hint_diagnostics + result.diagnostics,
         )
 
     @staticmethod

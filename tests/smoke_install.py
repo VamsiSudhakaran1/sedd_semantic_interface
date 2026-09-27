@@ -110,6 +110,20 @@ def main() -> None:
             ),
             encoding="utf-8",
         )
+        unsupported_input = Path(directory) / "unsupported.xml"
+        unsupported_input.write_text(
+            inspect_input.read_text(encoding="utf-8").replace("E172-0225", "E172-9999"),
+            encoding="utf-8",
+        )
+        rejected = subprocess.run(
+            [str(command), "inspect", str(unsupported_input), "--json"],
+            cwd=directory,
+            capture_output=True,
+            text=True,
+        )
+        assert rejected.returncode == 2 and not rejected.stdout
+        assert "Unsupported SEDD revision" in rejected.stderr
+        assert "E172-9999" in rejected.stderr and "Traceback" not in rejected.stderr
         inspected = subprocess.run(
             [str(command), "inspect", str(inspect_input), "--json", "--type", "alarm"],
             cwd=directory,
@@ -278,7 +292,7 @@ def main() -> None:
         "Isolated installation, inspect/explore CLI, loader, model, adapter, "
         "graph, cross-version matching, semantic comparison, dependency context, "
         "compare CLI, JSON report contract, HTML comparison, and single-file "
-        "explorer checks passed."
+        "explorer, and unsupported-revision checks passed."
     )
 
 

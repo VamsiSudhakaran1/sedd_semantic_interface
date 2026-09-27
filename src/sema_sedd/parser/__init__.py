@@ -1,4 +1,4 @@
-"""Bounded, offline XML ingestion with conservative SEDD revision hints."""
+"""Bounded, offline XML ingestion independent of revision vocabularies."""
 
 from sema_sedd.parser.ingest import (
     DEFAULT_MAX_BYTES,
@@ -8,6 +8,7 @@ from sema_sedd.parser.ingest import (
     SourceLocation,
     XmlElement,
     load_sedd,
+    load_xml,
 )
 
 __all__ = [
@@ -18,4 +19,5 @@ __all__ = [
     "SourcedDocument",
     "XmlElement",
     "load_sedd",
+    "load_xml",
 ]

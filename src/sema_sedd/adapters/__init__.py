@@ -9,7 +9,8 @@ from sema_sedd.adapters.base import (
 )
 from sema_sedd.adapters.defaults import default_registry
 from sema_sedd.adapters.pipeline import load_interface
-from sema_sedd.adapters.registry import AdapterRegistry
+from sema_sedd.adapters.registry import AdapterRegistry, RevisionAssessment, RevisionStatus
+from sema_sedd.adapters.revisions import RevisionDetection, detect_revision
 
 __all__ = [
     "AdapterDiagnostic",
@@ -18,6 +19,10 @@ __all__ = [
     "SeddAdapter",
     "SupportLevel",
     "AdapterRegistry",
+    "RevisionAssessment",
+    "RevisionStatus",
+    "RevisionDetection",
+    "detect_revision",
     "default_registry",
     "load_interface",
 ]
