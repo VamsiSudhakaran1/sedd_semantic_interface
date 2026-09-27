@@ -354,11 +354,16 @@ def _diagnostic(item: dict[str, JsonData]) -> str:
         if provenance is not None
         else ""
     )
+    context = item.get("entity_context")
+    context_html = f"<pre>{_pretty(context)}</pre>" if context is not None else ""
     return (
         "<article class='plain-card'>"
         f"<strong>{_h(item.get('code', 'UNKNOWN'))}</strong> "
         f"<span class='muted'>· {_h(item.get('severity', '?'))} · source {_h(source)}</span>"
-        f"<p>{_h(item.get('message', ''))}</p>{location}</article>"
+        f"<p>{_h(item.get('message', ''))}</p>"
+        f"<p class='muted'>Source: {_h(item.get('source_path', ''))} "
+        f"· line {_h(item.get('source_line') or 'unknown')}</p>"
+        f"{context_html}{location}</article>"
     )
 
 

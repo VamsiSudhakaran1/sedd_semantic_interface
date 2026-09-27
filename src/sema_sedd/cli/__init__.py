@@ -22,7 +22,7 @@ from sema_sedd.cli.explore import render_json as render_exploration_json
 from sema_sedd.cli.explore import render_text as render_exploration_text
 from sema_sedd.cli.inspect import ENTITY_TYPE_NAMES, build_inspection, render_json, render_text
 from sema_sedd.cli.report import write_html_report, write_interface_html_report
-from sema_sedd.exceptions import SeddError
+from sema_sedd.exceptions import SeddError, UnsupportedSeddVersionError
 
 
 def _bounded_depth(value: str) -> int:
@@ -33,6 +33,12 @@ def _bounded_depth(value: str) -> int:
     if not 0 <= depth <= MAX_EXPLORE_DEPTH:
         raise argparse.ArgumentTypeError(f"depth must be between 0 and {MAX_EXPLORE_DEPTH}")
     return depth
+
+
+def _error_message(error: SeddError) -> str:
+    if isinstance(error, UnsupportedSeddVersionError):
+        return f"{error.diagnostic.code}: {error}"
+    return str(error)
 
 
 def main(argv: Sequence[str] | None = None) -> int:
@@ -114,14 +120,14 @@ def main(argv: Sequence[str] | None = None) -> int:
                 wkn=args.wkn,
             )
         except SeddError as error:
-            inspect_parser.error(str(error))
+            inspect_parser.error(_error_message(error))
         sys.stdout.write(render_json(inspection) if args.json else render_text(inspection))
         return 0
     if args.command == "explore":
         try:
             exploration = build_exploration(args.file, args.entity, depth=args.depth)
         except SeddError as error:
-            explore_parser.error(str(error))
+            explore_parser.error(_error_message(error))
         sys.stdout.write(
             render_exploration_json(exploration)
             if args.json
@@ -138,7 +144,7 @@ def main(argv: Sequence[str] | None = None) -> int:
                 include_documentation=args.include_documentation,
             )
         except SeddError as error:
-            compare_parser.error(str(error))
+            compare_parser.error(_error_message(error))
         color = (
             not args.no_color
             and not args.json
@@ -159,7 +165,7 @@ def main(argv: Sequence[str] | None = None) -> int:
                 else write_html_report(args.old, args.new, args.html)
             )
         except SeddError as error:
-            report_parser.error(str(error))
+            report_parser.error(_error_message(error))
         sys.stdout.write(f"Wrote HTML report to {destination}\n")
         return 0
     parser.error("unsupported command")

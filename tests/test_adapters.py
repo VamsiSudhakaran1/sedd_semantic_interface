@@ -317,7 +317,7 @@ def test_duplicate_ids_messages_and_missing_ids_are_not_dropped(tmp_path: Path) 
     result = default_registry().adapt(doc)
     assert [v.implementation_id for v in result.interface.status_variables] == ["7", "7", None]
     assert len({v.key for v in result.interface.status_variables}) == 3
-    assert "MISSING_FIELD" in [d.code for d in result.diagnostics]
+    assert "MISSING_REQUIRED_STRUCTURE" in [d.code for d in result.diagnostics]
     messages = load_interface(
         FIXTURES / "relationships/e172-ambiguous-message.xml", revision="E172-0225"
     ).interface.supported_messages
@@ -361,7 +361,7 @@ def test_unknown_content_at_root_entity_field_and_format_is_preserved(tmp_path: 
     shape = result.interface.variable_formats[0].structure
     assert shape is not None and shape[0].children == ()
     assert shape[0].unknown_extensions[0].name == "Future"
-    assert "UNKNOWN_CONTENT" in [d.code for d in result.diagnostics]
+    assert "UNKNOWN_ELEMENT" in [d.code for d in result.diagnostics]
     assert "urn:v" in to_canonical_json(result.interface)
 
 
@@ -504,7 +504,7 @@ def test_standard_requirement_groups_map_to_structured_metadata(tmp_path: Path) 
     )
     assert vendor.content == ("preserve me",)
     assert vendor.provenance[0].source_path is not None
-    assert "UNKNOWN_CONTENT" in {diagnostic.code for diagnostic in result.diagnostics}
+    assert "UNKNOWN_ELEMENT" in {diagnostic.code for diagnostic in result.diagnostics}
 
 
 def test_invalid_closed_standard_and_message_values_are_retained(tmp_path: Path) -> None:

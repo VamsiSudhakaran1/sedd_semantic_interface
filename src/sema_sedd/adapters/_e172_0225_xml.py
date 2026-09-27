@@ -6,8 +6,26 @@ import re
 from dataclasses import dataclass, field
 
 from sema_sedd.adapters.base import AdapterDiagnostic, DiagnosticSeverity
-from sema_sedd.model import JsonObject, SourceProvenance, UnknownExtension
+from sema_sedd.diagnostics import DiagnosticCode, DiagnosticEntityContext
+from sema_sedd.model import CanonicalType, JsonObject, SourceProvenance, UnknownExtension
 from sema_sedd.parser import SourcedDocument, XmlElement
+
+_ENTITY_TAGS = {
+    "SEDDHeader": CanonicalType.EQUIPMENT_METADATA,
+    "StatusVariable": CanonicalType.STATUS_VARIABLE,
+    "DataVariable": CanonicalType.DATA_VARIABLE,
+    "EquipmentConstant": CanonicalType.EQUIPMENT_CONSTANT,
+    "CollectionEvent": CanonicalType.COLLECTION_EVENT,
+    "Alarm": CanonicalType.ALARM,
+    "RemoteCommand": CanonicalType.REMOTE_COMMAND,
+    "Parameter": CanonicalType.REMOTE_COMMAND_PARAMETER,
+    "VariableFormat": CanonicalType.VARIABLE_FORMAT,
+    "DefaultReportDefinition": CanonicalType.DEFAULT_REPORT,
+    "EventReportLink": CanonicalType.EVENT_REPORT_LINK,
+    "SupportedSEMIStandard": CanonicalType.STANDARD_REFERENCE,
+    "{urn:semi-org:xsd.SMN}SECSMessage": CanonicalType.SUPPORTED_MESSAGE,
+}
+_UNSUPPORTED_SECTIONS = frozenset(("RecipeVariableParameters", "EquipmentCharacterization"))
 
 XSI_NIL = "{http://www.w3.org/2001/XMLSchema-instance}nil"
 
@@ -25,16 +43,31 @@ class Context:
     revision: str
     diagnostics: list[AdapterDiagnostic] = field(default_factory=list)
     paths: dict[int, str] = field(default_factory=dict)
+    owners: dict[int, DiagnosticEntityContext] = field(default_factory=dict)
 
     def __post_init__(self) -> None:
         self._index(self.document.root, f"/{self.document.root.tag}[1]")
 
-    def _index(self, node: XmlElement, path: str) -> None:
+    def _index(
+        self,
+        node: XmlElement,
+        path: str,
+        owner: DiagnosticEntityContext | None = None,
+    ) -> None:
         self.paths[id(node)] = path
+        kind = _ENTITY_TAGS.get(node.tag)
+        if kind is not None:
+            owner = DiagnosticEntityContext(
+                kind,
+                None if kind is CanonicalType.EQUIPMENT_METADATA else path,
+            )
+        self.owners[id(node)] = owner or DiagnosticEntityContext(
+            CanonicalType.EQUIPMENT_INTERFACE,
+        )
         counts: dict[str, int] = {}
         for child in node.children:
             counts[child.tag] = counts.get(child.tag, 0) + 1
-            self._index(child, f"{path}/{child.tag}[{counts[child.tag]}]")
+            self._index(child, f"{path}/{child.tag}[{counts[child.tag]}]", self.owners[id(node)])
 
     def provenance(self, node: XmlElement, identifier: str | None = None) -> SourceProvenance:
         return SourceProvenance(
@@ -54,7 +87,15 @@ class Context:
         node: XmlElement,
         severity: DiagnosticSeverity = DiagnosticSeverity.WARNING,
     ) -> None:
-        self.diagnostics.append(AdapterDiagnostic(code, message, severity, self.provenance(node)))
+        self.diagnostics.append(
+            AdapterDiagnostic(
+                code,
+                message,
+                severity,
+                self.provenance(node),
+                self.owners[id(node)],
+            )
+        )
 
     def opaque(self, node: XmlElement, reason: str = "unmapped_content") -> UnknownExtension:
         namespace, name = split_name(node.tag)
@@ -84,13 +125,19 @@ class Reader:
         nodes = [child for child in self.node.children if child.tag == name]
         if len(nodes) > 1:
             self.context.diagnostic(
-                "AMBIGUOUS_FIELD", f"Repeated singleton field retained: {name}", self.node
+                "AMBIGUOUS_FIELD",
+                f"Repeated singleton field retained: {name}",
+                self.node,
+                DiagnosticSeverity.ERROR,
             )
             return None
         if not nodes:
             if required:
                 self.context.diagnostic(
-                    "MISSING_FIELD", f"Required field is absent: {name}", self.node
+                    DiagnosticCode.MISSING_REQUIRED_STRUCTURE,
+                    f"Required field is absent: {name}",
+                    self.node,
+                    DiagnosticSeverity.ERROR,
                 )
             return None
         node = nodes[0]
@@ -202,7 +249,10 @@ class Reader:
                 if child.tag == name:
                     self.consumed.discard(id(child))
         self.context.diagnostic(
-            "INVALID_FIELD", f"Uninterpretable field retained: {name}", self.node
+            "INVALID_FIELD",
+            f"Uninterpretable field retained: {name}",
+            self.node,
+            DiagnosticSeverity.ERROR,
         )
 
     def finish(self) -> tuple[UnknownExtension, ...]:
@@ -230,8 +280,23 @@ class Reader:
                         provenance=(self.context.provenance(self.node),),
                     )
                 )
-        if leftovers or attrs or (text and not self.body_used):
+        for child in leftovers:
+            code = (
+                DiagnosticCode.UNSUPPORTED_EXTENSION
+                if child.tag in _UNSUPPORTED_SECTIONS
+                else DiagnosticCode.UNKNOWN_ELEMENT
+            )
+            self.context.diagnostic(code, "Source element retained without interpretation", child)
+        if attrs:
             self.context.diagnostic(
-                "UNKNOWN_CONTENT", "Unmapped source content retained", self.node
+                DiagnosticCode.UNSUPPORTED_EXTENSION,
+                "Source attributes retained without interpretation",
+                self.node,
+            )
+        if text and not self.body_used:
+            self.context.diagnostic(
+                DiagnosticCode.UNSUPPORTED_EXTENSION,
+                "Mixed source content retained without interpretation",
+                self.node,
             )
         return tuple(result)

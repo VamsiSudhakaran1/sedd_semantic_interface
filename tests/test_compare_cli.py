@@ -75,7 +75,7 @@ def test_json_is_deterministic_and_uses_semantic_kinds(tmp_path: Path) -> None:
     assert first.stderr == second.stderr == ""
     assert first.stdout == second.stdout and first.stdout.endswith("\n")
     data = json.loads(first.stdout)
-    assert data["comparison_schema_version"] == "1.0"
+    assert data["comparison_schema_version"] == "2.0"
     assert data["old_revision"] == data["new_revision"] == "E172-0225"
     assert data["summary"]["property_changes"] == 1
     assert len(data["property_changes"]) == 1

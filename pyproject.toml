@@ -30,7 +30,7 @@ where = ["src"]
 
 [tool.setuptools.package-data]
 sema_sedd = ["py.typed"]
-"sema_sedd.report" = ["schema_v1.json"]
+"sema_sedd.report" = ["schema_v1.json", "schema_v2.json"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

@@ -79,9 +79,10 @@ def test_inspect_text_displays_required_summary(
     assert "UNRESOLVED/not_found" in output
     assert "Unsupported sections: 1" in output
     assert "RecipeVariableParameters" in output
-    assert "Diagnostics: 2" in output
+    assert "Diagnostics: 4" in output
     assert "REVISION_HINT_ONLY" in output
-    assert "UNKNOWN_CONTENT" in output
+    assert "UNSUPPORTED_EXTENSION" in output
+    assert "UNRESOLVED_REFERENCE" in output
     assert "REFERENCE_RESOLUTION_PENDING" not in output
 
 
@@ -98,7 +99,7 @@ def test_inspect_json_is_deterministic_and_complete(
     assert first == first.strip() + "\n"
 
     data = json.loads(first)
-    assert data["inspection_schema_version"] == "1.0"
+    assert data["inspection_schema_version"] == "2.0"
     assert data["sedd_revision"] == "E172-0225"
     assert data["equipment"]["model"] == "Lantern17"
     assert data["entity_counts"]["collection_event"] == 2
@@ -106,8 +107,10 @@ def test_inspect_json_is_deterministic_and_complete(
     assert data["unresolved_references"][0]["reason"] == "not_found"
     assert data["unsupported_sections"][0]["name"] == "RecipeVariableParameters"
     assert [item["code"] for item in data["diagnostics"]] == [
+        "MISSING_OPTIONAL_METADATA",
         "REVISION_HINT_ONLY",
-        "UNKNOWN_CONTENT",
+        "UNRESOLVED_REFERENCE",
+        "UNSUPPORTED_EXTENSION",
     ]
     assert data["selection"] is None
 

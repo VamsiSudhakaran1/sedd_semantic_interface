@@ -45,7 +45,7 @@ not become confirmed changes.
 
 ## JSON contract
 
-The top-level `comparison_schema_version` is `1.0`. Source paths and
+The top-level `comparison_schema_version` is `2.0`. Source paths and
 revisions, selection options, and the summary precede arrays named `added`,
 `removed`, `identity_preserving_changes`, `property_changes`,
 `relationship_changes`, `documentation_only_changes`, `unchanged_matches`,
