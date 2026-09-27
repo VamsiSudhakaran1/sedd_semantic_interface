@@ -8,6 +8,7 @@ from typing import ClassVar, TypedDict
 
 from sema_sedd.adapters._e172_0225_xml import XSI_NIL, Context, Reader, split_name
 from sema_sedd.adapters.base import AdapterResult, DiagnosticSeverity, SupportLevel
+from sema_sedd.adapters.revisions import detect_revision
 from sema_sedd.exceptions import UnsupportedSeddVersionError
 from sema_sedd.model import (
     Alarm,
@@ -38,7 +39,10 @@ from sema_sedd.model import (
     WellKnownName,
 )
 from sema_sedd.parser import SourcedDocument
-from sema_sedd.parser.revisions import SEDD_NAMESPACE, SEDD_ROOT, XSI_SCHEMA_LOCATION
+from sema_sedd.parser.ingest import XSI_NO_NAMESPACE_SCHEMA_LOCATION, XSI_SCHEMA_LOCATION
+
+SEDD_NAMESPACE = "urn:semi-org:xsd.SEDD"
+SEDD_ROOT = f"{{{SEDD_NAMESPACE}}}DataDictionary"
 
 SMN = "urn:semi-org:xsd.SMN"
 _VARIABLE_TYPES = (
@@ -503,16 +507,28 @@ class E172_0225Adapter:
     def detect_support(self, document: SourcedDocument) -> SupportLevel:
         if document.namespace != SEDD_NAMESPACE or document.root.tag != SEDD_ROOT:
             return SupportLevel.UNSUPPORTED
-        if document.revision_hint == self.revision:
+        detection = detect_revision(document)
+        if detection.revision_hint == self.revision:
             return SupportLevel.SUPPORTED
-        if document.revision_hint is None and document.schema_location is None:
+        if (
+            detection.diagnostic_code == "MISSING_SCHEMA_HINT"
+            and document.schema_location is None
+            and document.root.attribute(XSI_NO_NAMESPACE_SCHEMA_LOCATION) is None
+        ):
             return SupportLevel.INDETERMINATE
         return SupportLevel.UNSUPPORTED
 
     def parse(self, document: SourcedDocument) -> AdapterResult:
         support = self.detect_support(document)
         if support is SupportLevel.UNSUPPORTED:
-            raise UnsupportedSeddVersionError("Document is incompatible with E172-0225 adapter")
+            detection = detect_revision(document)
+            label = detection.revision_hint
+            detail = f"; detected schema hint: {label}" if label else ""
+            raise UnsupportedSeddVersionError(
+                f"Document is incompatible with E172-0225 adapter{detail}",
+                detected_revision=label,
+                diagnostic_code=detection.diagnostic_code or "UNSUPPORTED_REVISION",
+            )
         context = Context(document, self.revision)
         context.diagnostic(
             "EXPLICIT_REVISION_SELECTION"
@@ -567,12 +583,6 @@ class E172_0225Adapter:
         interface = EquipmentInterface(
             equipment=equipment,
             provenance=(context.provenance(document.root),),
-            extension_metadata=JsonObject(
-                entries=(
-                    ("adapter_revision", self.revision),
-                    ("schema_location", document.schema_location),
-                )
-            ),
             status_variables=collect("StatusVariables", "StatusVariable", _status),
             data_variables=collect("DataVariables", "DataVariable", _data),
             equipment_constants=collect("EquipmentConstants", "EquipmentConstant", _constant),

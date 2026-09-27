@@ -1,26 +1,34 @@
 # Safe XML ingestion
 
-`sema_sedd.parser.load_sedd(path)` reads a local XML file and returns a
+`sema_sedd.parser.load_xml(path)` reads a local XML file and returns a
 `SourcedDocument`. It preserves expanded element and attribute names, mixed-content
-order, the resolved source path, byte count, and one-based start-tag positions.
-For example:
+order, the resolved source path, byte count, root namespace, raw schema location,
+and one-based start-tag positions. `load_sedd` remains an alias for this secure
+loader. For example:
 
 ```python
-from sema_sedd.parser import load_sedd
+from sema_sedd.parser import load_xml
+from sema_sedd.adapters import default_registry
 
-document = load_sedd("equipment.xml")
+document = load_xml("equipment.xml")
 print(document.root.tag, document.root.location)
-print(document.revision_hint, document.diagnostics)
+assessment = default_registry().assess(document)
+print(assessment.detection.revision_hint, assessment.status)
 ```
 
-The loader accepts UTF-8 XML, including non-ASCII text. It requires the
-`{urn:semi-org:xsd.SEDD}DataDictionary` root. A recognized local or URL-shaped
-`xsi:schemaLocation` filename can produce an `E172-0225` *hint*; the URL is never
-opened. Missing, malformed, ambiguous, and unrecognized hints produce stable
-diagnostic codes and leave `revision_hint` unset. The hint does not validate the
-document against an XSD. The adapter registry now uses it for provisional routing
-with an explicit diagnostic; see [revision_adapters.md](revision_adapters.md). The generic XML
-tree contains no canonical entities.
+The loader accepts UTF-8 XML, including non-ASCII text, without assuming a
+particular root, namespace, or standard revision. The adapter layer interprets
+schema hints and decides whether a document has supported semantics. A future
+namespace can therefore reach a registered adapter without editing the loader.
+An unexpected namespace is still rejected by the normal `load_interface` pipeline
+when no adapter supports it. Schema hints never cause network or filesystem reads.
+The generic XML tree contains no canonical entities.
+
+As of Prompt 18, `SourcedDocument.revision_hint` and schema-hint diagnostics have
+moved to `detect_revision(document)` in `sema_sedd.adapters`. Loader diagnostics
+remain reserved for generic XML concerns. Root/version rejection occurs at adapter
+selection rather than during XML ingestion. See
+[revision_adapters.md](revision_adapters.md) for routing and deliberate selection.
 
 The parser uses Python's Expat engine with external parameter parsing disabled.
 It rejects all DOCTYPE declarations and entity declarations, including external
@@ -36,7 +44,7 @@ Expected failures have typed exceptions in `sema_sedd.exceptions`:
 | Exception | Meaning |
 | --- | --- |
 | `InvalidXmlError` | Empty, malformed, or incorrectly encoded XML |
-| `UnsupportedSeddVersionError` | Root element or namespace is not the supported SEDD QName |
+| `UnsupportedSeddVersionError` | Adapter selection cannot safely map the document (not raised by the generic loader) |
 | `UnsafeXmlError` | Forbidden XML declaration or exceeded structural limit |
 | `InputTooLargeError` | Byte limit exceeded |
 

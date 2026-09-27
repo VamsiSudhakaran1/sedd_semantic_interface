@@ -5,6 +5,7 @@ from pathlib import Path
 
 import pytest
 
+from sema_sedd.adapters import default_registry, detect_revision
 from sema_sedd.exceptions import (
     InputError,
     InputTooLargeError,
@@ -38,8 +39,8 @@ def test_real_synthetic_fixture_loads_without_canonical_entities() -> None:
     assert document.root.children[0].tag == "SEDDHeader"
     assert document.root.location == SourceLocation(2, 1)
     assert document.root.children[0].location.line > 2
-    assert document.revision_hint is None
-    assert [d.code for d in document.diagnostics] == ["MISSING_SCHEMA_HINT"]
+    assert detect_revision(document).revision_hint is None
+    assert detect_revision(document).diagnostic_code == "MISSING_SCHEMA_HINT"
     assert not hasattr(document, "entities")
 
 
@@ -48,7 +49,7 @@ def test_original_tracksys_sample_loads_without_fetching_schema() -> None:
     if not path.is_file():
         pytest.skip("Original reference file is intentionally not versioned")
     document = load_sedd(path)
-    assert document.revision_hint == "E172-0225"
+    assert detect_revision(document).revision_hint == "E172-0225"
     assert document.diagnostics == ()
     assert len(document.root.children) == 15
     assert document.root.children[0].location.line == 18
@@ -60,7 +61,7 @@ def test_utf8_namespace_schema_hint_and_mixed_content(tmp_path: Path) -> None:
         f'{ROOT}{HINT}><SEDDHeader name="Café">a<Part/>β</SEDDHeader></s:DataDictionary>'
     ).encode()
     document = load_sedd(write_xml(tmp_path, payload))
-    assert document.revision_hint == "E172-0225"
+    assert detect_revision(document).revision_hint == "E172-0225"
     assert document.schema_location == ("urn:semi-org:xsd.SEDD E172-0225-SEDD-Schema.xsd")
     child = document.root.children[0]
     assert child.attribute("name") == "Café"
@@ -124,7 +125,7 @@ def test_schema_location_is_text_only_and_cannot_access_network(
         + "/>"
     ).encode()
     document = load_sedd(write_xml(tmp_path, payload))
-    assert document.revision_hint == "E172-0225"
+    assert detect_revision(document).revision_hint == "E172-0225"
     assert document.diagnostics == ()
 
 
@@ -158,15 +159,18 @@ def test_element_and_attribute_limits(tmp_path: Path) -> None:
     ],
 )
 def test_unexpected_namespace_or_root(tmp_path: Path, xml: str) -> None:
+    document = load_sedd(write_xml(tmp_path, xml.encode()))
+    # The generic secure loader admits syntax; only adapters admit semantics.
     with pytest.raises(UnsupportedSeddVersionError):
-        load_sedd(write_xml(tmp_path, xml.encode()))
+        default_registry().adapt(document)
 
 
-def test_unrecognized_schema_location_is_diagnostic_not_a_version(tmp_path: Path) -> None:
+def test_unsupported_schema_label_is_identified_without_claiming_support(tmp_path: Path) -> None:
     xml = ROOT + HINT.replace("E172-0225", "E172-9999") + "/>"
     document = load_sedd(write_xml(tmp_path, xml.encode()))
-    assert document.revision_hint is None
-    assert [d.code for d in document.diagnostics] == ["UNRECOGNIZED_SCHEMA_HINT"]
+    assert detect_revision(document).revision_hint == "E172-9999"
+    with pytest.raises(UnsupportedSeddVersionError, match="E172-9999"):
+        default_registry().adapt(document)
 
 
 def test_input_error_and_limit_configuration(tmp_path: Path) -> None:

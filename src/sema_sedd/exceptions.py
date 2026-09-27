@@ -30,7 +30,20 @@ class UnsupportedRevisionError(InputError):
 
 
 class UnsupportedSeddVersionError(UnsupportedRevisionError):
-    """The root QName is not a supported SEDD document root."""
+    """No safe semantic mapping is available; retain a detected label if present."""
+
+    status = "unsupported"
+
+    def __init__(
+        self,
+        message: str,
+        *,
+        detected_revision: str | None = None,
+        diagnostic_code: str | None = None,
+    ) -> None:
+        super().__init__(message)
+        self.detected_revision = detected_revision
+        self.diagnostic_code = diagnostic_code
 
 
 class SemanticError(SeddError):
@@ -55,3 +68,5 @@ class AdapterRegistrationError(SeddError):
 
 class AmbiguousSeddVersionError(UnsupportedSeddVersionError):
     """Multiple registered adapters claim the same document."""
+
+    status = "ambiguous"

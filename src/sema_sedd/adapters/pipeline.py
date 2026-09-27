@@ -5,7 +5,7 @@ import os
 from sema_sedd.adapters.base import AdapterResult
 from sema_sedd.adapters.defaults import default_registry
 from sema_sedd.adapters.registry import AdapterRegistry
-from sema_sedd.parser import load_sedd
+from sema_sedd.parser import load_xml
 from sema_sedd.parser.ingest import (
     DEFAULT_MAX_ATTRIBUTES,
     DEFAULT_MAX_BYTES,
@@ -24,7 +24,7 @@ def load_interface(
     max_elements: int = DEFAULT_MAX_ELEMENTS,
     max_attributes: int = DEFAULT_MAX_ATTRIBUTES,
 ) -> AdapterResult:
-    document = load_sedd(
+    document = load_xml(
         path,
         max_bytes=max_bytes,
         max_depth=max_depth,

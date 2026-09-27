@@ -18,6 +18,7 @@ from sema_sedd.adapters import (
     SeddAdapter,
     SupportLevel,
     default_registry,
+    detect_revision,
     load_interface,
 )
 from sema_sedd.adapters.e172_0225 import E172_0225Adapter
@@ -101,7 +102,7 @@ def test_two_revisions_use_the_same_pipeline_and_downstream_json(tmp_path: Path)
         '<Device label="Second"/>',
         hint=' xsi:schemaLocation="urn:semi-org:xsd.SEDD test-second.xsd"',
     )
-    assert second.revision_hint is None  # Loader doesn't need to know the second adapter.
+    assert detect_revision(second).revision_hint is None
     second_result = load_interface(second.source, registry=registry)
     assert first_result.revision == "E172-0225"
     assert second_result.revision == "TEST-SECOND"
@@ -723,8 +724,8 @@ def test_malformed_schema_uri_produces_a_controlled_diagnostic(tmp_path: Path) -
     doc = document(
         tmp_path, hint=' xsi:schemaLocation="urn:semi-org:xsd.SEDD http://[bad/schema.xsd"'
     )
-    assert doc.revision_hint is None
-    assert doc.diagnostics[0].code == "MALFORMED_SCHEMA_HINT"
+    assert detect_revision(doc).revision_hint is None
+    assert detect_revision(doc).diagnostic_code == "MALFORMED_SCHEMA_HINT"
     with pytest.raises(UnsupportedSeddVersionError):
         default_registry().adapt(doc)
 
