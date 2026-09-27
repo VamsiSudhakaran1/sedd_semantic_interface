@@ -1,16 +1,17 @@
 """Deterministic registry: no first-match routing or implicit fallback revision."""
 
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from enum import StrEnum
 
 from sema_sedd.adapters.base import AdapterDiagnostic, AdapterResult, SeddAdapter, SupportLevel
 from sema_sedd.adapters.revisions import RevisionDetection, detect_revision
+from sema_sedd.diagnostics import DiagnosticCode, DiagnosticEntityContext, DiagnosticSeverity
 from sema_sedd.exceptions import (
     AdapterRegistrationError,
     AmbiguousSeddVersionError,
     UnsupportedSeddVersionError,
 )
-from sema_sedd.model import EquipmentInterface, SourceProvenance
+from sema_sedd.model import CanonicalType, EquipmentInterface, SourceProvenance
 from sema_sedd.parser import SourcedDocument
 
 
@@ -71,7 +72,10 @@ class AdapterRegistry:
         return UnsupportedSeddVersionError(
             f"Unsupported SEDD revision{detail}. {message}",
             detected_revision=detection.revision_hint,
-            diagnostic_code=detection.diagnostic_code or "UNSUPPORTED_REVISION",
+            diagnostic_code=DiagnosticCode.UNSUPPORTED_REVISION,
+            source=str(document.source),
+            source_line=document.root.location.line,
+            entity_context=DiagnosticEntityContext(CanonicalType.EQUIPMENT_INTERFACE),
         )
 
     def select(self, document: SourcedDocument, *, revision: str | None = None) -> SeddAdapter:
@@ -82,7 +86,13 @@ class AdapterRegistry:
             return selected
         assessment = self.assess(document)
         if assessment.status is RevisionStatus.AMBIGUOUS:
-            raise AmbiguousSeddVersionError("Multiple adapters report support; select a revision")
+            raise AmbiguousSeddVersionError(
+                "Multiple adapters report support; select a revision",
+                diagnostic_code="AMBIGUOUS_REVISION",
+                source=str(document.source),
+                source_line=document.root.location.line,
+                entity_context=DiagnosticEntityContext(CanonicalType.EQUIPMENT_INTERFACE),
+            )
         if not assessment.supported_revisions:
             raise self._unsupported(document, "No compatible adapter selected; no semantics parsed")
         return next(a for a in self.adapters if a.revision == assessment.supported_revisions[0])
@@ -103,11 +113,13 @@ class AdapterRegistry:
             AdapterDiagnostic(
                 diagnostic.code,
                 diagnostic.message,
+                DiagnosticSeverity.ERROR,
                 provenance=SourceProvenance(
                     source_document=str(document.source),
                     line=diagnostic.location.line if diagnostic.location else None,
                     column=diagnostic.location.column if diagnostic.location else None,
                 ),
+                entity_context=DiagnosticEntityContext(CanonicalType.EQUIPMENT_INTERFACE),
             )
             for diagnostic in document.diagnostics
         )
@@ -117,20 +129,41 @@ class AdapterRegistry:
                 AdapterDiagnostic(
                     detection.diagnostic_code,
                     "Revision schema hint is missing, unrecognized, malformed, or ambiguous",
+                    severity=DiagnosticSeverity.INFO
+                    if detection.diagnostic_code == "MISSING_SCHEMA_HINT"
+                    else DiagnosticSeverity.WARNING,
                     provenance=SourceProvenance(
                         source_document=str(document.source),
                         line=document.root.location.line,
                         column=document.root.location.column,
                     ),
+                    entity_context=DiagnosticEntityContext(CanonicalType.EQUIPMENT_INTERFACE),
                 ),
             )
             if detection.diagnostic_code
             else ()
         )
+        root_provenance = SourceProvenance(
+            source_document=str(document.source),
+            source_revision=result.revision,
+            line=document.root.location.line,
+            column=document.root.location.column,
+        )
+        normalized = tuple(
+            replace(
+                diagnostic,
+                provenance=diagnostic.provenance or root_provenance,
+                entity_context=diagnostic.entity_context
+                or DiagnosticEntityContext(
+                    CanonicalType.EQUIPMENT_INTERFACE,
+                ),
+            )
+            for diagnostic in result.diagnostics
+        )
         return AdapterResult(
             result.interface,
             result.revision,
-            loader_diagnostics + hint_diagnostics + result.diagnostics,
+            loader_diagnostics + hint_diagnostics + normalized,
         )
 
     @staticmethod

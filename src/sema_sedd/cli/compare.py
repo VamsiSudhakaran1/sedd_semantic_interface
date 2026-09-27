@@ -21,9 +21,10 @@ from sema_sedd.compare import (
     compare_interfaces,
 )
 from sema_sedd.compare._values import JsonData, dump, encode
+from sema_sedd.graph import relationship_diagnostics, resolve_references
 from sema_sedd.model import CanonicalType
 
-COMPARISON_SCHEMA_VERSION = "1.0"
+COMPARISON_SCHEMA_VERSION = "2.0"
 COMPARISON_TYPE_NAMES = (
     CanonicalType.EQUIPMENT_INTERFACE.value,
     CanonicalType.EQUIPMENT_METADATA.value,
@@ -156,7 +157,10 @@ def build_comparison(
             (
                 (side, item)
                 for side, adapted in (("old", old), ("new", new))
-                for item in adapted.diagnostics
+                for item in (
+                    *adapted.diagnostics,
+                    *relationship_diagnostics(resolve_references(adapted.interface)),
+                )
                 if item.code != _PENDING_DIAGNOSTIC
             ),
             key=lambda pair: (pair[0], pair[1].severity.value, pair[1].code, pair[1].message),
@@ -387,8 +391,16 @@ def render_text(view: ComparisonView, *, color: bool = False) -> str:
         )
     lines.append(heading(f"Diagnostics ({len(view.diagnostics)})"))
     for side, diagnostic in view.diagnostics:
+        entity_type = (
+            diagnostic.entity_context.canonical_type.value
+            if diagnostic.entity_context
+            else "unknown entity"
+        )
+        entity_key = diagnostic.entity_context.key if diagnostic.entity_context else "-"
         lines.append(
             f"  {side} {diagnostic.severity.value.upper()} "
-            f"{diagnostic.code}: {_display(diagnostic.message)}"
+            f"{diagnostic.code}: {_display(diagnostic.message)} "
+            f"[{_display(diagnostic.source)}:{diagnostic.source_line or '?'} · "
+            f"{entity_type} {entity_key}]"
         )
     return "\n".join(lines) + "\n"

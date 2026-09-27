@@ -7,14 +7,22 @@ import os
 from dataclasses import fields
 from enum import StrEnum
 from pathlib import Path
+from typing import cast
 
 from sema_sedd.adapters import AdapterDiagnostic, AdapterResult, load_interface
-from sema_sedd.graph import Relationship, RelationshipModel, ResolutionState, resolve_references
+from sema_sedd.diagnostics import context_data
+from sema_sedd.graph import (
+    Relationship,
+    RelationshipModel,
+    ResolutionState,
+    relationship_diagnostics,
+    resolve_references,
+)
 from sema_sedd.model import CanonicalType, JsonArray, JsonObject, UnknownExtension
 from sema_sedd.model._base import Record
 from sema_sedd.model.domain import InterfaceEntity, RemoteCommand, RemoteCommandParameter
 
-INSPECTION_SCHEMA_VERSION = "1.0"
+INSPECTION_SCHEMA_VERSION = "2.0"
 _PENDING_DIAGNOSTIC = "REFERENCE_RESOLUTION_PENDING"
 _ENTITY_TYPES = (
     CanonicalType.STATUS_VARIABLE,
@@ -92,6 +100,9 @@ def _diagnostic_data(diagnostic: AdapterDiagnostic) -> JsonData:
         "message": diagnostic.message,
         "severity": diagnostic.severity.value,
         "provenance": _encode(diagnostic.provenance),
+        "source": diagnostic.source,
+        "source_line": diagnostic.source_line,
+        "entity_context": cast(JsonData, context_data(diagnostic.entity_context)),
     }
 
 
@@ -211,7 +222,7 @@ def build_inspection(
     unsupported.sort(key=_dump)
     diagnostics = [
         _diagnostic_data(diagnostic)
-        for diagnostic in adapted.diagnostics
+        for diagnostic in (*adapted.diagnostics, *relationship_diagnostics(relationship_model))
         if diagnostic.code != _PENDING_DIAGNOSTIC
     ]
     diagnostics.sort(key=_dump)
@@ -331,7 +342,16 @@ def render_text(inspection: dict[str, JsonData]) -> str:
     for item in diagnostics:
         if not isinstance(item, dict):
             raise TypeError("Diagnostic projection must be an object")
-        lines.append(f"  {str(item['severity']).upper()} {item['code']}: {item['message']}")
+        context = item.get("entity_context")
+        owner = (
+            f"{context['canonical_type']} {context['key']}"
+            if isinstance(context, dict)
+            else "unknown entity"
+        )
+        lines.append(
+            f"  {item['severity']} {item['code']}: {item['message']} "
+            f"[{item.get('source')}:{item.get('source_line') or '?'} · {owner}]"
+        )
 
     selection = inspection["selection"]
     if selection is not None:

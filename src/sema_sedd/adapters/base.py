@@ -4,27 +4,18 @@ from dataclasses import dataclass
 from enum import StrEnum
 from typing import Protocol, runtime_checkable
 
-from sema_sedd.model import EquipmentInterface, SourceProvenance
+from sema_sedd.diagnostics import Diagnostic
+from sema_sedd.diagnostics import DiagnosticSeverity as DiagnosticSeverity
+from sema_sedd.model import EquipmentInterface
 from sema_sedd.parser import SourcedDocument
+
+AdapterDiagnostic = Diagnostic
 
 
 class SupportLevel(StrEnum):
     SUPPORTED = "supported"
     INDETERMINATE = "indeterminate"
     UNSUPPORTED = "unsupported"
-
-
-class DiagnosticSeverity(StrEnum):
-    INFO = "info"
-    WARNING = "warning"
-
-
-@dataclass(frozen=True, slots=True)
-class AdapterDiagnostic:
-    code: str
-    message: str
-    severity: DiagnosticSeverity = DiagnosticSeverity.WARNING
-    provenance: SourceProvenance | None = None
 
 
 @dataclass(frozen=True, slots=True)

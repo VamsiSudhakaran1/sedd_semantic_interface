@@ -158,8 +158,8 @@ opaque. Source preservation is not a claim of XSD validity.
 
 Repeated singleton fields/sections produce `AMBIGUOUS_FIELD` and retain all
 occurrences; the mapper does not silently pick the first. Missing required IDs,
-names, or main sections produce `MISSING_FIELD`. `NIL_CONTENT`, `INVALID_FIELD`,
-`UNSUPPORTED_FIELD_SHAPE`, and `UNKNOWN_CONTENT` distinguish other preservation
+names, or main sections produce `MISSING_REQUIRED_STRUCTURE`. `NIL_CONTENT`, `INVALID_FIELD`,
+`UNSUPPORTED_FIELD_SHAPE`, `UNKNOWN_ELEMENT`, and `UNSUPPORTED_EXTENSION` distinguish other preservation
 cases. This is loss-aware structural mapping, not a complete XSD validator or a
 byte-for-byte XML round-trip. Prefix spellings and markup syntax are not domain
 identity. Unknown content within a node retains text/order; positions relative

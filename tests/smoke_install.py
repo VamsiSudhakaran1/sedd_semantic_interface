@@ -122,7 +122,7 @@ def main() -> None:
             text=True,
         )
         assert rejected.returncode == 2 and not rejected.stdout
-        assert "Unsupported SEDD revision" in rejected.stderr
+        assert "UNSUPPORTED_REVISION: Unsupported SEDD revision" in rejected.stderr
         assert "E172-9999" in rejected.stderr and "Traceback" not in rejected.stderr
         inspected = subprocess.run(
             [str(command), "inspect", str(inspect_input), "--json", "--type", "alarm"],
@@ -194,7 +194,7 @@ def main() -> None:
                 "from sema_sedd.reporting import report_files; "
                 "import json, sys; "
                 "schema = report_schema(); "
-                "assert schema['properties']['report_schema_version']['const'] == '1.0'; "
+                "assert schema['properties']['report_schema_version']['const'] == '2.0'; "
                 "report = report_files(sys.argv[1], sys.argv[2]); "
                 "assert set(schema['required']) == set(report); "
                 "assert any(row['change_id'] == 'AL_ALARM_CHANGED' "

@@ -96,7 +96,7 @@ def test_unresolved_reference_is_not_presented_as_resolved(tmp_path: Path) -> No
     source = hinted(tmp_path, FIXTURES / "relationships" / "e172-dangling-event-variable.xml")
     graph = resolve_references(load_interface(source).interface)
     html = render_interface_html(graph, ReportSource(str(source), "E172-0225"))
-    assert "REFERENCE_UNRESOLVED" in html
+    assert "UNRESOLVED_REFERENCE" in html
     assert "unsupported" in html
     assert "No resolved incoming relationships recorded." in html
 

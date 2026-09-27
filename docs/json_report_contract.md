@@ -1,12 +1,12 @@
 # JSON report contract
 
-`sema_sedd.report` publishes version `1.0` of a deterministic comparison report.
+`sema_sedd.report` publishes version `2.0` of a deterministic comparison report.
 `report_from_changes(change_set, source_a, source_b)` projects canonical comparison
 results without XML imports or file access. `sema_sedd.reporting.report_files(path_a, path_b)` is a
 convenience facade that loads each file through the revision adapter registry;
 use `revision_a=` and `revision_b=` when a source has no revision hint. `report_json`
 returns compact, key-sorted UTF-8-friendly JSON with one trailing newline.
-`report_schema()` reads the [bundled JSON Schema](../src/sema_sedd/report/schema_v1.json)
+`report_schema()` reads the [bundled JSON Schema](../src/sema_sedd/report/schema_v2.json)
 from the installed package without network access.
 
 ```python
@@ -44,8 +44,10 @@ supporting tokens and source keys. `unresolved` contains uncertain identities,
 references, and unknown content; ambiguous matching evidence appears there and
 does not become a confirmed change. `dependency_context` records factual
 before/after graph context for each changed entity, including dependency evidence
-and statements. It is not a risk score. `diagnostics` retains adapter messages
-with an `a` or `b` source label; the provisional
+and statements. It is not a risk score. `diagnostics` retains adapter and final reference-resolution messages
+with an `a` or `b` source label. Each row also has `source_path`, `source_line`
+(when known), `entity_context` (when known), code, message, and uppercase
+`INFO`/`WARNING`/`ERROR` severity; the provisional
 `REFERENCE_RESOLUTION_PENDING` adapter message is removed because comparison
 has already run reference resolution.
 
@@ -58,6 +60,11 @@ The earlier `sedd compare --json` output has its own
 `comparison_schema_version` and layout; it is a separate CLI presentation format.
 Call this report API when integrating a machine consumer of the stable contract.
 
-The byte-for-byte [basic](../tests/snapshots/report-basic-v1.json) and
-[ambiguous](../tests/snapshots/report-ambiguous-v1.json) snapshots pin the
+The byte-for-byte [basic](../tests/snapshots/report-basic-v2.json) and
+[ambiguous](../tests/snapshots/report-ambiguous-v2.json) snapshots pin the
 serialization, source labels, change codes, evidence, and uncertainty behavior.
+
+Version `2.0` adds required diagnostic source and entity fields and uppercase
+severity values. Version `1.0` remains documented by the bundled
+[`schema_v1.json`](../src/sema_sedd/report/schema_v1.json) and its original
+snapshots; consumers must select a schema by `report_schema_version`.

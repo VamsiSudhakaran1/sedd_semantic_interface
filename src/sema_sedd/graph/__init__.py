@@ -9,6 +9,7 @@ from sema_sedd.graph.context import (
     DependencyKind,
     build_dependency_index,
 )
+from sema_sedd.graph.diagnostics import relationship_diagnostics
 from sema_sedd.graph.resolution import (
     ReferenceIndexes,
     Relationship,
@@ -32,4 +33,5 @@ __all__ = [
     "ResolutionState",
     "build_reference_indexes",
     "resolve_references",
+    "relationship_diagnostics",
 ]

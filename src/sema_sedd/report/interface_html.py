@@ -6,7 +6,12 @@ from base64 import b64encode
 from dataclasses import fields
 from hashlib import sha256
 
-from sema_sedd.graph import Relationship, RelationshipModel, ResolutionState
+from sema_sedd.graph import (
+    Relationship,
+    RelationshipModel,
+    ResolutionState,
+    relationship_diagnostics,
+)
 from sema_sedd.model import (
     EntityReference,
     EquipmentInterface,
@@ -290,20 +295,23 @@ def _diagnostics(graph: RelationshipModel, diagnostics: tuple[ReportDiagnostic, 
         if item.code == "REFERENCE_RESOLUTION_PENDING":
             continue
         location = f" · {_h(_location(item.provenance))}" if item.provenance else ""
+        context = (
+            f" · {_h(item.entity_context.canonical_type.value)} {_h(item.entity_context.key or '')}"
+            if item.entity_context
+            else ""
+        )
         entries.append(
             f"<article class='plain-card'><strong>{_h(item.code)}</strong> "
-            f"<span class='muted'>({_h(item.severity)}){location}</span>"
+            f"<span class='muted'>({_h(item.severity)}){location}{context}</span>"
             f"<p>{_h(item.message)}</p></article>"
         )
-    for relation in graph.relationships:
-        if relation.state is ResolutionState.RESOLVED:
-            continue
-        reason = relation.reason.value if relation.reason is not None else relation.state.value
+    for diagnostic in relationship_diagnostics(graph):
+        location = _location(diagnostic.provenance) if diagnostic.provenance else "Not recorded"
+        owner = diagnostic.entity_context.key if diagnostic.entity_context else "Not recorded"
         entries.append(
-            "<article class='plain-card'><strong>REFERENCE_"
-            f"{_h(relation.state.value.upper())}</strong> "
-            f"<span class='muted'>{_h(relation.owner_key)} · {_h(relation.role)}</span>"
-            f"<p>{_h(reason)}; {_h(len(relation.candidate_keys))} candidate(s).</p></article>"
+            f"<article class='plain-card'><strong>{_h(diagnostic.code)}</strong> "
+            f"<span class='muted'>{_h(diagnostic.severity)} · {_h(owner)} · "
+            f"{_h(location)}</span><p>{_h(diagnostic.message)}</p></article>"
         )
     source = (graph.interface, graph.interface.equipment, *graph.interface.entities())
     for entity in source:

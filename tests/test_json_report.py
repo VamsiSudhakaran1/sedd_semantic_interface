@@ -73,7 +73,7 @@ def ambiguous_report() -> Any:
 
 @pytest.mark.parametrize("name,factory", [("basic", basic_report), ("ambiguous", ambiguous_report)])
 def test_public_snapshots_are_deterministic(name: str, factory: Callable[[], Any]) -> None:
-    expected = (ROOT / "snapshots" / f"report-{name}-v1.json").read_text(encoding="utf-8")
+    expected = (ROOT / "snapshots" / f"report-{name}-v2.json").read_text(encoding="utf-8")
     output = report_json(factory())
     assert output == expected
     assert output == report_json(factory())

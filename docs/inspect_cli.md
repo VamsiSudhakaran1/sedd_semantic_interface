@@ -29,7 +29,8 @@ Text and JSON output include:
 - loader and adapter diagnostics that still apply.
 
 The adapter's `REFERENCE_RESOLUTION_PENDING` diagnostic is omitted after this
-command successfully completes reference resolution. Other diagnostics, including
+command successfully completes reference resolution. Final `UNRESOLVED_REFERENCE` and `AMBIGUOUS_REFERENCE` diagnostics are added from
+resolved graph evidence. Other diagnostics, including
 revision-hint limitations and unknown retained content, remain visible.
 
 ## Entity filters
@@ -48,7 +49,7 @@ command/parameter containment. No fuzzy match or inferred relationship is added.
 
 ## JSON contract
 
-`--json` emits compact UTF-8 JSON with `inspection_schema_version: "1.0"` and one
+`--json` emits compact UTF-8 JSON with `inspection_schema_version: "2.0"` and one
 trailing newline. Object keys, unordered entity inventories, diagnostics,
 unsupported sections, unresolved outcomes, selected entities, and immediate
 relationships have deterministic ordering. Meaningful ordered fields inside

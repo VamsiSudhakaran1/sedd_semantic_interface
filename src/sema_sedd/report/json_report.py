@@ -5,17 +5,19 @@ from __future__ import annotations
 import json
 from dataclasses import dataclass
 from importlib.resources import files
+from typing import cast
 
 from sema_sedd import __version__
 from sema_sedd.compare import ChangeCategory, ChangeKind, ChangeSet
 from sema_sedd.compare._values import JsonData, dump, encode
 from sema_sedd.compare.matching import MatchingEvidence
+from sema_sedd.diagnostics import Diagnostic, DiagnosticEntityContext, context_data
 from sema_sedd.exceptions import ReportError
 from sema_sedd.graph import DependencyContext
 from sema_sedd.model import CanonicalType, SourceProvenance
 from sema_sedd.model.domain import EquipmentInterface, EquipmentMetadata, InterfaceEntity
 
-REPORT_SCHEMA_VERSION = "1.0"
+REPORT_SCHEMA_VERSION = "2.0"
 
 # Public codes are an explicit versioned registry. No Python class name or
 # dynamically generated field name is part of the identifier contract.
@@ -85,10 +87,22 @@ class ReportDiagnostic:
     message: str
     severity: str
     provenance: SourceProvenance | None = None
+    entity_context: DiagnosticEntityContext | None = None
+
+    @classmethod
+    def from_diagnostic(cls, diagnostic: Diagnostic) -> ReportDiagnostic:
+        return cls(
+            diagnostic.code,
+            diagnostic.message,
+            diagnostic.severity.value,
+            diagnostic.provenance,
+            diagnostic.entity_context,
+        )
 
     def __post_init__(self) -> None:
-        if not self.code or self.severity not in {"info", "warning", "error"}:
+        if not self.code or self.severity.upper() not in {"INFO", "WARNING", "ERROR"}:
             raise ReportError("Invalid report diagnostic")
+        object.__setattr__(self, "severity", self.severity.upper())
 
 
 def public_change_id(entity_type: CanonicalType, kind: ChangeKind) -> str:
@@ -297,6 +311,13 @@ def report_from_changes(
             "severity": diagnostic.severity,
             "message": diagnostic.message,
             "provenance": encode(diagnostic.provenance),
+            "source_path": diagnostic.provenance.source_document
+            if diagnostic.provenance is not None
+            else (source_a.path if side == "a" else source_b.path),
+            "source_line": diagnostic.provenance.line
+            if diagnostic.provenance is not None
+            else None,
+            "entity_context": cast(JsonData, context_data(diagnostic.entity_context)),
         }
         for side, records in (("a", diagnostics_a), ("b", diagnostics_b))
         for diagnostic in records
@@ -355,7 +376,7 @@ def report_json(report: dict[str, JsonData]) -> str:
 
 def report_schema() -> dict[str, JsonData]:
     """Read the schema bundled with the installed wheel, without network access."""
-    value = json.loads(files("sema_sedd.report").joinpath("schema_v1.json").read_text("utf-8"))
+    value = json.loads(files("sema_sedd.report").joinpath("schema_v2.json").read_text("utf-8"))
     if not isinstance(value, dict):
         raise ReportError("Bundled report schema is invalid")
     return value

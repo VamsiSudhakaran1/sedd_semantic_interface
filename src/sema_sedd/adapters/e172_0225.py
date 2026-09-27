@@ -9,6 +9,7 @@ from typing import ClassVar, TypedDict
 from sema_sedd.adapters._e172_0225_xml import XSI_NIL, Context, Reader, split_name
 from sema_sedd.adapters.base import AdapterResult, DiagnosticSeverity, SupportLevel
 from sema_sedd.adapters.revisions import detect_revision
+from sema_sedd.diagnostics import DiagnosticCode, DiagnosticEntityContext
 from sema_sedd.exceptions import UnsupportedSeddVersionError
 from sema_sedd.model import (
     Alarm,
@@ -176,6 +177,13 @@ def _common(
             reader, "SEMIStandard", (CanonicalType.STANDARD_REFERENCE,), by_name=True
         )
         source = reader.text("Source")
+    if description and not any(child.tag == description for child in reader.node.children):
+        reader.context.diagnostic(
+            DiagnosticCode.MISSING_OPTIONAL_METADATA,
+            "Optional description is absent",
+            reader.node,
+            DiagnosticSeverity.INFO,
+        )
     return _CommonFields(
         key=reader.context.paths[id(reader.node)],
         implementation_id=native_id,
@@ -527,7 +535,10 @@ class E172_0225Adapter:
             raise UnsupportedSeddVersionError(
                 f"Document is incompatible with E172-0225 adapter{detail}",
                 detected_revision=label,
-                diagnostic_code=detection.diagnostic_code or "UNSUPPORTED_REVISION",
+                diagnostic_code=DiagnosticCode.UNSUPPORTED_REVISION,
+                source=str(document.source),
+                source_line=document.root.location.line,
+                entity_context=DiagnosticEntityContext(CanonicalType.EQUIPMENT_INTERFACE),
             )
         context = Context(document, self.revision)
         context.diagnostic(
