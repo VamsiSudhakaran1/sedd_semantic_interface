@@ -1,9 +1,9 @@
 """Semantic value projections; exact scalar text and ordered protocol sequences."""
 
-import json
 from dataclasses import fields
 from enum import StrEnum
 
+from sema_sedd.limits import bounded_json
 from sema_sedd.model import DataStructure, JsonArray, JsonObject
 from sema_sedd.model._base import Record
 from sema_sedd.model.values import JsonValue
@@ -38,9 +38,7 @@ def encode(value: object) -> JsonData:
 
 
 def dump(value: JsonData) -> str:
-    return json.dumps(
-        value, ensure_ascii=False, allow_nan=False, sort_keys=True, separators=(",", ":")
-    )
+    return bounded_json(value)
 
 
 def token(value: JsonValue) -> str:

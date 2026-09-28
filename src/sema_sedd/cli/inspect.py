@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import json
 import os
 from dataclasses import fields
 from enum import StrEnum
@@ -13,11 +12,12 @@ from sema_sedd.adapters import AdapterDiagnostic, AdapterResult, load_interface
 from sema_sedd.diagnostics import context_data
 from sema_sedd.graph import (
     Relationship,
-    RelationshipModel,
     ResolutionState,
     relationship_diagnostics,
     resolve_references,
 )
+from sema_sedd.graph.adjacency import RelationshipAdjacency, build_relationship_adjacency
+from sema_sedd.limits import bounded_json
 from sema_sedd.model import CanonicalType, JsonArray, JsonObject, UnknownExtension
 from sema_sedd.model._base import Record
 from sema_sedd.model.domain import InterfaceEntity, RemoteCommand, RemoteCommandParameter
@@ -44,14 +44,7 @@ type JsonData = None | str | int | float | bool | list["JsonData"] | dict[str, "
 
 
 def _dump(value: JsonData, *, pretty: bool = False) -> str:
-    return json.dumps(
-        value,
-        ensure_ascii=False,
-        allow_nan=False,
-        sort_keys=True,
-        separators=None if pretty else (",", ":"),
-        indent=2 if pretty else None,
-    )
+    return bounded_json(value, pretty=pretty)
 
 
 def _encode(value: object) -> JsonData:
@@ -149,9 +142,7 @@ def _select_entities(
     )
 
 
-def _containment_data(
-    entity: InterfaceEntity, relationship_model: RelationshipModel
-) -> list[JsonData]:
+def _containment_data(entity: InterfaceEntity, adjacency: RelationshipAdjacency) -> list[JsonData]:
     relationships: list[JsonData] = []
     if isinstance(entity, RemoteCommand):
         relationships.extend(
@@ -169,29 +160,29 @@ def _containment_data(
                 "direction": "incoming",
                 "kind": "containment",
                 "role": f"parameters[{index}]",
-                "owner_key": command.key,
+                "owner_key": owner,
             }
-            for command in relationship_model.interface.remote_commands
-            for index, parameter in enumerate(command.parameters or ())
-            if parameter.key == entity.key
+            for owner, index in [adjacency.contained_by[entity.key]]
         )
     return relationships
 
 
 def _immediate_relationships(
-    entity: InterfaceEntity, relationship_model: RelationshipModel
+    entity: InterfaceEntity, adjacency: RelationshipAdjacency
 ) -> list[JsonData]:
     result = [
         _relationship_data(relationship, "outgoing")
-        for relationship in relationship_model.relationships
-        if relationship.owner_key == entity.key
+        for relationship in adjacency.outgoing.get(entity.key, ())
     ]
-    for relationship in relationship_model.relationships:
+    for relationship in (
+        *adjacency.incoming.get(entity.key, ()),
+        *adjacency.candidates.get(entity.key, ()),
+    ):
         if relationship.reference.target_key == entity.key:
             result.append(_relationship_data(relationship, "incoming"))
         elif entity.key in relationship.candidate_keys:
             result.append(_relationship_data(relationship, "incoming_candidate"))
-    result.extend(_containment_data(entity, relationship_model))
+    result.extend(_containment_data(entity, adjacency))
     result.sort(key=_dump)
     return result
 
@@ -230,6 +221,7 @@ def build_inspection(
     filtered = any(value is not None for value in (entity_type, implementation_id, wkn))
     selection: JsonData = None
     if filtered:
+        adjacency = build_relationship_adjacency(relationship_model)
         selected = _select_entities(
             entities,
             entity_type=entity_type,
@@ -242,7 +234,7 @@ def build_inspection(
             "entities": [
                 {
                     "entity": _encode(entity),
-                    "immediate_relationships": _immediate_relationships(entity, relationship_model),
+                    "immediate_relationships": _immediate_relationships(entity, adjacency),
                 }
                 for entity in selected
             ],

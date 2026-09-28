@@ -11,6 +11,7 @@ from sema_sedd.compare import ChangeCategory, ChangeKind, ChangeSet, EntityChang
 from sema_sedd.compare._values import JsonData, encode
 from sema_sedd.exceptions import ReportError
 from sema_sedd.graph import DependencyContext
+from sema_sedd.limits import BoundedParts, bounded_join, check_html
 from sema_sedd.model import SourceProvenance
 from sema_sedd.model.domain import EquipmentInterface, EquipmentMetadata, InterfaceEntity
 from sema_sedd.report.json_report import (
@@ -143,7 +144,7 @@ def _provenance(entity: ReportEntity | None, side: str) -> str:
     else:
         body = (
             "<ul>"
-            + "".join(f"<li>{_h(_location(item))}</li>" for item in entity.provenance)
+            + bounded_join(f"<li>{_h(_location(item))}</li>" for item in entity.provenance)
             + "</ul>"
         )
     return f"<section><h3>Source {side} provenance</h3>{body}</section>"
@@ -167,8 +168,8 @@ def _dependencies(context: DependencyContext | None, side: str) -> str:
             f"<section><h3>Source {side} dependencies</h3>"
             "<p>Entity absent on this side.</p></section>"
         )
-    statements = "".join(f"<li>{_h(item)}</li>" for item in context.statements)
-    proofs = "".join(
+    statements = bounded_join(f"<li>{_h(item)}</li>" for item in context.statements)
+    proofs = bounded_join(
         "<li>"
         + _h(dependency.kind.value.replace("_", " ").title())
         + ": "
@@ -234,7 +235,7 @@ def _entity_card(change: EntityChange) -> str:
     entity = change.new_entity or change.old_entity
     assert entity is not None
     old, new = change.old_entity, change.new_entity
-    rows: list[str] = []
+    rows = BoundedParts()
     if change.kind in {ChangeKind.ENTITY_ADDED, ChangeKind.ENTITY_REMOVED}:
         direction = "added" if change.kind is ChangeKind.ENTITY_ADDED else "removed"
         rows.append(
@@ -308,7 +309,7 @@ def _entity_card(change: EntityChange) -> str:
         + _dependencies(change.old_context, "A")
         + _dependencies(change.new_context, "B")
         + "</div>"
-        + "".join(rows)
+        + bounded_join(rows)
         + "</div></details>"
     )
 
@@ -386,7 +387,7 @@ def render_html_report(
     summary = _summary(report)
     issues = _records(report, "unresolved")
     diagnostics = _records(report, "diagnostics")
-    cards = "".join(_entity_card(change) for change in changes.entity_changes)
+    cards = bounded_join(_entity_card(change) for change in changes.entity_changes)
     if not cards:
         message = (
             "No confirmed changes. Unresolved items prevent a complete equivalence conclusion."
@@ -412,18 +413,18 @@ def render_html_report(
         ("Unresolved", "unresolved"),
         ("Diagnostics", "diagnostics"),
     )
-    metric_html = "".join(
+    metric_html = bounded_join(
         f"<div class='metric'><b>{_h(summary[key])}</b><span>{_h(label)}</span></div>"
         for label, key in metrics
     )
-    issues_html = "".join(_issue(item) for item in issues) or (
+    issues_html = bounded_join(_issue(item) for item in issues) or (
         "<p class='empty'>No unresolved items recorded.</p>"
     )
-    diagnostics_html = "".join(_diagnostic(item) for item in diagnostics) or (
+    diagnostics_html = bounded_join(_diagnostic(item) for item in diagnostics) or (
         "<p class='empty'>No diagnostics recorded.</p>"
     )
     script_hash = b64encode(sha256(_JS.encode("utf-8")).digest()).decode("ascii")
-    return (
+    result = (
         "<!doctype html>\n<html lang='en'><head><meta charset='utf-8'>"
         "<meta name='viewport' content='width=device-width,initial-scale=1'>"
         "<meta http-equiv='Content-Security-Policy' content=\"default-src 'none'; "
@@ -469,3 +470,4 @@ def render_html_report(
         + _JS
         + "</script></body></html>\n"
     )
+    return check_html(result)

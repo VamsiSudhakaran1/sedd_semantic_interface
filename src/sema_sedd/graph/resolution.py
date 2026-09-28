@@ -10,6 +10,7 @@ from types import MappingProxyType
 from typing import Any, cast
 
 from sema_sedd.exceptions import ModelValidationError
+from sema_sedd.limits import MAX_CANDIDATE_OCCURRENCES, WorkBudget
 from sema_sedd.model import (
     CanonicalType,
     EntityReference,
@@ -246,12 +247,7 @@ def _keys_for_types(
     value: str,
     kinds: tuple[CanonicalType, ...],
 ) -> set[str]:
-    return {
-        key
-        for (kind, indexed), keys in index.items()
-        if indexed == value and (not kinds or kind in kinds)
-        for key in keys
-    }
+    return {key for kind in kinds or tuple(CanonicalType) for key in index.get((kind, value), ())}
 
 
 def _wkn_keys(
@@ -261,12 +257,8 @@ def _wkn_keys(
 ) -> set[str]:
     return {
         key
-        for (kind, value, authority, scope), keys in indexes.by_wkn.items()
-        if value == wkn.value
-        and authority == wkn.authority
-        and scope == wkn.scope
-        and (not kinds or kind in kinds)
-        for key in keys
+        for kind in kinds or tuple(CanonicalType)
+        for key in indexes.by_wkn.get(_wkn_key(kind, wkn), ())
     }
 
 
@@ -322,7 +314,7 @@ def _resolve_one(
             state=ResolutionState.RESOLVED,
         )
 
-    if _candidates(reference, indexes, ()) is None:
+    if all(value is None for value in (reference.implementation_id, reference.name, reference.wkn)):
         return Relationship(
             owner_key=owner,
             role=role,
@@ -406,12 +398,17 @@ def resolve_references(
     if dict(indexes.entities_by_key) != {entity.key: entity for entity in interface.entities()}:
         raise ModelValidationError("Reference indexes belong to a different interface")
 
+    budget = WorkBudget(MAX_CANDIDATE_OCCURRENCES, "Reference candidate occurrences")
+
+    def outcomes_with_budget() -> Iterable[Relationship]:
+        for owner, role, reference in _reference_occurrences(interface):
+            outcome = _resolve_one(owner, role, reference, indexes)
+            budget.consume(len(outcome.candidate_keys))
+            yield outcome
+
     relationships = tuple(
         sorted(
-            (
-                _resolve_one(owner, role, reference, indexes)
-                for owner, role, reference in _reference_occurrences(interface)
-            ),
+            outcomes_with_budget(),
             key=lambda item: (item.owner_key, item.role),
         )
     )

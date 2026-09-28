@@ -105,7 +105,9 @@ The application operates offline and read-only on inputs. The library XML loader
 rejects DTDs and entity declarations, enforces byte and structural limits, and
 never resolves external resources. Its revision hint is not proof of schema
 validity or E172 conformance. See [docs/xml_ingestion.md](docs/xml_ingestion.md)
-for its API and limits.
+for its API and limits. The runtime requires Expat 2.7.2 or newer.
+See the [security and performance audit](docs/security_performance_audit.md) for
+attack coverage, resource limits, and reproducible large-case measurements.
 
 See [docs/architecture.md](docs/architecture.md) for module responsibilities and
 [docs/build-prompts.md](docs/build-prompts.md) for the supplied sequential roadmap.

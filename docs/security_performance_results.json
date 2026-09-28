@@ -1,0 +1,95 @@
+{
+  "date": "2026-09-28",
+  "expat": "2.8.3",
+  "memory": "Peak traced Python allocations after fixture generation, not whole-process RSS.",
+  "platform": "Windows AMD64",
+  "python": "3.12.14",
+  "scenarios": {
+    "10000_changed_variables_50000_references": {
+      "changes": 10000,
+      "compare_seconds": 15.996758100111037,
+      "entities": 10001,
+      "input_bytes": 2132835,
+      "parse_seconds": 3.9553282000124454,
+      "relationships": 50000,
+      "resolve_seconds": 2.474430500064045,
+      "tracemalloc": false
+    },
+    "10000_variables_50000_references": {
+      "changes": 0,
+      "compare_seconds": 11.655193600337952,
+      "entities": 10001,
+      "html_bytes": 46576803,
+      "html_seconds": 1.1223058998584747,
+      "input_bytes": 2132835,
+      "parse_seconds": 3.8975013000890613,
+      "relationships": 50000,
+      "resolve_seconds": 2.5728616998530924,
+      "tracemalloc": false
+    },
+    "10000_variables_50000_references_memory": {
+      "changes": 0,
+      "compare_seconds": 40.8138263002038,
+      "entities": 10001,
+      "html_bytes": 46466800,
+      "html_seconds": 2.6651971000246704,
+      "input_bytes": 2132835,
+      "parse_seconds": 17.59391360031441,
+      "peak_mib": 334.06449794769287,
+      "relationships": 50000,
+      "resolve_seconds": 6.9056214997544885,
+      "tracemalloc": true
+    },
+    "1000_variables_5000_references": {
+      "changes": 0,
+      "compare_seconds": 0.5897139003500342,
+      "entities": 1001,
+      "html_bytes": 4596994,
+      "html_seconds": 0.06865909975022078,
+      "input_bytes": 206835,
+      "parse_seconds": 0.31859299959614873,
+      "relationships": 5000,
+      "resolve_seconds": 0.13081820029765368,
+      "tracemalloc": false
+    },
+    "1000_variables_8000_character_descriptions": {
+      "changes": 0,
+      "compare_seconds": 2.676975400187075,
+      "entities": 1001,
+      "html_bytes": 20566667,
+      "html_seconds": 0.3035701001062989,
+      "input_bytes": 8174835,
+      "parse_seconds": 1.685899999924004,
+      "peak_mib": 133.13313007354736,
+      "relationships": 5000,
+      "resolve_seconds": 0.6420819000340998,
+      "tracemalloc": true
+    },
+    "20000_message_items": {
+      "changes": 0,
+      "compare_seconds": 12.961209899745882,
+      "entities": 1002,
+      "html_bytes": 29307208,
+      "html_seconds": 1.9690733002498746,
+      "input_bytes": 366967,
+      "parse_seconds": 5.535824100021273,
+      "peak_mib": 162.05325889587402,
+      "relationships": 5000,
+      "resolve_seconds": 1.102713200263679,
+      "tracemalloc": true
+    },
+    "one_variable_50000_repeated_references": {
+      "changes": 0,
+      "compare_seconds": 6.595714999828488,
+      "entities": 2,
+      "html_bytes": 35598639,
+      "html_seconds": 0.7347690998576581,
+      "input_bytes": 600738,
+      "parse_seconds": 2.5688736997544765,
+      "relationships": 50000,
+      "resolve_seconds": 1.2011835002340376,
+      "tracemalloc": false
+    }
+  },
+  "timing": "Single-run perf_counter wall seconds; memory runs include tracemalloc overhead."
+}
