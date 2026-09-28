@@ -1,6 +1,6 @@
 # Cross-version entity matching
 
-Prompt 11 adds `sema_sedd.compare.match_interfaces(old, new)`. Both arguments must
+`sema_sedd.compare.match_interfaces(old, new)` matches two canonical inventories. Arguments must
 be canonical `EquipmentInterface` objects. The function is deterministic, offline,
 and read-only. It imports only model types and application exceptions. It never
 loads XML, invokes an adapter, resolves references, or compares source paths.
@@ -182,3 +182,11 @@ side, with four ambiguous groups for the repeated S1F1, S1F2, S1F13 and S1F14
 messages. No unmatched entities remained. The matcher deliberately does not
 short-circuit identical model objects or equal local keys to erase those collisions.
 This sample check is optional and is not a test-suite dependency.
+
+
+## Original runnable example
+
+[The machine tutorial](../examples/README.md) shows the same raw WKN across an ID
+change and explains why ordinary XML CLI comparison cannot authenticate continuity.
+`examples/compare_demo.py` uses a labeled fictional registry to exercise the canonical
+verified-evidence contract. It needs no official names or proprietary registry.

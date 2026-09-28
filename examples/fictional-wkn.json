@@ -1,0 +1,9 @@
+{
+  "purpose": "Original fictional evidence used only by compare_demo.py; no official SEMI WKN claim.",
+  "authority": "Fictional Example Workshop registry",
+  "scope": "ExampleMachine tutorial",
+  "value": "urn:example:machine:pressure",
+  "entity_type": "status_variable",
+  "name": "Pressure",
+  "implementation_ids": ["44", "144"]
+}

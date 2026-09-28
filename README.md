@@ -1,89 +1,82 @@
 # sema-sedd
 
-A local-first semantic explorer and comparison engine for semiconductor equipment
-interfaces represented by SEMI E172 SEDD files. The product name is temporary.
+Explore and compare semiconductor equipment interfaces from local SEDD XML files.
+The tool builds a typed canonical model, resolves references, records evidence
+behind entity matches, and generates text, JSON, and offline HTML reports.
 
-## Current scope
+Release `0.1.0` supports **E172-0225** through the default adapter. Inputs are
+read-only; processing requires no network, account, backend, or AI. The original
+synthetic examples require no proprietary files.
 
-Prompts 0–7 establish the architectural contract, Python package foundation,
-reference observations, secure XML ingestion, a canonical model, revision adapters,
-E172-0225 entity conversion, and conservative reference resolution.
-Prompt 9 adds `sedd inspect FILE` with deterministic text/JSON summaries and exact
-entity filters. Prompt 10 adds `sedd explore FILE ENTITY` with exact selectors,
-incoming and outgoing relationships, deterministic JSON, and traversal bounded to
-depth 0–8. The CLI also supports `sedd --help` and `sedd --version` (including through
-`python -m sema_sedd`).
-Prompt 11 adds the canonical `match_interfaces(old, new)` API with recorded identity
-evidence, categorical confidence, explicit collisions/conflicts, and implementation
-ID changes established by verified WKN continuity.
-Prompt 12 adds `compare_interfaces(old, new)` with typed semantic changes,
-documentation/interface classification, matching-aware relationship deltas,
-explicit uncertainty, and deterministic change JSON.
-Prompt 13 attaches separate before/after dependency context to every entity
-change, using resolved graph evidence and factual counts without risk scoring.
-Prompt 14 adds `sedd compare OLD NEW` with text/JSON sections, canonical type
-filtering, documentation opt-in, and exit status based only on execution success.
-Prompt 15 adds a versioned machine-readable report API with public change codes,
-a bundled JSON Schema, and deterministic snapshots.
-Prompt 16 adds `sedd report OLD NEW --html FILE`, producing a self-contained,
-offline HTML comparison with search, filters, source evidence, and diagnostics.
-Prompt 17 adds `sedd report FILE --html FILE`, producing an offline visual
-explorer for one interface with searchable entities and resolved relationships.
-Prompt 18 separates generic XML ingestion from revision identification, reports
-unsupported schema labels explicitly, and proves comparison across different
-adapter syntaxes without downstream changes.
-Prompt 19 gives parsing and reference uncertainty shared diagnostic codes,
-severity, source location, and entity ownership across commands and reports.
-The library can ingest local SEDD XML and infer an E172-0225 revision hint from
-`xsi:schemaLocation`. The model library provides immutable typed entities, explicit
-reference/unknown states, and deterministic canonical JSON. An explicit adapter
-registry now maps E172-0225 structures into that model and preserves unsupported
-content with diagnostics. The graph package now indexes exact identities and produces
-an exhaustive three-state relationship model. Runtime XSD validation and general
-graph APIs remain unimplemented.
-See [docs/canonical_model.md](docs/canonical_model.md) for the API,
-identity boundaries, and architecture review.
-See [docs/revision_adapters.md](docs/revision_adapters.md) for `load_interface()`,
-revision selection, extension preservation, and registering other adapters.
-See [docs/e172_entity_parser.md](docs/e172_entity_parser.md) for the complete
-entity mapping and its explicit non-resolution boundary.
-See [docs/reference_resolution.md](docs/reference_resolution.md) for index keys,
-resolution states, and the audited no-assumption rules.
-See [docs/inspect_cli.md](docs/inspect_cli.md) for inspect output, filters, and its
-versioned JSON contract.
-See [docs/explore_cli.md](docs/explore_cli.md) for selectors, bounded traversal,
-relationship visibility, and its versioned JSON contract.
-See [docs/entity_matching.md](docs/entity_matching.md) for cross-version identity
-policy, evidence precedence, WKN trust boundaries, and ambiguity handling.
-See [docs/semantic_changes.md](docs/semantic_changes.md) for the semantic change
-API, coverage, ordering rules, and a reproducible comparison with XML diff output.
-See [docs/change_dependency_context.md](docs/change_dependency_context.md) for
-dependency paths, evidence, counts, exclusions, and before/after context.
-See [docs/compare_cli.md](docs/compare_cli.md) for compare sections, flags,
-the JSON contract, and exit-status behavior.
-See [docs/json_report_contract.md](docs/json_report_contract.md) for the standalone
-machine-readable report API, public change IDs, and bundled JSON Schema.
-See [docs/html_report.md](docs/html_report.md) for HTML report generation and its
-offline review controls.
-See [docs/diagnostics.md](docs/diagnostics.md) for diagnostic codes, severity,
-source context, and unknown-first behavior.
-See [docs/version_resilience.md](docs/version_resilience.md) for the revision audit,
-unsupported-revision policy, and adapter extension scaffold.
-See [docs/interface_explorer.md](docs/interface_explorer.md) for the single-file
-explorer, its sections, search, relationship evidence, and diagnostics.
-Unsupported commands exit with an argument error; they never claim successful processing.
+## Install
 
-## Development
-
-Python 3.12 or later is required. From this repository:
+Use Python 3.12+ with Expat 2.7.2+. From a checkout:
 
 ```sh
 python -m venv .venv
-# Windows PowerShell: .venv/Scripts/Activate.ps1
+# Windows PowerShell: .\.venv\Scripts\Activate.ps1
 # POSIX shell: source .venv/bin/activate
-python -m pip install -e ".[dev]"
-sedd --help
+python -m pip install .
 sedd --version
+```
+
+[Installation](docs/installation.md) covers Windows/POSIX commands, editable
+development, wheels, offline use, and troubleshooting. `python -m sema_sedd`
+supports the same commands as `sedd`.
+
+## Try the original examples
+
+Run from the repository root:
+
+```sh
+sedd inspect examples/machine-v1.xml
+sedd explore examples/machine-v1.xml event:1001 --depth 2
+sedd compare examples/machine-v1.xml examples/machine-v2.xml --include-documentation --no-color
+sedd report examples/machine-v1.xml --html interface.html
+sedd report examples/machine-v1.xml examples/machine-v2.xml --html comparison.html
+```
+
+Open the HTML files locally. [Quick start](docs/quick_start.md) explains the output;
+[the example walkthrough](examples/README.md) maps each intended change to evidence.
+Reordered inventories, fields, and attributes leave unchanged entities unchanged.
+
+The XML changes pressure ID `44` to `144` while retaining its fictional WKN. Raw XML
+WKNs remain unverified, so the CLI reports removal/addition for that variable.
+A labeled library tutorial supplies fictional registry evidence and canonical
+datatype fields to demonstrate identity-preserving ID and datatype changes:
+
+```sh
+python examples/compare_demo.py > demo.json
+```
+
+This exercises the evidence API and does not verify official SEMI names. Ordinary
+XML comparison also detects the wire format change `UI4` to `FP4`.
+
+## Documentation
+
+| Guide | Covers |
+| --- | --- |
+| [Quick start](docs/quick_start.md) | Inspection, exploration, comparison, local reports |
+| [CLI reference](docs/cli_reference.md) | Commands, flags, selectors, JSON versions, exit status |
+| [Architecture](docs/architecture.md) | Loader, adapters, canonical model, graph, comparison, reports |
+| [Canonical model](docs/canonical_model.md) | Entities, identifiers, references, provenance, unknowns |
+| [Matching semantics](docs/entity_matching.md) | Exact identity evidence, WKN trust, collisions and conflicts |
+| [Comparison semantics](docs/semantic_changes.md) | Categories, ordered data, reconciled relationships |
+| [Supported revisions](docs/supported_revisions.md) | Evidence-backed support and unsupported status |
+| [Limitations](docs/limitations.md) | Interpretation, verification, output limits |
+| [Security](docs/security.md) | Untrusted input, local files, output safety, resource ceilings |
+| [Standards and licensing](docs/standards_licensing.md) | MIT license and independent standards status |
+| [Contributing](CONTRIBUTING.md) | Setup, checks, evidence and fixture rules |
+
+Detailed guides cover [resolution](docs/reference_resolution.md),
+[dependency context](docs/change_dependency_context.md), [diagnostics](docs/diagnostics.md),
+and the [JSON report contract](docs/json_report_contract.md).
+The [hostile audit](docs/security_performance_audit.md) includes reproducible profiles.
+
+## Develop
+
+```sh
+python -m pip install -e ".[dev]"
 python -m pytest
 python -m ruff check .
 python -m ruff format --check .
@@ -91,49 +84,6 @@ python -m mypy
 python -m build
 ```
 
-CI runs these checks on Windows and Linux, then installs the built wheel into a
-separate environment and checks both the console script and module entry point.
-
-## Architecture
-
-Read [MASTER_PRODUCT_CONTRACT.md](MASTER_PRODUCT_CONTRACT.md) before changes.
-The processing boundary is secure loader → revision detection → revision adapter →
-`CanonicalEquipmentInterface` → graph / comparison / reporting. Revision-specific
-XML assumptions belong in adapters. Unknown information must remain explicit.
-
-The application operates offline and read-only on inputs. The library XML loader
-rejects DTDs and entity declarations, enforces byte and structural limits, and
-never resolves external resources. Its revision hint is not proof of schema
-validity or E172 conformance. See [docs/xml_ingestion.md](docs/xml_ingestion.md)
-for its API and limits. The runtime requires Expat 2.7.2 or newer.
-See the [security and performance audit](docs/security_performance_audit.md) for
-attack coverage, resource limits, and reproducible large-case measurements.
-
-See [docs/architecture.md](docs/architecture.md) for module responsibilities and
-[docs/build-prompts.md](docs/build-prompts.md) for the supplied sequential roadmap.
-The repository is MIT licensed; it does not reproduce SEMI standards or imply
-SEMI endorsement or certification.
-
-## Reference analysis status
-
-[Prompt 2 observations and coverage matrix](docs/e172_observations.md) cover the
-E172/E173 schemas and the complete original TrackSys sample. The unmodified sample
-passes offline XSD validation. All 26 synthetic XSD outcomes match expectations
-(22 valid and 4 intentionally invalid). The sample also demonstrates unresolved
-identifiers and repeated message identities despite schema validity. Remaining
-semantic design questions are explicitly pending. The canonical model is now
-available, and E172-0225 XML can now be mapped into it through the registry.
-Complete compound-format interpretation and authoritative WKN vocabulary
-verification remain pending. Cross-version identity matching is implemented with
-the explicit evidence policy documented above.
-
-To reproduce the reference checks, place the original supplied XSDs and sample in
-`work/references/`, then run:
-
-```sh
-python -m pip install -e ".[references]"
-python tools/validate_reference_fixtures.py --references work/references --sample work/references/SEDD_TrackSys_Model404_0225.xml --output docs/e172_validation_results.json
-```
-
-The utility uses only pinned local schemas and performs no network requests.
-The original reference inputs are intentionally excluded from version control.
+Read [MASTER_PRODUCT_CONTRACT.md](MASTER_PRODUCT_CONTRACT.md) before architecture
+changes. CI is configured for Windows/Linux on Python 3.12-3.14. Optional reference
+analysis requires separately supplied schemas; examples and required tests do not.
