@@ -11,6 +11,7 @@ from sema_sedd.adapters import load_interface
 from sema_sedd.cli.inspect import JsonData, _display, _dump, _encode, _relationship_data
 from sema_sedd.exceptions import EntitySelectionError
 from sema_sedd.graph import RelationshipModel, ResolutionState, resolve_references
+from sema_sedd.graph.adjacency import RelationshipAdjacency, build_relationship_adjacency
 from sema_sedd.model import CanonicalType, EntityReference
 from sema_sedd.model.domain import InterfaceEntity, RemoteCommand, RemoteCommandParameter
 
@@ -79,7 +80,7 @@ def _select_entity(entities: tuple[InterfaceEntity, ...], selector: str) -> Inte
 
 
 def _containment_relationships(
-    entity: InterfaceEntity, relationship_model: RelationshipModel
+    entity: InterfaceEntity, adjacency: RelationshipAdjacency
 ) -> tuple[list[JsonData], list[JsonData]]:
     incoming: list[JsonData] = []
     outgoing: list[JsonData] = []
@@ -98,26 +99,25 @@ def _containment_relationships(
             {
                 "kind": "containment",
                 "role": f"parameters[{index}]",
-                "owner_key": command.key,
+                "owner_key": owner,
                 "target_key": entity.key,
             }
-            for command in relationship_model.interface.remote_commands
-            for index, parameter in enumerate(command.parameters or ())
-            if parameter.key == entity.key
+            for owner, index in [adjacency.contained_by[entity.key]]
         )
     return incoming, outgoing
 
 
 def _relationships_for(
-    entity: InterfaceEntity, relationship_model: RelationshipModel
+    entity: InterfaceEntity, adjacency: RelationshipAdjacency
 ) -> tuple[list[JsonData], list[JsonData]]:
     incoming: list[JsonData] = []
     outgoing = [
-        _relationship_data(relationship)
-        for relationship in relationship_model.relationships
-        if relationship.owner_key == entity.key
+        _relationship_data(relationship) for relationship in adjacency.outgoing.get(entity.key, ())
     ]
-    for relationship in relationship_model.relationships:
+    for relationship in (
+        *adjacency.incoming.get(entity.key, ()),
+        *adjacency.candidates.get(entity.key, ()),
+    ):
         if relationship.reference.target_key == entity.key:
             incoming.append(_relationship_data(relationship))
         elif entity.key in relationship.candidate_keys:
@@ -126,9 +126,7 @@ def _relationships_for(
                 raise TypeError("Relationship projection must be an object")
             candidate["candidate"] = True
             incoming.append(candidate)
-    containment_incoming, containment_outgoing = _containment_relationships(
-        entity, relationship_model
-    )
+    containment_incoming, containment_outgoing = _containment_relationships(entity, adjacency)
     incoming.extend(containment_incoming)
     outgoing.extend(containment_outgoing)
     incoming.sort(key=_dump)
@@ -208,6 +206,7 @@ def build_exploration(
     entities = relationship_model.interface.entities()
     root = _select_entity(entities, selector)
     by_key = {entity.key: entity for entity in entities}
+    adjacency = build_relationship_adjacency(relationship_model)
     distances = _bounded_distances(root.key, _traversable_adjacency(relationship_model), depth)
     explored: list[JsonData] = []
     for key, distance in sorted(
@@ -220,7 +219,7 @@ def build_exploration(
         ),
     ):
         entity = by_key[key]
-        incoming, outgoing = _relationships_for(entity, relationship_model)
+        incoming, outgoing = _relationships_for(entity, adjacency)
         explored.append(
             {
                 "depth": distance,

@@ -1,10 +1,10 @@
 """Versioned deterministic JSON, with inventory order separated from sequence order."""
 
-import json
 from dataclasses import fields
 from enum import StrEnum
 
 from sema_sedd.exceptions import ModelValidationError
+from sema_sedd.limits import bounded_json
 from sema_sedd.model._base import Record
 from sema_sedd.model.domain import EquipmentInterface
 from sema_sedd.model.values import JsonArray, JsonObject
@@ -14,9 +14,7 @@ type JsonData = None | str | int | float | bool | list["JsonData"] | dict[str, "
 
 
 def _dump(value: JsonData) -> str:
-    return json.dumps(
-        value, ensure_ascii=False, allow_nan=False, sort_keys=True, separators=(",", ":")
-    )
+    return bounded_json(value)
 
 
 def _encode(value: object) -> JsonData:

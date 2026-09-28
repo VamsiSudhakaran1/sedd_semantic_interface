@@ -1,13 +1,14 @@
 """Factual dependency context from resolved edges and explicit bounded joins."""
 
 from collections import defaultdict
-from collections.abc import Mapping
+from collections.abc import Iterable, Mapping
 from dataclasses import dataclass
 from enum import StrEnum
 from types import MappingProxyType
 
 from sema_sedd.exceptions import ModelValidationError
 from sema_sedd.graph.resolution import RelationshipModel, ResolutionState
+from sema_sedd.limits import MAX_DEPENDENCY_PATHS, WorkBudget
 from sema_sedd.model import CanonicalType, EntityReference
 from sema_sedd.model._base import Record
 from sema_sedd.model.domain import InterfaceEntity
@@ -121,7 +122,9 @@ class DependencyIndex:
     entities: Mapping[str, InterfaceEntity]
     incoming: Mapping[str, tuple[DependencyEdge, ...]]
     outgoing: Mapping[str, tuple[DependencyEdge, ...]]
+    link_event_edges: Mapping[str, tuple[DependencyEdge, ...]]
     excluded_unresolved_graph_relationships: int
+    budget: WorkBudget
 
     def context_for(self, key: str) -> DependencyContext:
         if key not in self.entities:
@@ -130,16 +133,17 @@ class DependencyIndex:
         proofs: dict[tuple[DependencyKind, str], set[tuple[DependencyEdge, ...]]] = defaultdict(set)
 
         def add(kind: DependencyKind, target: str, *edges: DependencyEdge) -> None:
+            self.budget.consume()
             proofs[kind, target].add(tuple(sorted(edges, key=_edge_key)))
 
-        def link_events(report_key: str) -> tuple[tuple[DependencyEdge, DependencyEdge], ...]:
-            return tuple(
+        def link_events(report_key: str) -> Iterable[tuple[DependencyEdge, DependencyEdge]]:
+            return (
                 (report_edge, event_edge)
                 for report_edge in self.incoming.get(report_key, ())
                 if self.entities[report_edge.owner_key].canonical_type
                 is CanonicalType.EVENT_REPORT_LINK
                 and report_edge.role.startswith("reports[")
-                for event_edge in self.outgoing.get(report_edge.owner_key, ())
+                for event_edge in self.link_event_edges.get(report_edge.owner_key, ())
                 if event_edge.role == "event"
                 and self.entities[event_edge.target_key].canonical_type
                 is CanonicalType.COLLECTION_EVENT
@@ -225,5 +229,12 @@ def build_dependency_index(model: RelationshipModel) -> DependencyIndex:
         outgoing=MappingProxyType(
             {key: tuple(sorted(edges, key=_edge_key)) for key, edges in outgoing.items()}
         ),
+        link_event_edges=MappingProxyType(
+            {
+                key: tuple(edge for edge in edges if edge.role == "event")
+                for key, edges in outgoing.items()
+            }
+        ),
         excluded_unresolved_graph_relationships=excluded,
+        budget=WorkBudget(MAX_DEPENDENCY_PATHS, "Dependency evidence paths"),
     )

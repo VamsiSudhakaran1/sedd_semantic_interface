@@ -1,6 +1,7 @@
 """Strict, immutable model boundary; no parser types or mutable containers."""
 
 from dataclasses import dataclass, fields
+from functools import cache
 from math import isfinite
 from types import UnionType
 from typing import TypeAliasType, Union, get_args, get_origin, get_type_hints
@@ -16,21 +17,13 @@ def _hints(cls: type[object]) -> dict[str, object]:
     return _HINTS[cls]
 
 
+@cache
+def _shape(annotation: object) -> tuple[object, tuple[object, ...]]:
+    return get_origin(annotation), get_args(annotation)
+
+
 def _matches(value: object, annotation: object) -> bool:
-    if isinstance(annotation, TypeAliasType):
-        return _matches(value, annotation.__value__)
-    origin = get_origin(annotation)
-    args = get_args(annotation)
-    if origin in (Union, UnionType):
-        return any(_matches(value, arg) for arg in args)
-    if origin is tuple:
-        if not isinstance(value, tuple):
-            return False
-        if len(args) == 2 and args[1] is Ellipsis:
-            return all(_matches(item, args[0]) for item in value)
-        return len(value) == len(args) and all(
-            _matches(item, arg) for item, arg in zip(value, args, strict=True)
-        )
+    # Primitive and record checks do not require typing introspection.
     if annotation is str:
         if type(value) is not str:
             return False
@@ -41,7 +34,22 @@ def _matches(value: object, annotation: object) -> bool:
         return True
     if annotation in (int, float, bool, type(None)):
         return type(value) is annotation and (not isinstance(value, float) or isfinite(value))
-    return isinstance(annotation, type) and type(value) is annotation
+    if isinstance(annotation, type):
+        return type(value) is annotation
+    if isinstance(annotation, TypeAliasType):
+        return _matches(value, annotation.__value__)
+    origin, args = _shape(annotation)
+    if origin in (Union, UnionType):
+        return any(_matches(value, arg) for arg in args)
+    if origin is tuple:
+        if not isinstance(value, tuple):
+            return False
+        if len(args) == 2 and args[1] is Ellipsis:
+            return all(_matches(item, args[0]) for item in value)
+        return len(value) == len(args) and all(
+            _matches(item, arg) for item, arg in zip(value, args, strict=True)
+        )
+    return False
 
 
 @dataclass(frozen=True, slots=True, kw_only=True)

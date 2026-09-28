@@ -7,6 +7,7 @@ from dataclasses import dataclass, field
 
 from sema_sedd.adapters.base import AdapterDiagnostic, DiagnosticSeverity
 from sema_sedd.diagnostics import DiagnosticCode, DiagnosticEntityContext
+from sema_sedd.limits import WorkBudget
 from sema_sedd.model import CanonicalType, JsonObject, SourceProvenance, UnknownExtension
 from sema_sedd.parser import SourcedDocument, XmlElement
 
@@ -25,6 +26,7 @@ _ENTITY_TAGS = {
     "SupportedSEMIStandard": CanonicalType.STANDARD_REFERENCE,
     "{urn:semi-org:xsd.SMN}SECSMessage": CanonicalType.SUPPORTED_MESSAGE,
 }
+MAX_RETAINED_XML_NODES = 100_000
 _UNSUPPORTED_SECTIONS = frozenset(("RecipeVariableParameters", "EquipmentCharacterization"))
 
 XSI_NIL = "{http://www.w3.org/2001/XMLSchema-instance}nil"
@@ -44,6 +46,13 @@ class Context:
     diagnostics: list[AdapterDiagnostic] = field(default_factory=list)
     paths: dict[int, str] = field(default_factory=dict)
     owners: dict[int, DiagnosticEntityContext] = field(default_factory=dict)
+    path_budget: WorkBudget = field(
+        default_factory=lambda: WorkBudget(16 * 1024 * 1024, "XML provenance path characters")
+    )
+
+    opaque_budget: WorkBudget = field(
+        default_factory=lambda: WorkBudget(MAX_RETAINED_XML_NODES, "Retained XML nodes")
+    )
 
     def __post_init__(self) -> None:
         self._index(self.document.root, f"/{self.document.root.tag}[1]")
@@ -54,6 +63,7 @@ class Context:
         path: str,
         owner: DiagnosticEntityContext | None = None,
     ) -> None:
+        self.path_budget.consume(len(path))
         self.paths[id(node)] = path
         kind = _ENTITY_TAGS.get(node.tag)
         if kind is not None:
@@ -98,6 +108,7 @@ class Context:
         )
 
     def opaque(self, node: XmlElement, reason: str = "unmapped_content") -> UnknownExtension:
+        self.opaque_budget.consume()
         namespace, name = split_name(node.tag)
         return UnknownExtension(
             name=name,

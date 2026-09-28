@@ -83,6 +83,10 @@ class SemanticError(SeddError):
     """A semantic operation cannot be completed."""
 
 
+class ResourceLimitError(SemanticError):
+    """An operation exceeded a bounded work budget; no partial result is returned."""
+
+
 class ReportError(SeddError):
     """A report cannot be generated or written."""
 

@@ -30,14 +30,28 @@ remain reserved for generic XML concerns. Root/version rejection occurs at adapt
 selection rather than during XML ingestion. See
 [revision_adapters.md](revision_adapters.md) for routing and deliberate selection.
 
-The parser uses Python's Expat engine with external parameter parsing disabled.
-It rejects all DOCTYPE declarations and entity declarations, including external
-DTDs and XXE. It reads only the supplied local regular file; UNC paths and a
-symlink at the supplied path are rejected. Default limits are 10 MiB of input,
-64 nested elements, 100,000 elements total, and 128 attributes per element.
-Callers may lower or raise these positive limits with `max_bytes`, `max_depth`,
-`max_elements`, and `max_attributes`. The input is read in bounded chunks, with
-both a pre-read size check and an incremental byte counter.
+The parser requires Expat 2.7.2 or newer, with external parameter parsing disabled.
+It rejects DOCTYPE and entity declarations before expansion, and buffers character
+callbacks to avoid repeatedly copying fragmented text. Unknown and unsupported
+encoding declarations produce controlled `InvalidXmlError` failures.
+
+Only local regular files are admitted. Network/URL paths, Windows devices and
+alternate streams, mapped network drives, and symlink/reparse ancestors are rejected.
+Regular-file checks occur before opening and against the opened descriptor; POSIX
+opens use no-follow and nonblocking flags where available. These checks are not a
+sandbox against a separate process concurrently replacing filesystem ancestors.
+
+Default limits are 10 MiB input, 64 nested elements, 100,000 elements, and 128
+attributes plus namespace declarations per element. `max_bytes`, `max_elements`,
+and `max_attributes` accept positive overrides. `max_depth` can be lowered but
+cannot exceed the hard safe ceiling of 64. Additional fixed ceilings are 1,024
+characters per expanded name or namespace declaration and 16 Mi characters of
+expanded names/attributes/text. The E172 adapter also caps aggregate provenance
+paths at 16 Mi characters and retained opaque nodes at 100,000. Exceeding an
+adapter budget raises `ResourceLimitError`; no partial interface is returned.
+The input is read in bounded chunks with pre-read and incremental byte limits.
+See [the hostile audit](security_performance_audit.md) for graph/output limits and
+measured large-input behavior.
 
 Expected failures have typed exceptions in `sema_sedd.exceptions`:
 

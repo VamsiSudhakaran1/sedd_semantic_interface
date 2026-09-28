@@ -119,20 +119,22 @@ def main(argv: Sequence[str] | None = None) -> int:
                 implementation_id=args.implementation_id,
                 wkn=args.wkn,
             )
+            output = render_json(inspection) if args.json else render_text(inspection)
         except SeddError as error:
             inspect_parser.error(_error_message(error))
-        sys.stdout.write(render_json(inspection) if args.json else render_text(inspection))
+        sys.stdout.write(output)
         return 0
     if args.command == "explore":
         try:
             exploration = build_exploration(args.file, args.entity, depth=args.depth)
+            output = (
+                render_exploration_json(exploration)
+                if args.json
+                else render_exploration_text(exploration)
+            )
         except SeddError as error:
             explore_parser.error(_error_message(error))
-        sys.stdout.write(
-            render_exploration_json(exploration)
-            if args.json
-            else render_exploration_text(exploration)
-        )
+        sys.stdout.write(output)
         return 0
     if args.command == "compare":
         try:
@@ -143,19 +145,20 @@ def main(argv: Sequence[str] | None = None) -> int:
                 only_changed=args.only_changed,
                 include_documentation=args.include_documentation,
             )
+            color = (
+                not args.no_color
+                and not args.json
+                and sys.stdout.isatty()
+                and "NO_COLOR" not in os.environ
+            )
+            output = (
+                render_comparison_json(comparison)
+                if args.json
+                else render_comparison_text(comparison, color=color)
+            )
         except SeddError as error:
             compare_parser.error(_error_message(error))
-        color = (
-            not args.no_color
-            and not args.json
-            and sys.stdout.isatty()
-            and "NO_COLOR" not in os.environ
-        )
-        sys.stdout.write(
-            render_comparison_json(comparison)
-            if args.json
-            else render_comparison_text(comparison, color=color)
-        )
+        sys.stdout.write(output)
         return 0
     if args.command == "report":
         try:

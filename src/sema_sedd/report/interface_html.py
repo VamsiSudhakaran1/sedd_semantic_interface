@@ -12,6 +12,8 @@ from sema_sedd.graph import (
     ResolutionState,
     relationship_diagnostics,
 )
+from sema_sedd.graph.adjacency import RelationshipAdjacency, build_relationship_adjacency
+from sema_sedd.limits import BoundedParts, bounded_join, check_html
 from sema_sedd.model import (
     EntityReference,
     EquipmentInterface,
@@ -123,7 +125,7 @@ def _property_rows(entity: InterfaceEntity) -> str:
         "standards",
         "parameters",
     }
-    rows: list[str] = []
+    rows = BoundedParts()
     for member in fields(entity):
         if member.name in omitted:
             continue
@@ -141,7 +143,7 @@ def _property_rows(entity: InterfaceEntity) -> str:
             f"<td><pre>{_pretty(value)}</pre></td></tr>"
         )
     return (
-        "<table class='props'>" + "".join(rows) + "</table>"
+        "<table class='props'>" + bounded_join(rows) + "</table>"
         if rows
         else ("<p class='muted'>No additional structured properties recorded.</p>")
     )
@@ -178,19 +180,20 @@ def _reference_location(relationship: Relationship) -> str:
 
 def _relations(
     entity: InterfaceEntity,
-    graph: RelationshipModel,
+    adjacency: RelationshipAdjacency,
     entities: dict[str, InterfaceEntity],
     anchors: dict[str, str],
 ) -> tuple[str, str]:
-    outgoing: list[str] = []
-    incoming: list[str] = []
-    for relationship in graph.relationships:
+    outgoing = BoundedParts()
+    incoming = BoundedParts()
+    for relationship in adjacency.outgoing.get(entity.key, ()):
         if relationship.owner_key == entity.key:
             outgoing.append(
                 f"<li><strong>{_h(relationship.role)}</strong> → "
                 f"{_target(relationship, entities, anchors)}"
                 f"{_reference_location(relationship)}</li>"
             )
+    for relationship in adjacency.incoming.get(entity.key, ()):
         if (
             relationship.state is ResolutionState.RESOLVED
             and relationship.reference.target_key == entity.key
@@ -202,27 +205,26 @@ def _relations(
                     f"→ <strong>{_h(relationship.role)}</strong>"
                     f"{_reference_location(relationship)}</li>"
                 )
-    for command in graph.interface.remote_commands:
-        for index, parameter in enumerate(command.parameters or ()):
-            if command.key == entity.key:
-                outgoing.append(
-                    f"<li><strong>parameters[{index}]</strong> → "
-                    f"<a href='#{anchors[parameter.key]}'>{_h(_label(parameter))}</a> "
-                    "<span class='muted'>(contains)</span></li>"
-                )
-            if parameter.key == entity.key:
-                incoming.append(
-                    f"<li><a href='#{anchors[command.key]}'>{_h(_label(command))}</a> "
-                    f"→ <strong>parameters[{index}]</strong> "
-                    "<span class='muted'>(contains)</span></li>"
-                )
+    for key, index in adjacency.contains.get(entity.key, ()):
+        outgoing.append(
+            f"<li><strong>parameters[{index}]</strong> → "
+            f"<a href='#{anchors[key]}'>{_h(_label(entities[key]))}</a> "
+            "<span class='muted'>(contains)</span></li>"
+        )
+    if entity.key in adjacency.contained_by:
+        key, index = adjacency.contained_by[entity.key]
+        incoming.append(
+            f"<li><a href='#{anchors[key]}'>{_h(_label(entities[key]))}</a> "
+            f"→ <strong>parameters[{index}]</strong> "
+            "<span class='muted'>(contains)</span></li>"
+        )
     outgoing_html = (
-        "<ul class='relation-list'>" + "".join(outgoing) + "</ul>"
+        "<ul class='relation-list'>" + bounded_join(outgoing) + "</ul>"
         if outgoing
         else ("<p class='muted'>No outgoing relationships recorded.</p>")
     )
     incoming_html = (
-        "<ul class='relation-list'>" + "".join(incoming) + "</ul>"
+        "<ul class='relation-list'>" + bounded_join(incoming) + "</ul>"
         if incoming
         else ("<p class='muted'>No resolved incoming relationships recorded.</p>")
     )
@@ -231,12 +233,12 @@ def _relations(
 
 def _entity_view(
     entity: InterfaceEntity,
-    graph: RelationshipModel,
+    adjacency: RelationshipAdjacency,
     entities: dict[str, InterfaceEntity],
     anchors: dict[str, str],
 ) -> str:
-    incoming, outgoing = _relations(entity, graph, entities, anchors)
-    locations = "".join(f"<li>{_h(_location(item))}</li>" for item in entity.provenance)
+    incoming, outgoing = _relations(entity, adjacency, entities, anchors)
+    locations = bounded_join(f"<li>{_h(_location(item))}</li>" for item in entity.provenance)
     provenance = (
         f"<ul>{locations}</ul>"
         if locations
@@ -278,7 +280,7 @@ def _wkn_directory(entities: tuple[InterfaceEntity, ...], anchors: dict[str, str
         return "<p class='empty'>No WKN values recorded.</p>"
     return (
         "<ul class='wkn-list'>"
-        + "".join(
+        + bounded_join(
             f"<li><strong>{_h(entity.wkn.value if entity.wkn else '')}</strong> → "
             f"<a href='#{anchors[entity.key]}'>{_h(_label(entity))}</a> "
             f"<span class='muted'>({_h(entity.canonical_type.value.replace('_', ' '))}; "
@@ -324,7 +326,7 @@ def _diagnostics(graph: RelationshipModel, diagnostics: tuple[ReportDiagnostic, 
                 f"<span class='muted'>{_h(extension.name)} · {_h(location)}</span>"
                 f"<p>{_h(extension.reason)}</p></article>"
             )
-    return "".join(entries) or "<p class='empty'>No diagnostics recorded.</p>"
+    return bounded_join(entries) or "<p class='empty'>No diagnostics recorded.</p>"
 
 
 def render_interface_html(
@@ -343,10 +345,13 @@ def render_interface_html(
     )
     entities = {entity.key: entity for entity in ordered}
     anchors = {entity.key: f"entity-{index}" for index, entity in enumerate(ordered)}
-    groups: list[str] = []
+    adjacency = build_relationship_adjacency(graph)
+    groups = BoundedParts()
     for section_id, title, types in _GROUPS:
         selected = tuple(entity for entity in ordered if entity.canonical_type.value in types)
-        cards = "".join(_entity_view(entity, graph, entities, anchors) for entity in selected)
+        cards = bounded_join(
+            _entity_view(entity, adjacency, entities, anchors) for entity in selected
+        )
         if not cards:
             cards = "<p class='empty'>No entries recorded.</p>"
         directory = (
@@ -367,7 +372,7 @@ def render_interface_html(
         ("Created", equipment.created_date),
         ("Description", equipment.description),
     )
-    metadata_html = "".join(
+    metadata_html = bounded_join(
         f"<tr><th scope='row'>{_h(label)}</th><td>{_h(value or 'Not recorded')}</td></tr>"
         for label, value in metadata
     )
@@ -375,9 +380,11 @@ def render_interface_html(
     unresolved = sum(
         relation.state is not ResolutionState.RESOLVED for relation in graph.relationships
     )
-    nav = "".join(f"<a href='#{section_id}'>{_h(title)}</a>" for section_id, title, _ in _GROUPS)
+    nav = bounded_join(
+        f"<a href='#{section_id}'>{_h(title)}</a>" for section_id, title, _ in _GROUPS
+    )
     script_hash = b64encode(sha256(_EXPLORER_JS.encode("utf-8")).digest()).decode("ascii")
-    return (
+    result = (
         "<!doctype html>\n<html lang='en'><head><meta charset='utf-8'>"
         "<meta name='viewport' content='width=device-width,initial-scale=1'>"
         "<meta http-equiv='Content-Security-Policy' content=\"default-src 'none'; "
@@ -406,7 +413,7 @@ def render_interface_html(
         "Search identifier, name, WKN, or description"
         "<input id='entity-search' type='search' placeholder='Search entities'></label>"
         "<span id='entity-count' class='search-count' aria-live='polite'></span></div>"
-        + "".join(groups)
+        + bounded_join(groups)
         + "<section id='diagnostics'><h2>Diagnostics</h2>"
         + _diagnostics(graph, diagnostics)
         + "</section><footer><p class='muted'>Generated locally by sema-sedd. "
@@ -414,3 +421,4 @@ def render_interface_html(
         + _EXPLORER_JS
         + "</script></body></html>\n"
     )
+    return check_html(result)
