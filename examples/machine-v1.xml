@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Original synthetic data: no official equipment or verified SEMI WKNs. -->
+<s:DataDictionary xmlns:s="urn:semi-org:xsd.SEDD"
+ xmlns:m="urn:semi-org:xsd.SMN"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="urn:semi-org:xsd.SEDD E172-0225-SEDD-Schema.xsd">
+  <SEDDHeader><MDLN>ExampleMachine</MDLN><SOFTREV>demo</SOFTREV>
+    <Supplier>Fictional Example Workshop</Supplier>
+    <Description>Original tutorial interface.</Description></SEDDHeader>
+  <StatusVariables>
+    <StatusVariable><SVID>44</SVID><SVNAME>Pressure</SVNAME><Description>Pressure reading.</Description><Format>ReadingFormat</Format><UNITS>kPa</UNITS><WellKnownName>urn:example:machine:pressure</WellKnownName></StatusVariable>
+    <StatusVariable><SVID>45</SVID><SVNAME>CycleCount</SVNAME><Description>Completed cycles.</Description><Format>CountFormat</Format></StatusVariable>
+    <StatusVariable><SVID>46</SVID><SVNAME>LegacyCounter</SVNAME><Description>Original tutorial counter.</Description><Format>CountFormat</Format></StatusVariable>
+    <StatusVariable><SVID>49</SVID><SVNAME>UnchangedReady</SVNAME><Description>Unchanged despite XML reordering.</Description><Format>CountFormat</Format></StatusVariable>
+  </StatusVariables>
+  <CollectionEvents>
+    <CollectionEvent><CEID>1001</CEID><CENAME>Started</CENAME><Description>Fictional Started event.</Description></CollectionEvent>
+    <CollectionEvent><CEID>1002</CEID><CENAME>Stopped</CENAME><Description>Fictional Stopped event.</Description></CollectionEvent>
+  </CollectionEvents>
+  <DataVariables/>
+  <EquipmentConstants/>
+  <Alarms><Alarm><ALID>72</ALID><AlarmName>DemoAlarm</AlarmName><ALCD>1</ALCD><ALTX>Example warning</ALTX><Description>Original tutorial alarm.</Description><SetEvent>1001</SetEvent><ClearEvent>1002</ClearEvent></Alarm></Alarms>
+  <VariableFormats>
+    <VariableFormat><FormatName>ReadingFormat</FormatName><SECSData><m:UI4 length="1"/></SECSData></VariableFormat>
+    <VariableFormat><FormatName>CountFormat</FormatName><SECSData><m:UI4 length="1"/></SECSData></VariableFormat>
+  </VariableFormats>
+  <DefaultReportDefinitions>
+    <DefaultReportDefinition><RPTID>5001</RPTID><DefaultReportName>CycleReport</DefaultReportName><Description>Original tutorial report.</Description><VIDList><VID>44</VID><VID>45</VID><VID>46</VID></VIDList></DefaultReportDefinition>
+    <DefaultReportDefinition><RPTID>5002</RPTID><DefaultReportName>ReadyReport</DefaultReportName><Description>Original tutorial report.</Description><VIDList><VID>49</VID></VIDList></DefaultReportDefinition>
+  </DefaultReportDefinitions>
+  <DefaultEventReportLinks><EventReportLink><Description>Original tutorial link.</Description><CEID>1001</CEID><RPTIDList><RPTID>5001</RPTID></RPTIDList></EventReportLink></DefaultEventReportLinks>
+  <SECSMessages><m:SECSMessage s="99" f="1" name="DemoMessage" direction="H to E"><m:Description>Unchanged message with reordered attributes.</m:Description><m:SECSData><m:UI4 length="1"/></m:SECSData></m:SECSMessage></SECSMessages>
+</s:DataDictionary>

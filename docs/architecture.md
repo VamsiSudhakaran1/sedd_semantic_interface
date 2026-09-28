@@ -1,55 +1,57 @@
-# Foundation boundaries
+# Architecture
 
-The master product contract is the architectural invariant. Implement increments
-sequentially; the supplied attachment includes only prompts 0 and 1 in full.
+The [master product contract](../MASTER_PRODUCT_CONTRACT.md) defines the product's
+boundaries. The semantic core consumes canonical objects independent of XML revision.
 
-| Package | Planned responsibility |
+```mermaid
+flowchart TD
+    File[Local XML] --> Loader[Secure generic XML loader]
+    Loader --> Registry[Revision detection and adapter registry]
+    Registry --> Adapter[Revision-specific adapter]
+    Adapter --> Model[Canonical EquipmentInterface]
+    Model --> Index[Exact reference indexes]
+    Index --> Resolve[Resolved / unresolved / ambiguous relationships]
+    Resolve --> Explore[Inspection and bounded exploration]
+    Resolve --> Match[Cross-version identity matching]
+    Match --> Changes[Semantic changes and factual dependency context]
+    Changes --> Reports[JSON and offline HTML]
+```
+
+| Module | Responsibility |
 | --- | --- |
-| parser | Bounded secure XML loading and revision detection, without network access |
-| adapters | Evidence-backed revision-specific extraction, initially E172-0225 |
-| model | CanonicalEquipmentInterface, provenance, unknowns and unresolved references |
-| graph | Build exact indexes, resolve references conservatively, and derive factual dependency context from resolved edges |
-| compare | Deterministic identity matching and typed semantic changes with evidence, relationship deltas, and explicit uncertainty |
-| report | Machine-readable and escaped human-readable output |
-| cli | Deterministic inspect, bounded explore, and semantic compare text/JSON output |
+| `parser` | Bound local XML; retain generic nodes, namespaces, and source positions |
+| `adapters` | Detect/select revisions; map evidenced syntax; preserve unsupported information |
+| `model` | Immutable typed entities, exact identifiers, references, provenance, unknowns, canonical JSON |
+| `graph` | Collision-preserving indexes, exhaustive outcomes, adjacency, bounded dependency joins |
+| `compare` | Identity matching, properties, relationships, documentation, explicit uncertainty |
+| `report` | Public report projections/change codes, schemas, escaped offline HTML |
+| `cli` | File-loading orchestration, exact selectors/filters, controlled errors and output |
+| `diagnostics`, `limits`, `local_files` | Shared source/entity diagnostics, work budgets, local path policy |
 
-The CLI supports help/version, read-only inspection, bounded relationship
-exploration, and semantic comparison in text or JSON. The parser package provides bounded, offline XML
-ingestion with source positions and a non-authoritative revision hint.
-The model package provides immutable canonical objects, provenance, explicit
-references and unknowns, and versioned deterministic JSON. It imports no XML or
-parser types. `CanonicalEquipmentInterface` aliases `EquipmentInterface`.
-An explicit registry now selects E172-0225 or caller-supplied adapters.
-Reference resolution is implemented as a revision-neutral graph phase. Cross-version
-identity matching consumes only canonical models and records conflicts explicitly. See
-[xml_ingestion.md](xml_ingestion.md) and [canonical_model.md](canonical_model.md)
-for the public boundaries and the model architecture challenge.
-[revision_adapters.md](revision_adapters.md) describes routing, structural mapping,
-and import-boundary tests. Comparison, graph, and report packages must never
-import concrete revision adapters. Source evidence
-and local keys must be supplied explicitly; no relationships are inferred.
-[e172_entity_parser.md](e172_entity_parser.md) records the field-level conversion
-and preservation rules for the initial E172-0225 adapter.
-[reference_resolution.md](reference_resolution.md) records exact index identities,
-the three-state relationship model, and the audited ambiguity rules.
-[inspect_cli.md](inspect_cli.md) records summary fields, exact filters, immediate
-relationship output, and the deterministic inspection JSON contract.
-[explore_cli.md](explore_cli.md) records exact selectors, bidirectional traversal
-over resolved canonical relationships, the hard depth bound, and the deterministic
-exploration JSON contract.
-[entity_matching.md](entity_matching.md) records the canonical matcher, evidence
-policy, confidence categories, dependent scopes and conflict-preserving algorithm.
+The loader has no E172 admission rules. Revision interpretation belongs to the registry
+and adapter. Only `adapters/defaults.py` composes the default `E172_0225Adapter`.
+Graph, matching, comparison, and report renderers never import that adapter. File
+facades and CLI compose loading with canonical APIs. Tests use fictional adapters
+and block concrete-adapter imports downstream.
 
-[semantic_changes.md](semantic_changes.md) records the canonical change engine,
-documentation classification, relationship endpoint reconciliation, and uncertainty.
-Comparison ignores inventory order and source coordinates while preserving protocol
-sequences and exact leaf text. XML interpretation remains inside the adapter.
-[change_dependency_context.md](change_dependency_context.md) describes the bounded
-graph joins attached to each change on its old and new sides. Context does not
-change identity matching, change classification, or assign risk/impact scores.
-[compare_cli.md](compare_cli.md) describes the user-facing comparison selection,
-sections, diagnostics, deterministic JSON, and execution-only exit status.
+Adapters parse observed entities/selectors and record pending resolution. A separate
+phase indexes and gives every reference one outcome. Unknown sections remain opaque;
+missing and ambiguous targets stay explicit. Diagnostics include code, severity,
+source/location, and entity context.
 
-Runtime version metadata comes from the installed distribution. Development uses
-an editable installation. No runtime dependency or network access is needed for
-help/version, XML ingestion, revision mapping, or canonical model construction/serialization.
+Document-local `key` identifies an occurrence, not continuity across versions. Matching
+evaluates exact signals across both inventories and retains collisions/conflicts.
+Comparison reconciles confirmed identities before evaluating relationship endpoints.
+Source coordinates and inventory order are ignored; protocol sequence order, report
+member order, duplicate members, and exact scalar text remain meaningful.
+
+Dependency context follows supported resolved paths and reports factual counts.
+Graph/output budgets abort exhausted operations rather than dropping evidence.
+Inputs remain immutable. Normal product writes are caller-selected HTML outputs,
+guarded against input aliases and replaced atomically.
+
+Public entry points include `load_interface`, `resolve_references`, `match_interfaces`,
+`compare_interfaces`, `to_canonical_json`, `report_from_changes`, and `report_files`.
+See [canonical model](canonical_model.md), [matching](entity_matching.md),
+[comparison](semantic_changes.md), [revisions](supported_revisions.md),
+[diagnostics](diagnostics.md), and [security](security.md) for contracts.

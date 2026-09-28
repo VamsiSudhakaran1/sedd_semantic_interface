@@ -1,7 +1,6 @@
 # Canonical domain model
 
-Prompt 4 introduces `EquipmentInterface`, also exported as
-`CanonicalEquipmentInterface` to match the master contract. This is an immutable,
+`EquipmentInterface`, also exported as `CanonicalEquipmentInterface`, is an immutable,
 XML-independent Python API. It has no parser imports, filesystem reads, network
 operations, adapter selection, identity matcher, or relationship resolver.
 `tests/test_model.py` constructs a complete original interface directly in Python.
@@ -200,3 +199,12 @@ and occurrence-based adapter key allocation; see
 [revision_adapters.md](revision_adapters.md). No Prompt 2 assumption has silently
 become XML parser behavior. The E172-0225 adapter consumes the secure loader and constructs these
 objects through this API; graph/comparison/report layers consume the model directly.
+
+
+## Runnable tutorial
+
+The original [machine examples](../examples/README.md) show loading XML into these
+objects and comparing versions. Their labeled library script demonstrates explicit
+fictional WKN evidence and scalar datatype values. The E172 adapter preserves format
+structures and does not infer the scalar `data_type` field for arbitrary formats.
+Canonical callers remain responsible for any additional interpretation or authority evidence.

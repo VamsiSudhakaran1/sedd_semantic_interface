@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Original synthetic data: no official equipment or verified SEMI WKNs. -->
+<s:DataDictionary xmlns:s="urn:semi-org:xsd.SEDD"
+ xmlns:m="urn:semi-org:xsd.SMN"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="urn:semi-org:xsd.SEDD E172-0225-SEDD-Schema.xsd">
+  <SEDDHeader><MDLN>ExampleMachine</MDLN><SOFTREV>demo</SOFTREV>
+    <Supplier>Fictional Example Workshop</Supplier>
+    <Description>Original tutorial interface.</Description></SEDDHeader>
+  <SECSMessages><m:SECSMessage direction="H to E" name="DemoMessage" f="1" s="99"><m:Description>Unchanged message with reordered attributes.</m:Description><m:SECSData><m:UI4 length="1"/></m:SECSData></m:SECSMessage></SECSMessages>
+  <DefaultEventReportLinks><EventReportLink><Description>Original tutorial link.</Description><CEID>1001</CEID><RPTIDList><RPTID>5001</RPTID><RPTID>5002</RPTID></RPTIDList></EventReportLink></DefaultEventReportLinks>
+  <DefaultReportDefinitions>
+    <DefaultReportDefinition><VIDList><VID>49</VID></VIDList><Description>Original tutorial report.</Description><DefaultReportName>ReadyReport</DefaultReportName><RPTID>5002</RPTID></DefaultReportDefinition>
+    <DefaultReportDefinition><VIDList><VID>144</VID><VID>45</VID><VID>47</VID></VIDList><Description>Original tutorial report.</Description><DefaultReportName>CycleReport</DefaultReportName><RPTID>5001</RPTID></DefaultReportDefinition>
+  </DefaultReportDefinitions>
+  <VariableFormats>
+    <VariableFormat><FormatName>CountFormat</FormatName><SECSData><m:UI4 length="1"/></SECSData></VariableFormat>
+    <VariableFormat><FormatName>ReadingFormat</FormatName><SECSData><m:FP4 length="1"/></SECSData></VariableFormat>
+  </VariableFormats>
+  <Alarms><Alarm><ALID>72</ALID><AlarmName>DemoAlarm</AlarmName><ALCD>1</ALCD><ALTX>Example warning</ALTX><Description>Original tutorial alarm.</Description><SetEvent>1002</SetEvent><ClearEvent>1001</ClearEvent></Alarm></Alarms>
+  <DataVariables/>
+  <EquipmentConstants/>
+  <CollectionEvents>
+    <CollectionEvent><CEID>1002</CEID><CENAME>Stopped</CENAME><Description>Fictional Stopped event.</Description></CollectionEvent>
+    <CollectionEvent><CEID>1001</CEID><CENAME>Started</CENAME><Description>Fictional Started event.</Description></CollectionEvent>
+  </CollectionEvents>
+  <StatusVariables>
+    <StatusVariable><Format>CountFormat</Format><Description>Unchanged despite XML reordering.</Description><SVNAME>UnchangedReady</SVNAME><SVID>49</SVID></StatusVariable>
+    <StatusVariable><SVID>47</SVID><SVNAME>NewCounter</SVNAME><Description>Original tutorial counter.</Description><Format>CountFormat</Format></StatusVariable>
+    <StatusVariable><Format>CountFormat</Format><Description>Completed cycles since reset.</Description><SVNAME>CycleCount</SVNAME><SVID>45</SVID></StatusVariable>
+    <StatusVariable><WellKnownName>urn:example:machine:pressure</WellKnownName><UNITS>kPa</UNITS><Format>ReadingFormat</Format><Description>Pressure reading.</Description><SVNAME>Pressure</SVNAME><SVID>144</SVID></StatusVariable>
+  </StatusVariables>
+</s:DataDictionary>

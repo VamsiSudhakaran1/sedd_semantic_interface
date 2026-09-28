@@ -192,3 +192,13 @@ sample with itself: zero entity changes, with existing identity ambiguity, unkno
 content and unresolved references retained. That external file is not a test
 dependency. The API operates on canonical models from any revision adapter. A
 comparison CLI, rendered reports, and compatibility/impact policy are separate work.
+
+
+## Original runnable example
+
+[The machine walkthrough](../examples/README.md) demonstrates additions/removals,
+wire-format and canonical datatype changes, report membership, event/report and
+alarm/event links, documentation, and an unchanged reordered subset. Its explicit
+fictional evidence variant also demonstrates an ID change without removal/addition.
+Tests isolate XML reorder alone and verify zero semantic changes while retaining
+ordered protocol data. No proprietary artifacts are needed for this example.
